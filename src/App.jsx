@@ -9,7 +9,8 @@ import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, User
 import './App.css'
 
 function App() {
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState('monitoramento')
+  const [selectedPeriod, setSelectedPeriod] = useState('ultimo_mes')
   const [chatOpen, setChatOpen] = useState(false)
   const [chatMessages, setChatMessages] = useState([
     {
@@ -648,38 +649,64 @@ function App() {
 
       {/* Tabs de Análise */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-6 lg:w-4/5">
-          <TabsTrigger value="overview" className="flex items-center space-x-2">
+        <TabsList className="grid w-full grid-cols-2 lg:w-2/5">
+          <TabsTrigger value="monitoramento" className="flex items-center space-x-2">
             <BarChart3 className="w-4 h-4" />
             <span>Monitoramento</span>
+            <Badge variant="outline" className="ml-2 text-xs">Mensal</Badge>
           </TabsTrigger>
-          <TabsTrigger value="products" className="flex items-center space-x-2">
-            <Package className="w-4 h-4" />
-            <span>Produtos</span>
-          </TabsTrigger>
-          <TabsTrigger value="channels" className="flex items-center space-x-2">
-            <Users className="w-4 h-4" />
-            <span>Canais</span>
-          </TabsTrigger>
-          <TabsTrigger value="estados" className="flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-            </svg>
-            <span>Estados</span>
-          </TabsTrigger>
-          <TabsTrigger value="inovacoes" className="flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-            <span>Inovações</span>
-          </TabsTrigger>
-          <TabsTrigger value="recommendations" className="flex items-center space-x-2">
+          <TabsTrigger value="estrategia" className="flex items-center space-x-2">
             <Zap className="w-4 h-4" />
-            <span>Recomendações</span>
+            <span>Estratégia</span>
+            <Badge variant="outline" className="ml-2 text-xs">Trimestral</Badge>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="monitoramento" className="space-y-6">
+          {/* Filtros de Período */}
+          <Card className="border-0 shadow-lg bg-gradient-to-r from-slate-50 to-slate-100">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center space-x-2">
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Filtros Temporais</span>
+                  </CardTitle>
+                  <CardDescription>Selecione o período para análise (Atualização: Dezembro 2024)</CardDescription>
+                </div>
+                <Badge className="bg-green-100 text-green-800 border-green-200">
+                  Dados Atualizados
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+                {[
+                  { id: 'ultimo_mes', label: 'Último Mês', desc: 'Dez/24' },
+                  { id: 'ultimos_3m', label: 'Últimos 3M', desc: 'Out-Dez/24' },
+                  { id: 'ultimos_6m', label: 'Últimos 6M', desc: 'Jul-Dez/24' },
+                  { id: 'ultimo_ano', label: 'Último Ano', desc: '2024' },
+                  { id: 'ano_anterior', label: 'Ano Anterior', desc: '2023' },
+                  { id: 'personalizado', label: 'Personalizado', desc: 'Escolher' }
+                ].map((period) => (
+                  <Button
+                    key={period.id}
+                    variant={selectedPeriod === period.id ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedPeriod(period.id)}
+                    className={`flex flex-col h-16 ${selectedPeriod === period.id ? 'bg-blue-600 text-white' : 'hover:bg-blue-50'}`}
+                  >
+                    <span className="font-medium text-sm">{period.label}</span>
+                    <span className="text-xs opacity-70">{period.desc}</span>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+        <TabsContent value="estrategia" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Tendência de Vendas */}
             <Card className="border-0 shadow-lg">

@@ -6,18 +6,24 @@ const MapaBrasilSimples = () => {
   const [showValidation, setShowValidation] = useState(false);
   const [validationResults, setValidationResults] = useState(null);
 
-  // Dados de market share por estado
+  // Dados reais de market share por estado - MTRIX 2025 2º Semestre
   const estadosData = {
-    'SP': { nome: 'São Paulo', share: 26.9, vendas: 20589, densidade: 85.4, regiao: 'Sudeste', status: 'Líder', color: '#1e40af' },
-    'CE': { nome: 'Ceará', share: 26.5, vendas: 20285, densidade: 37.2, regiao: 'Nordeste', status: 'Líder', color: '#1e40af' },
-    'RN': { nome: 'Rio Grande do Norte', share: 26.4, vendas: 20208, densidade: 31.8, regiao: 'Nordeste', status: 'Líder', color: '#1e40af' },
-    'PR': { nome: 'Paraná', share: 15.9, vendas: 12167, densidade: 42.1, regiao: 'Sul', status: 'Forte', color: '#3b82f6' },
-    'MG': { nome: 'Minas Gerais', share: 4.2, vendas: 3214, densidade: 28.9, regiao: 'Sudeste', status: 'Moderado', color: '#60a5fa' },
-    'RJ': { nome: 'Rio de Janeiro', share: 0.25, vendas: 189, densidade: 6.8, regiao: 'Sudeste', status: 'Crítico', color: '#ef4444' },
-    'BA': { nome: 'Bahia', share: 0.15, vendas: 115, densidade: 4.2, regiao: 'Nordeste', status: 'Crítico', color: '#ef4444' },
-    'RS': { nome: 'Rio Grande do Sul', share: 0.12, vendas: 92, densidade: 3.8, regiao: 'Sul', status: 'Crítico', color: '#ef4444' },
-    'SC': { nome: 'Santa Catarina', share: 0.08, vendas: 61, densidade: 2.9, regiao: 'Sul', status: 'Crítico', color: '#ef4444' },
-    'GO': { nome: 'Goiás', share: 0.05, vendas: 38, densidade: 2.1, regiao: 'Centro-Oeste', status: 'Crítico', color: '#ef4444' }
+    'SP': { nome: 'São Paulo', share: 24.52, vendas: 2482565, faturamento: 3935626.01, densidade: 245.2, regiao: 'Sudeste', status: 'Líder', color: '#1e40af' },
+    'PR': { nome: 'Paraná', share: 15.35, vendas: 1598222, faturamento: 2463394.32, densidade: 153.5, regiao: 'Sul', status: 'Líder', color: '#1e40af' },
+    'MG': { nome: 'Minas Gerais', share: 11.52, vendas: 1130928, faturamento: 1849597.24, densidade: 115.2, regiao: 'Sudeste', status: 'Líder', color: '#1e40af' },
+    'RJ': { nome: 'Rio de Janeiro', share: 11.25, vendas: 1334433, faturamento: 1805363.76, densidade: 112.5, regiao: 'Sudeste', status: 'Líder', color: '#1e40af' },
+    'SC': { nome: 'Santa Catarina', share: 6.57, vendas: 625015, faturamento: 1054256.20, densidade: 65.7, regiao: 'Sul', status: 'Forte', color: '#3b82f6' },
+    'GO': { nome: 'Goiás', share: 6.07, vendas: 472401, faturamento: 973694.50, densidade: 60.7, regiao: 'Centro-Oeste', status: 'Forte', color: '#3b82f6' },
+    'CE': { nome: 'Ceará', share: 4.82, vendas: 340405, faturamento: 773159.43, densidade: 48.2, regiao: 'Nordeste', status: 'Moderado', color: '#60a5fa' },
+    'RN': { nome: 'Rio Grande do Norte', share: 4.20, vendas: 363721, faturamento: 674839.31, densidade: 42.0, regiao: 'Nordeste', status: 'Moderado', color: '#60a5fa' },
+    'ES': { nome: 'Espírito Santo', share: 3.66, vendas: 325827, faturamento: 587002.69, densidade: 36.6, regiao: 'Sudeste', status: 'Moderado', color: '#60a5fa' },
+    'PA': { nome: 'Pará', share: 2.47, vendas: 142071, faturamento: 396926.22, densidade: 24.7, regiao: 'Norte', status: 'Moderado', color: '#60a5fa' },
+    'RS': { nome: 'Rio Grande do Sul', share: 2.47, vendas: 698013, faturamento: 396120.83, densidade: 24.7, regiao: 'Sul', status: 'Moderado', color: '#60a5fa' },
+    'AL': { nome: 'Alagoas', share: 1.90, vendas: 140914, faturamento: 304326.16, densidade: 19.0, regiao: 'Nordeste', status: 'Moderado', color: '#60a5fa' },
+    'BA': { nome: 'Bahia', share: 1.87, vendas: 137347, faturamento: 300310.07, densidade: 18.7, regiao: 'Nordeste', status: 'Moderado', color: '#60a5fa' },
+    'PE': { nome: 'Pernambuco', share: 1.68, vendas: 139440, faturamento: 269339.00, densidade: 16.8, regiao: 'Nordeste', status: 'Moderado', color: '#60a5fa' },
+    'PB': { nome: 'Paraíba', share: 1.14, vendas: 93685, faturamento: 183666.95, densidade: 11.4, regiao: 'Nordeste', status: 'Moderado', color: '#60a5fa' },
+    'AM': { nome: 'Amazonas', share: 0.49, vendas: 24380, faturamento: 79071.94, densidade: 4.9, regiao: 'Norte', status: 'Crítico', color: '#ef4444' }
   };
 
   const handleStateClick = (stateCode) => {
@@ -77,7 +83,7 @@ const MapaBrasilSimples = () => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground">
-            Distribuição geográfica da participação de mercado da Nutrimental
+            Distribuição geográfica da participação de mercado da Nutrimental (Dados MTRIX 2025 - 2º Semestre)
           </p>
         </div>
         
@@ -170,7 +176,7 @@ const MapaBrasilSimples = () => {
               <h4 className="font-medium text-blue-900 mb-3">
                 Detalhes: {estadosData[selectedState].nome} ({selectedState})
               </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <div>
                   <div className="text-sm text-blue-700">Market Share</div>
                   <div className="text-xl font-bold text-blue-900">
@@ -178,9 +184,15 @@ const MapaBrasilSimples = () => {
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-blue-700">Vendas</div>
+                  <div className="text-sm text-blue-700">Vendas (Und)</div>
                   <div className="text-xl font-bold text-blue-900">
                     {estadosData[selectedState].vendas.toLocaleString()}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-blue-700">Faturamento</div>
+                  <div className="text-xl font-bold text-blue-900">
+                    R$ {(estadosData[selectedState].faturamento / 1000).toFixed(0)}k
                   </div>
                 </div>
                 <div>

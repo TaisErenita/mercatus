@@ -7,6 +7,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, Users, DollarSign, Package, BarChart3, PieChart as PieChartIcon, MessageCircle, Send, X, Minimize2, Map } from 'lucide-react'
 import MapaBrasilSimples from './components/MapaBrasilSimples'
 import AnaliseAmazon from './components/AnaliseAmazon'
+import ModeloPreditivoAprimorado from "./components/ModeloPreditivoAprimorado";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
@@ -462,6 +463,7 @@ function App() {
 
           {/* Análise Amazon - Dados E-commerce */}
           <AnaliseAmazon />
+            <ModeloPreditivoAprimorado />
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">

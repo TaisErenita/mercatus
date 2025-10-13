@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell } from 'recharts'
 import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, Users, DollarSign, Package, BarChart3, PieChart as PieChartIcon, MessageCircle, Send, X, Minimize2, Map } from 'lucide-react'
 import MapaBrasilSimples from './components/MapaBrasilSimples'
+import AnaliseAmazon from './components/AnaliseAmazon'
 import './App.css'
 
 function App() {
@@ -456,6 +457,9 @@ function App() {
 
           {/* Mapa do Brasil - Market Share por Estado */}
           <MapaBrasilSimples />
+
+          {/* Análise Amazon - Dados E-commerce */}
+          <AnaliseAmazon />
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">
@@ -528,6 +532,9 @@ function App() {
 
           {/* Mapa do Brasil - Market Share por Estado */}
           <MapaBrasilSimples />
+
+          {/* Análise Amazon - Dados E-commerce */}
+          <AnaliseAmazon />
         </TabsContent>
       </Tabs>
 

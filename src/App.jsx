@@ -9,6 +9,7 @@ import MapaBrasilSimples from './components/MapaBrasilSimples'
 import AnaliseAmazon from './components/AnaliseAmazon'
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
+import SimuladorElasticidade from './components/SimuladorElasticidade'
 
 function App() {
   const [activeTab, setActiveTab] = useState('monitoramento')
@@ -241,7 +242,7 @@ function App() {
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                Simular Cenários
+                Simulador de Elasticidade
               </Button>
 
               {/* Modo Apresentação */}
@@ -470,129 +471,7 @@ function App() {
 
       {/* Simulador Modal */}
       {showSimulator && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-slate-900">Simulador de Cenários</h3>
-                <Button variant="ghost" size="sm" onClick={() => setShowSimulator(false)}>
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-medium text-slate-900">Parâmetros de Simulação</h4>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Investimento Total: R$ {(simulatorParams.investment / 1000000).toFixed(1)}M
-                    </label>
-                    <input
-                      type="range"
-                      min="500000"
-                      max="5000000"
-                      step="100000"
-                      value={simulatorParams.investment}
-                      onChange={(e) => updateSimulatorParam('investment', parseInt(e.target.value))}
-                      className="w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Aumento de Preço: {simulatorParams.priceIncrease}%
-                    </label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="25"
-                      step="1"
-                      value={simulatorParams.priceIncrease}
-                      onChange={(e) => updateSimulatorParam('priceIncrease', parseInt(e.target.value))}
-                      className="w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Marketing: R$ {(simulatorParams.marketing / 1000).toFixed(0)}K
-                    </label>
-                    <input
-                      type="range"
-                      min="100000"
-                      max="2000000"
-                      step="50000"
-                      value={simulatorParams.marketing}
-                      onChange={(e) => updateSimulatorParam('marketing', parseInt(e.target.value))}
-                      className="w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Novos Estados: {simulatorParams.expansion}
-                    </label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="10"
-                      step="1"
-                      value={simulatorParams.expansion}
-                      onChange={(e) => updateSimulatorParam('expansion', parseInt(e.target.value))}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-medium text-slate-900">Resultados Projetados</h4>
-                  {(() => {
-                    const results = calculateSimulatorResults()
-                    return (
-                      <div className="space-y-3">
-                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                          <div className="text-sm text-blue-700 font-medium">Receita Projetada</div>
-                          <div className="text-xl font-bold text-blue-800">
-                            R$ {(results.revenue / 1000000).toFixed(1)}M
-                          </div>
-                          <div className="text-xs text-blue-600">
-                            +R$ {((results.revenue - kpiData.revenue) / 1000000).toFixed(1)}M vs atual
-                          </div>
-                        </div>
-
-                        <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                          <div className="text-sm text-green-700 font-medium">Market Share Projetado</div>
-                          <div className="text-xl font-bold text-green-800">{results.share.toFixed(1)}%</div>
-                          <div className="text-xs text-green-600">
-                            +{(results.share - kpiData.marketShare).toFixed(1)} pontos
-                          </div>
-                        </div>
-
-                        <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
-                          <div className="text-sm text-purple-700 font-medium">ROI Projetado</div>
-                          <div className="text-xl font-bold text-purple-800">{results.roi.toFixed(0)}%</div>
-                          <div className="text-xs text-purple-600">
-                            Payback: {results.payback.toFixed(1)} meses
-                          </div>
-                        </div>
-
-                        <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-                          <div className="text-sm text-orange-700 font-medium">Análise de Risco</div>
-                          <div className="text-xl font-bold text-orange-800">{results.risk}</div>
-                          <div className="text-xs text-orange-600">
-                            {results.roi > 150 ? '✅ Recomendado' : results.roi > 50 ? '⚠️ Avaliar' : '❌ Não recomendado'}
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })()}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SimuladorElasticidade onClose={() => setShowSimulator(false)} />
       )}
 
       {/* Chat Assistant */}

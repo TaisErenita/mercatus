@@ -7,6 +7,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, Users, DollarSign, Package, BarChart3, PieChart as PieChartIcon, MessageCircle, Send, X, Minimize2, Map } from 'lucide-react'
 import MapaBrasilSimples from './components/MapaBrasilSimples'
 import AnaliseAmazon from './components/AnaliseAmazon'
+import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
 
 function App() {
@@ -463,78 +464,7 @@ function App() {
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">
-          <Card className="border-0 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Zap className="w-5 h-5 text-orange-600" />
-                <span>Central de Recomendações Estratégicas</span>
-                <Badge className="bg-orange-100 text-orange-800 border-orange-200">IA</Badge>
-              </CardTitle>
-              <CardDescription>Ações priorizadas baseadas em análise de dados</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {[
-                  {
-                    titulo: 'Implementar Forecasting Automático',
-                    prioridade: 'Alta',
-                    objetivo: 'Redução custos estoque',
-                    impacto: 'R$ 2.3M economia anual',
-                    prazo: '30 dias',
-                    roi: '1.150%'
-                  },
-                  {
-                    titulo: 'Estratégias por Cluster',
-                    prioridade: 'Alta', 
-                    objetivo: 'Aumento vendas',
-                    impacto: '+25% vendas produtos-alvo',
-                    prazo: '60 dias',
-                    roi: '340%'
-                  },
-                  {
-                    titulo: 'Intensificar Amazon',
-                    prioridade: 'Alta',
-                    objetivo: 'Crescimento digital',
-                    impacto: '+40% vendas e-commerce',
-                    prazo: '90 dias',
-                    roi: '280%'
-                  }
-                ].map((rec, idx) => (
-                  <div key={idx} className="p-4 bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg border">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <h5 className="font-semibold text-slate-900">{rec.titulo}</h5>
-                        <p className="text-sm text-slate-600 mt-1">{rec.objetivo}</p>
-                      </div>
-                      <Badge variant={rec.prioridade === 'Alta' ? 'destructive' : 'secondary'}>
-                        {rec.prioridade}
-                      </Badge>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs font-medium text-slate-600">Impacto:</span>
-                        <span className="text-xs text-green-600">{rec.impacto}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs font-medium text-slate-600">Prazo:</span>
-                        <span className="text-xs text-blue-600">{rec.prazo}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs font-medium text-slate-600">ROI:</span>
-                        <span className="text-xs text-purple-600">{rec.roi}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Mapa do Brasil - Market Share por Estado */}
-          <MapaBrasilSimples />
-
-          {/* Análise Amazon - Dados E-commerce */}
-          <AnaliseAmazon />
+          <EstrategiaInovacao />
         </TabsContent>
       </Tabs>
 

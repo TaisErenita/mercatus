@@ -9,6 +9,7 @@ import MapaBrasilInterativo from './components/MapaBrasilInterativo'
 import AnaliseAmazon from './components/AnaliseAmazon'
 import ModeloPreditivoAprimorado from "./components/ModeloPreditivoAprimorado";
 import InsightsMercado from "./components/InsightsMercado";
+import InsightsNaoEstruturados from "./components/InsightsNaoEstruturados";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
@@ -466,6 +467,7 @@ function App() {
           <AnaliseAmazon />
             <ModeloPreditivoAprimorado />
             <InsightsMercado />
+            <InsightsNaoEstruturados />
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">

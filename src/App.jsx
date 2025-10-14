@@ -10,6 +10,8 @@ import AnaliseAmazon from './components/AnaliseAmazon'
 import ModeloPreditivoAprimorado from "./components/ModeloPreditivoAprimorado";
 import InsightsMercado from "./components/InsightsMercado";
 import InsightsNaoEstruturados from "./components/InsightsNaoEstruturados";
+import DashboardRecomendacoes from "./components/DashboardRecomendacoes";
+import DashboardExecutivo from "./components/DashboardExecutivo";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
@@ -472,6 +474,7 @@ function App() {
 
         <TabsContent value="estrategia" className="space-y-6">
           <EstrategiaInovacao />
+            <DashboardRecomendacoes />
         </TabsContent>
       </Tabs>
 

@@ -463,7 +463,7 @@ function App() {
           </Card>
 
           {/* Mapa do Brasil - Market Share por Estado */}
-          <MapaBrasilVisual />
+          <MapaBrasilInterativoSVG />
 
           {/* Análise Amazon - Dados E-commerce */}
           <AnaliseAmazon />

@@ -463,7 +463,7 @@ function App() {
           </Card>
 
           {/* Mapa do Brasil - Market Share por Estado */}
-          <MapaBrasilInterativo />
+          <MapaBrasilFuncional />
 
           {/* Análise Amazon - Dados E-commerce */}
           <AnaliseAmazon />
@@ -473,6 +473,7 @@ function App() {
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">
+            <DashboardExecutivo />
           <EstrategiaInovacao />
             <DashboardRecomendacoes />
         </TabsContent>

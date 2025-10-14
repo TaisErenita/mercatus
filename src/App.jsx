@@ -5,7 +5,7 @@ import { Badge } from './components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell } from 'recharts'
 import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, Users, DollarSign, Package, BarChart3, PieChart as PieChartIcon, MessageCircle, Send, X, Minimize2, Map } from 'lucide-react'
-import MapaBrasilSimples from './components/MapaBrasilSimples'
+import MapaBrasilInterativo from './components/MapaBrasilInterativo'
 import AnaliseAmazon from './components/AnaliseAmazon'
 import ModeloPreditivoAprimorado from "./components/ModeloPreditivoAprimorado";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
@@ -459,7 +459,7 @@ function App() {
           </Card>
 
           {/* Mapa do Brasil - Market Share por Estado */}
-          <MapaBrasilSimples />
+          <MapaBrasilInterativo />
 
           {/* Análise Amazon - Dados E-commerce */}
           <AnaliseAmazon />

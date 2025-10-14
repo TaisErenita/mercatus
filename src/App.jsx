@@ -8,6 +8,7 @@ import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, User
 import MapaBrasilInterativo from './components/MapaBrasilInterativo'
 import AnaliseAmazon from './components/AnaliseAmazon'
 import ModeloPreditivoAprimorado from "./components/ModeloPreditivoAprimorado";
+import InsightsMercado from "./components/InsightsMercado";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
@@ -464,6 +465,7 @@ function App() {
           {/* Análise Amazon - Dados E-commerce */}
           <AnaliseAmazon />
             <ModeloPreditivoAprimorado />
+            <InsightsMercado />
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">

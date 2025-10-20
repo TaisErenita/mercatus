@@ -14,6 +14,7 @@ import DashboardRecomendacoes from "./components/DashboardRecomendacoes";
 import DashboardExecutivo from "./components/DashboardExecutivo";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
+import './enhancements.css'
 import Tooltip from './components/Tooltip'
 import { getTooltip } from './data/tooltipDescriptions'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
@@ -269,7 +270,7 @@ function App() {
       </div>
 
       {/* KPIs Principais */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 fade-in-up">
         <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium opacity-90">Market Share</CardTitle>

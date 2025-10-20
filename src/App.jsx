@@ -14,6 +14,8 @@ import DashboardRecomendacoes from "./components/DashboardRecomendacoes";
 import DashboardExecutivo from "./components/DashboardExecutivo";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
+import Tooltip from './components/Tooltip'
+import { getTooltip } from './data/tooltipDescriptions'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
 
 function App() {

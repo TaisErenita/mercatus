@@ -5,18 +5,32 @@ const MapaBrasilGeografico = () => {
   const [hoveredState, setHoveredState] = useState(null);
 
   const dadosEstados = {
-    'SP': { nome: 'São Paulo', share: 24.52, faturamento: 3.9, regiao: 'Sudeste' },
-    'PR': { nome: 'Paraná', share: 15.35, faturamento: 2.4, regiao: 'Sul' },
-    'MG': { nome: 'Minas Gerais', share: 11.52, faturamento: 1.8, regiao: 'Sudeste' },
-    'RJ': { nome: 'Rio de Janeiro', share: 11.25, faturamento: 1.8, regiao: 'Sudeste' },
-    'SC': { nome: 'Santa Catarina', share: 6.57, faturamento: 1.0, regiao: 'Sul' },
-    'GO': { nome: 'Goiás', share: 6.07, faturamento: 0.9, regiao: 'Centro-Oeste' },
-    'CE': { nome: 'Ceará', share: 4.82, faturamento: 0.7, regiao: 'Nordeste' },
-    'RN': { nome: 'Rio Grande do Norte', share: 4.2, faturamento: 0.6, regiao: 'Nordeste' },
-    'ES': { nome: 'Espírito Santo', share: 3.66, faturamento: 0.5, regiao: 'Sudeste' },
-    'PA': { nome: 'Pará', share: 2.47, faturamento: 0.4, regiao: 'Norte' },
-    'RS': { nome: 'Rio Grande do Sul', share: 2.47, faturamento: 0.4, regiao: 'Sul' },
-    'AL': { nome: 'Alagoas', share: 1.9, faturamento: 0.3, regiao: 'Nordeste' }
+    'SP': { nome: 'São Paulo', share: 24.52, faturamento: 3.94, volume: 2482.56, regiao: 'Sudeste' },
+    'PR': { nome: 'Paraná', share: 15.35, faturamento: 2.46, volume: 1598.22, regiao: 'Sul' },
+    'MG': { nome: 'Minas Gerais', share: 11.52, faturamento: 1.85, volume: 1130.93, regiao: 'Sudeste' },
+    'RJ': { nome: 'Rio de Janeiro', share: 11.25, faturamento: 1.81, volume: 1334.43, regiao: 'Sudeste' },
+    'SC': { nome: 'Santa Catarina', share: 6.57, faturamento: 1.05, volume: 625.02, regiao: 'Sul' },
+    'GO': { nome: 'Goiás', share: 6.07, faturamento: 0.97, volume: 472.40, regiao: 'Centro-Oeste' },
+    'CE': { nome: 'Ceará', share: 4.82, faturamento: 0.77, volume: 340.40, regiao: 'Nordeste' },
+    'RN': { nome: 'Rio Grande do Norte', share: 4.2, faturamento: 0.67, volume: 363.72, regiao: 'Nordeste' },
+    'ES': { nome: 'Espírito Santo', share: 3.66, faturamento: 0.59, volume: 325.83, regiao: 'Sudeste' },
+    'PA': { nome: 'Pará', share: 2.47, faturamento: 0.40, volume: 142.07, regiao: 'Norte' },
+    'RS': { nome: 'Rio Grande do Sul', share: 2.47, faturamento: 0.40, volume: 698.01, regiao: 'Sul' },
+    'AL': { nome: 'Alagoas', share: 1.9, faturamento: 0.30, volume: 140.91, regiao: 'Nordeste' },
+    'BA': { nome: 'Bahia', share: 1.87, faturamento: 0.30, volume: 137.35, regiao: 'Nordeste' },
+    'PE': { nome: 'Pernambuco', share: 1.68, faturamento: 0.27, volume: 139.44, regiao: 'Nordeste' },
+    'PB': { nome: 'Paraíba', share: 1.14, faturamento: 0.18, volume: 93.69, regiao: 'Nordeste' },
+    'AM': { nome: 'Amazonas', share: 0.49, faturamento: 0.08, volume: 24.38, regiao: 'Norte' },
+    'RR': { nome: 'Roraima', share: 0.02, faturamento: 0.003, volume: 1.68, regiao: 'Norte' },
+    'MA': { nome: 'Maranhão', share: 0.0, faturamento: 0.001, volume: 0.67, regiao: 'Nordeste' },
+    'TO': { nome: 'Tocantins', share: 0.0, faturamento: 0.001, volume: 0.40, regiao: 'Norte' },
+    'MT': { nome: 'Mato Grosso', share: 0.0, faturamento: 0.0003, volume: 0.20, regiao: 'Centro-Oeste' },
+    'DF': { nome: 'Distrito Federal', share: 0.0, faturamento: 0.0002, volume: 0.14, regiao: 'Centro-Oeste' },
+    'MS': { nome: 'Mato Grosso do Sul', share: 0.0, faturamento: 0.0001, volume: 0.10, regiao: 'Centro-Oeste' },
+    'SE': { nome: 'Sergipe', share: 0.0, faturamento: 0.0001, volume: 0.10, regiao: 'Nordeste' },
+    'PI': { nome: 'Piauí', share: 0.0, faturamento: 0.00006, volume: 0.05, regiao: 'Nordeste' },
+    'AC': { nome: 'Acre', share: 0.0, faturamento: 0.0, volume: 0.0, regiao: 'Norte' },
+    'RO': { nome: 'Rondônia', share: 0.0, faturamento: 0.0, volume: 0.0, regiao: 'Norte' }
   };
 
   const getCorPorShare = (share) => {
@@ -103,10 +117,13 @@ const MapaBrasilGeografico = () => {
               <path
                 id="AM"
                 d="M 100 80 L 280 80 L 300 100 L 280 180 L 200 200 L 120 180 L 100 120 Z"
-                fill="#f3f4f6"
+                fill={getCorPorShare(dadosEstados.AM?.share || 0)}
                 stroke="#fff"
                 strokeWidth="2"
                 className="cursor-pointer transition-all duration-300 hover:brightness-110"
+                onClick={() => handleStateClick('AM')}
+                onMouseEnter={() => handleStateHover('AM')}
+                onMouseLeave={handleStateLeave}
                 filter="url(#shadow)"
               />
 
@@ -213,10 +230,13 @@ const MapaBrasilGeografico = () => {
               <path
                 id="PB"
                 d="M 600 210 L 630 200 L 640 230 L 620 250 L 600 240 L 590 220 Z"
-                fill="#f3f4f6"
+                fill={getCorPorShare(dadosEstados.PB?.share || 0)}
                 stroke="#fff"
                 strokeWidth="2"
                 className="cursor-pointer transition-all duration-300 hover:brightness-110"
+                onClick={() => handleStateClick('PB')}
+                onMouseEnter={() => handleStateHover('PB')}
+                onMouseLeave={handleStateLeave}
                 filter="url(#shadow)"
               />
 
@@ -224,10 +244,13 @@ const MapaBrasilGeografico = () => {
               <path
                 id="PE"
                 d="M 580 240 L 620 230 L 640 260 L 610 290 L 580 280 L 570 250 Z"
-                fill="#f3f4f6"
+                fill={getCorPorShare(dadosEstados.PE?.share || 0)}
                 stroke="#fff"
                 strokeWidth="2"
                 className="cursor-pointer transition-all duration-300 hover:brightness-110"
+                onClick={() => handleStateClick('PE')}
+                onMouseEnter={() => handleStateHover('PE')}
+                onMouseLeave={handleStateLeave}
                 filter="url(#shadow)"
               />
 
@@ -260,10 +283,13 @@ const MapaBrasilGeografico = () => {
               <path
                 id="BA"
                 d="M 480 250 L 570 240 L 590 330 L 550 380 L 480 370 L 460 320 L 480 270 Z"
-                fill="#f3f4f6"
+                fill={getCorPorShare(dadosEstados.BA?.share || 0)}
                 stroke="#fff"
                 strokeWidth="2"
                 className="cursor-pointer transition-all duration-300 hover:brightness-110"
+                onClick={() => handleStateClick('BA')}
+                onMouseEnter={() => handleStateHover('BA')}
+                onMouseLeave={handleStateLeave}
                 filter="url(#shadow)"
               />
 
@@ -492,7 +518,10 @@ const MapaBrasilGeografico = () => {
                   <text x="65" y="115" className="fill-white text-sm pointer-events-none">
                     Faturamento: R$ {dadosEstados[hoveredState].faturamento}M
                   </text>
-                  <text x="65" y="130" className="fill-blue-300 text-xs pointer-events-none">
+                  <text x="65" y="130" className="fill-white text-sm pointer-events-none">
+                    Volume: {dadosEstados[hoveredState].volume}k und
+                  </text>
+                  <text x="65" y="145" className="fill-blue-300 text-xs pointer-events-none">
                     Região: {dadosEstados[hoveredState].regiao}
                   </text>
                 </g>
@@ -579,6 +608,12 @@ const MapaBrasilGeografico = () => {
                     <span className="text-gray-600 font-medium">Faturamento:</span>
                     <span className="font-bold text-green-600 text-lg">
                       R$ {dadosEstados[estadoSelecionado].faturamento}M
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-white rounded">
+                    <span className="text-gray-600 font-medium">Volume:</span>
+                    <span className="font-bold text-purple-600 text-lg">
+                      {dadosEstados[estadoSelecionado].volume}k und
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-2 bg-white rounded">

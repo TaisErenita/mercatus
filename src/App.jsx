@@ -14,7 +14,10 @@ import DashboardRecomendacoes from "./components/DashboardRecomendacoes";
 import DashboardExecutivo from "./components/DashboardExecutivo";
 import EstrategiaInovacao from './components/EstrategiaInovacao'
 import './App.css'
+import './enhancements.css'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
+import InfoTooltip from './components/Tooltip'
+import tooltipDescriptions from './data/tooltipDescriptions'
 
 function App() {
   const [activeTab, setActiveTab] = useState('monitoramento')
@@ -323,16 +326,26 @@ function App() {
 
       {/* Tabs de Análise */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 lg:w-2/5">
+        <TabsList className="grid w-full grid-cols-4 lg:w-4/5">
           <TabsTrigger value="monitoramento" className="flex items-center space-x-2">
             <BarChart3 className="w-4 h-4" />
             <span>Monitoramento</span>
             <Badge variant="outline" className="ml-2 text-xs">Mensal</Badge>
           </TabsTrigger>
+          <TabsTrigger value="insights" className="flex items-center space-x-2">
+            <Brain className="w-4 h-4" />
+            <span>Insights</span>
+            <Badge variant="outline" className="ml-2 text-xs">IA</Badge>
+          </TabsTrigger>
           <TabsTrigger value="estrategia" className="flex items-center space-x-2">
             <Zap className="w-4 h-4" />
             <span>Estratégia</span>
             <Badge variant="outline" className="ml-2 text-xs">Trimestral</Badge>
+          </TabsTrigger>
+          <TabsTrigger value="simulador" className="flex items-center space-x-2">
+            <Target className="w-4 h-4" />
+            <span>Simulador</span>
+            <Badge variant="outline" className="ml-2 text-xs">Cenários</Badge>
           </TabsTrigger>
         </TabsList>
 
@@ -464,24 +477,25 @@ function App() {
 
           {/* Mapa do Brasil - Market Share por Estado */}
           <MapaBrasilInterativo />
+        </TabsContent>
 
+        <TabsContent value="insights" className="space-y-6">
           {/* Análise Amazon - Dados E-commerce */}
           <AnaliseAmazon />
-            <ModeloPreditivoAprimorado />
-            <InsightsMercado />
-            <InsightsNaoEstruturados />
+          <ModeloPreditivoAprimorado />
+          <InsightsMercado />
+          <InsightsNaoEstruturados />
         </TabsContent>
 
         <TabsContent value="estrategia" className="space-y-6">
           <EstrategiaInovacao />
-            <DashboardRecomendacoes />
+          <DashboardRecomendacoes />
+        </TabsContent>
+
+        <TabsContent value="simulador" className="space-y-6">
+          <SimuladorElasticidade />
         </TabsContent>
       </Tabs>
-
-      {/* Simulador Modal */}
-      {showSimulator && (
-        <SimuladorElasticidade onClose={() => setShowSimulator(false)} />
-      )}
 
       {/* Chat Assistant */}
       {!presentationMode && (

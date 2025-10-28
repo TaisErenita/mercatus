@@ -18,8 +18,10 @@ import './enhancements.css'
 import SimuladorElasticidade from './components/SimuladorElasticidade'
 import InfoTooltip from './components/Tooltip'
 import tooltipDescriptions from './data/tooltipDescriptions'
+import LandingPage from './components/LandingPage'
 
 function App() {
+  const [showLanding, setShowLanding] = useState(true)
   const [activeTab, setActiveTab] = useState('monitoramento')
   const [selectedPeriod, setSelectedPeriod] = useState('ultimo_mes')
   const [chatOpen, setChatOpen] = useState(false)
@@ -167,6 +169,11 @@ function App() {
       payback: Math.max(payback, 1),
       risk: roi > 200 ? 'Alto' : roi > 100 ? 'Médio' : 'Baixo'
     }
+  }
+
+  // Se estiver na landing page, mostrar apenas ela
+  if (showLanding) {
+    return <LandingPage onEnter={() => setShowLanding(false)} />;
   }
 
   return (
@@ -475,8 +482,6 @@ function App() {
             </CardContent>
           </Card>
 
-          {/* Mapa do Brasil - Market Share por Estado */}
-          <MapaBrasilInterativo />
         </TabsContent>
 
         <TabsContent value="insights" className="space-y-6">

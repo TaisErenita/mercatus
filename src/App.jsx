@@ -278,10 +278,11 @@ function App() {
 
       {/* KPIs Principais */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium opacity-90">Market Share</CardTitle>
-          </CardHeader>
+        <InfoTooltip content={tooltipDescriptions.marketShare} position="bottom">
+          <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:scale-105 transition-transform cursor-help">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium opacity-90">Market Share</CardTitle>
+            </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="text-3xl font-bold">{kpiData.marketShare}%</div>
@@ -289,12 +290,14 @@ function App() {
             </div>
             <p className="text-xs opacity-80 mt-1">Liderança consolidada</p>
           </CardContent>
-        </Card>
+          </Card>
+        </InfoTooltip>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-r from-green-500 to-green-600 text-white">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium opacity-90">Vendas Totais</CardTitle>
-          </CardHeader>
+        <InfoTooltip content={tooltipDescriptions.totalSales} position="bottom">
+          <Card className="border-0 shadow-lg bg-gradient-to-r from-green-500 to-green-600 text-white hover:scale-105 transition-transform cursor-help">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium opacity-90">Vendas Totais</CardTitle>
+            </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="text-3xl font-bold">{kpiData.totalSales.toLocaleString()}</div>
@@ -302,9 +305,11 @@ function App() {
             </div>
             <p className="text-xs opacity-80 mt-1">Unidades vendidas</p>
           </CardContent>
-        </Card>
+          </Card>
+        </InfoTooltip>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+        <InfoTooltip content={tooltipDescriptions.revenue} position="bottom">
+          <Card className="border-0 shadow-lg bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:scale-105 transition-transform cursor-help">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium opacity-90">Receita</CardTitle>
           </CardHeader>
@@ -315,9 +320,11 @@ function App() {
             </div>
             <p className="text-xs opacity-80 mt-1">Faturamento total</p>
           </CardContent>
-        </Card>
+          </Card>
+        </InfoTooltip>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+        <InfoTooltip content={tooltipDescriptions.iaPreditiva} position="bottom">
+          <Card className="border-0 shadow-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:scale-105 transition-transform cursor-help">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium opacity-90">IA Preditiva</CardTitle>
           </CardHeader>
@@ -328,7 +335,8 @@ function App() {
             </div>
             <p className="text-xs opacity-80 mt-1">Precisão do modelo</p>
           </CardContent>
-        </Card>
+          </Card>
+        </InfoTooltip>
       </div>
 
       {/* Tabs de Análise */}

@@ -1,0 +1,262 @@
+import React, { useState, useEffect } from 'react';
+import { ValidadorGeografico } from '../utils/validacaoGeografica.js';
+
+const ValidacaoGeografica = ({ dadosEstados, onValidationChange }) => {
+  const [resultadosValidacao, setResultadosValidacao] = useState(null);
+  const [validador] = useState(new ValidadorGeografico());
+  const [showDetails, setShowDetails] = useState(false);
+
+  useEffect(() => {
+    if (dadosEstados && Object.keys(dadosEstados).length > 0) {
+      const resultados = validador.validarDadosEstados(dadosEstados);
+      setResultadosValidacao(resultados);
+      
+      if (onValidationChange) {
+        onValidationChange(resultados);
+      }
+    }
+  }, [dadosEstados, validador, onValidationChange]);
+
+  if (!resultadosValidacao) {
+    return (
+      <div className="rounded-lg border bg-white shadow-sm p-6">
+        <div className="flex items-center space-x-2">
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+          <span className="text-sm text-slate-600">Validando dados geográficos...</span>
+        </div>
+      </div>
+    );
+  }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'verde': return 'bg-green-100 text-green-800 border-green-200';
+      case 'amarelo': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'vermelho': return 'bg-red-100 text-red-800 border-red-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'verde': return '✅';
+      case 'amarelo': return '⚠️';
+      case 'vermelho': return '❌';
+      default: return '❓';
+    }
+  };
+
+  const getSeverityColor = (severidade) => {
+    switch (severidade) {
+      case 'alta': return 'text-red-600';
+      case 'media': return 'text-yellow-600';
+      case 'baixa': return 'text-blue-600';
+      default: return 'text-gray-600';
+    }
+  };
+
+  const getPriorityColor = (prioridade) => {
+    switch (prioridade) {
+      case 'Crítica': return 'bg-red-100 text-red-800';
+      case 'Alta': return 'bg-orange-100 text-orange-800';
+      case 'Média': return 'bg-yellow-100 text-yellow-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Status Principal */}
+      <div className="rounded-lg border bg-white shadow-sm">
+        <div className="flex flex-col space-y-1.5 p-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold leading-none tracking-tight">
+              Validação de Dados Geográficos
+            </h3>
+            <button 
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-8 px-3"
+              onClick={() => setShowDetails(!showDetails)}
+            >
+              {showDetails ? 'Ocultar Detalhes' : 'Ver Detalhes'}
+            </button>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Sistema de validação automática com indicadores de qualidade
+          </p>
+        </div>
+        
+        <div className="p-6 pt-0">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Score de Validação */}
+            <div className={`p-4 rounded-lg border ${getStatusColor(resultadosValidacao.status)}`}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium">Score de Validação</div>
+                  <div className="text-2xl font-bold">{resultadosValidacao.score}%</div>
+                </div>
+                <div className="text-2xl">{getStatusIcon(resultadosValidacao.status)}</div>
+              </div>
+              <div className="text-xs mt-1">
+                {validador.getNivelQualidade(resultadosValidacao.score)}
+              </div>
+            </div>
+
+            {/* Inconsistências */}
+            <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+              <div className="text-sm text-red-700 font-medium">Inconsistências</div>
+              <div className="text-2xl font-bold text-red-800">
+                {resultadosValidacao.inconsistencias.length}
+              </div>
+              <div className="text-xs text-red-600 mt-1">
+                {resultadosValidacao.inconsistencias.filter(i => i.severidade === 'alta').length} críticas
+              </div>
+            </div>
+
+            {/* Alertas */}
+            <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+              <div className="text-sm text-yellow-700 font-medium">Alertas</div>
+              <div className="text-2xl font-bold text-yellow-800">
+                {resultadosValidacao.alertas.length}
+              </div>
+              <div className="text-xs text-yellow-600 mt-1">
+                {resultadosValidacao.alertas.filter(a => a.severidade === 'alta').length} prioritários
+              </div>
+            </div>
+
+            {/* Recomendações */}
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="text-sm text-blue-700 font-medium">Recomendações</div>
+              <div className="text-2xl font-bold text-blue-800">
+                {resultadosValidacao.recomendacoes.length}
+              </div>
+              <div className="text-xs text-blue-600 mt-1">
+                {resultadosValidacao.recomendacoes.filter(r => r.prioridade === 'Crítica').length} urgentes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Detalhes da Validação */}
+      {showDetails && (
+        <div className="space-y-4">
+          {/* Inconsistências Detalhadas */}
+          {resultadosValidacao.inconsistencias.length > 0 && (
+            <div className="rounded-lg border bg-white shadow-sm">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <h4 className="text-lg font-semibold text-red-800">
+                  Inconsistências Identificadas ({resultadosValidacao.inconsistencias.length})
+                </h4>
+              </div>
+              <div className="p-6 pt-0">
+                <div className="space-y-3">
+                  {resultadosValidacao.inconsistencias.map((inconsistencia, index) => (
+                    <div key={index} className="p-3 bg-red-50 rounded-lg border border-red-200">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="font-medium text-red-900">{inconsistencia.tipo}</div>
+                          <div className="text-sm text-red-700 mt-1">{inconsistencia.detalhes}</div>
+                        </div>
+                        <span className={`text-xs font-medium ${getSeverityColor(inconsistencia.severidade)}`}>
+                          {inconsistencia.severidade.toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Alertas Detalhados */}
+          {resultadosValidacao.alertas.length > 0 && (
+            <div className="rounded-lg border bg-white shadow-sm">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <h4 className="text-lg font-semibold text-yellow-800">
+                  Alertas do Sistema ({resultadosValidacao.alertas.length})
+                </h4>
+              </div>
+              <div className="p-6 pt-0">
+                <div className="space-y-3">
+                  {resultadosValidacao.alertas.map((alerta, index) => (
+                    <div key={index} className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="font-medium text-yellow-900">{alerta.tipo}</div>
+                          <div className="text-sm text-yellow-700 mt-1">{alerta.mensagem}</div>
+                        </div>
+                        <span className={`text-xs font-medium ${getSeverityColor(alerta.severidade)}`}>
+                          {alerta.severidade.toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Recomendações Detalhadas */}
+          {resultadosValidacao.recomendacoes.length > 0 && (
+            <div className="rounded-lg border bg-white shadow-sm">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <h4 className="text-lg font-semibold text-blue-800">
+                  Recomendações de Ação ({resultadosValidacao.recomendacoes.length})
+                </h4>
+              </div>
+              <div className="p-6 pt-0">
+                <div className="space-y-3">
+                  {resultadosValidacao.recomendacoes.map((recomendacao, index) => (
+                    <div key={index} className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="font-medium text-blue-900">{recomendacao.acao}</div>
+                        <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${getPriorityColor(recomendacao.prioridade)}`}>
+                          {recomendacao.prioridade}
+                        </span>
+                      </div>
+                      <div className="text-sm text-blue-700 mb-2">{recomendacao.detalhes}</div>
+                      <div className="text-xs text-blue-600">
+                        <strong>Prazo:</strong> {recomendacao.prazo}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Detalhes Técnicos */}
+          <div className="rounded-lg border bg-white shadow-sm">
+            <div className="flex flex-col space-y-1.5 p-6">
+              <h4 className="text-lg font-semibold text-slate-800">Detalhes da Validação</h4>
+            </div>
+            <div className="p-6 pt-0">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div>
+                  <div className="text-slate-600">Verificações Realizadas</div>
+                  <div className="font-medium">{resultadosValidacao.detalhes.verificacoesRealizadas}</div>
+                </div>
+                <div>
+                  <div className="text-slate-600">Pontuação Obtida</div>
+                  <div className="font-medium">{resultadosValidacao.detalhes.pontuacaoObtida.toFixed(1)}</div>
+                </div>
+                <div>
+                  <div className="text-slate-600">Pontuação Máxima</div>
+                  <div className="font-medium">{resultadosValidacao.detalhes.pontuacaoMaxima}</div>
+                </div>
+                <div>
+                  <div className="text-slate-600">Última Validação</div>
+                  <div className="font-medium">
+                    {new Date(resultadosValidacao.detalhes.timestamp).toLocaleString('pt-BR')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ValidacaoGeografica;

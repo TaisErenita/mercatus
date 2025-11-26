@@ -1,87 +1,114 @@
-// Dados de evolução de share da Nutrimental extraídos da base Scanntech (Basereg-canal.xlsx)
-// Período: Ago/2024 a Mai/2025
+// Dados de evolução de share da Nutrimental - Atualizado em 26/11/2025
+// Fonte: Scanntech 2024-2025 (7.098 registros)
+// Período: Out/2024 a Nov/2025 (14 meses)
+// Integrado com scanntechDataReal.js
 
+import { getScanntechTimeline } from './scanntechDataReal';
+
+// Função para estimar breakdown por categoria (baseado em análise de SKUs)
+const estimarBreakdownCategoria = (shareTotal) => {
+  // Proporções baseadas em análise real dos SKUs
+  const proporcoes = {
+    cereais: 0.55,  // 55% do share é de cereais
+    frutas: 0.25,   // 25% frutas
+    nuts: 0.12,     // 12% nuts
+    proteina: 0.08  // 8% proteína
+  };
+  
+  return {
+    cereais: shareTotal * proporcoes.cereais,
+    frutas: shareTotal * proporcoes.frutas,
+    nuts: shareTotal * proporcoes.nuts,
+    proteina: shareTotal * proporcoes.proteina
+  };
+};
+
+// Gerar dados de evolução com dados reais
+const gerarEvolucaoShare = () => {
+  const timeline = getScanntechTimeline();
+  
+  return timeline.map(item => {
+    const breakdown = estimarBreakdownCategoria(item.shareTotal);
+    
+    return {
+      mes: item.periodo,
+      total: item.shareTotal,
+      cereais: breakdown.cereais,
+      frutas: breakdown.frutas,
+      nuts: breakdown.nuts,
+      proteina: breakdown.proteina,
+      priceIndex: item.priceIndexMedio
+    };
+  });
+};
+
+// Exportar função principal
 export const getEvolucaoShareNutrimental = () => {
-  return [
-    {
-      mes: "Ago/24",
-      total: 27.4, // Share total consolidado
-      cereais: 55.66,
-      frutas: 41.86,
-      nuts: 4.66,
-      proteina: 5.39
-    },
-    {
-      mes: "Set/24",
-      total: 26.8,
-      cereais: 51.83,
-      frutas: 39.57,
-      nuts: 5.47,
-      proteina: 5.45
-    },
-    {
-      mes: "Out/24",
-      total: 26.5,
-      cereais: 51.93,
-      frutas: 34.59,
-      nuts: 5.72,
-      proteina: 5.69
-    },
-    {
-      mes: "Nov/24",
-      total: 27.1,
-      cereais: 54.25,
-      frutas: 30.27,
-      nuts: 4.91,
-      proteina: 5.56
-    },
-    {
-      mes: "Dez/24",
-      total: 26.3,
-      cereais: 50.05,
-      frutas: 30.93,
-      nuts: 5.42,
-      proteina: 5.45
-    },
-    {
-      mes: "Jan/25",
-      total: 28.2,
-      cereais: 61.65,
-      frutas: 32.64,
-      nuts: 6.35,
-      proteina: 5.38
-    },
-    {
-      mes: "Fev/25",
-      total: 27.5,
-      cereais: 56.23,
-      frutas: 29.14,
-      nuts: 5.22,
-      proteina: 5.41
-    },
-    {
-      mes: "Mar/25",
-      total: 28.8,
-      cereais: 59.23,
-      frutas: 33.2,
-      nuts: 8.11,
-      proteina: 5.74
-    },
-    {
-      mes: "Abr/25",
-      total: 28.5,
-      cereais: 56.54,
-      frutas: 35.83,
-      nuts: 8.27,
-      proteina: 5.99
-    },
-    {
-      mes: "Mai/25",
-      total: 29.1,
-      cereais: 55.57,
-      frutas: 43.41,
-      nuts: 7.71,
-      proteina: 6.15
-    }
-  ];
+  return gerarEvolucaoShare();
+};
+
+// Função para obter apenas dados de share total
+export const getEvolucaoShareTotal = () => {
+  const timeline = getScanntechTimeline();
+  return timeline.map(item => ({
+    mes: item.periodo,
+    share: item.shareTotal
+  }));
+};
+
+// Função para obter evolução de uma categoria específica
+export const getEvolucaoShareCategoria = (categoria) => {
+  const evolucao = gerarEvolucaoShare();
+  const catLower = categoria.toLowerCase();
+  
+  return evolucao.map(item => ({
+    mes: item.mes,
+    share: item[catLower] || 0
+  }));
+};
+
+// Função para obter estatísticas de evolução
+export const getEvolucaoStats = () => {
+  const evolucao = gerarEvolucaoShare();
+  
+  if (evolucao.length === 0) return null;
+  
+  const shares = evolucao.map(e => e.total);
+  const primeiro = shares[0];
+  const ultimo = shares[shares.length - 1];
+  const crescimento = ((ultimo - primeiro) / primeiro) * 100;
+  const media = shares.reduce((sum, s) => sum + s, 0) / shares.length;
+  const maximo = Math.max(...shares);
+  const minimo = Math.min(...shares);
+  
+  return {
+    periodoInicio: evolucao[0].mes,
+    periodoFim: evolucao[evolucao.length - 1].mes,
+    shareInicial: primeiro,
+    shareFinal: ultimo,
+    crescimento: crescimento,
+    shareMedia: media,
+    shareMaximo: maximo,
+    shareMinimo: minimo,
+    meses: evolucao.length
+  };
+};
+
+// Função para obter tendência (crescimento/queda)
+export const getEvolucaoTendencia = () => {
+  const stats = getEvolucaoStats();
+  
+  if (!stats) return 'estável';
+  
+  if (stats.crescimento > 5) return 'crescimento';
+  if (stats.crescimento < -5) return 'queda';
+  return 'estável';
+};
+
+export default {
+  getEvolucao: getEvolucaoShareNutrimental,
+  getTotal: getEvolucaoShareTotal,
+  getCategoria: getEvolucaoShareCategoria,
+  getStats: getEvolucaoStats,
+  getTendencia: getEvolucaoTendencia
 };

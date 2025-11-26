@@ -1092,6 +1092,138 @@ export const estrategiaData = {
       incrementoVolume: "+24%",
       incrementoReceita: "+31%"
     }
+  },
+
+  // Tabela Resumida de Impacto por Iniciativa
+  tabelaImpacto: {
+    descricao: "Análise consolidada de todas as iniciativas estratégicas com investimento, receita, ROI e payback",
+    fonte: "Cálculos baseados em MTRIX (328.984 reg) + Amazon (351.113 un) + Scanntech (6.297 reg)",
+    
+    visaoConsolidada: [
+      { id: 1, iniciativa: "Expansão E-commerce", investimento: 1200000, receitaAnual: 2719472, roi: "4.5x", payback: "8 meses", risco: "Baixo", prioridade: "ALTA" },
+      { id: 2, iniciativa: "Mini Barras (15-25g)", investimento: 600000, receitaAnual: 1920000, roi: "3.2x", payback: "12 meses", risco: "Baixo", prioridade: "ALTA" },
+      { id: 3, iniciativa: "Linha Premium Proteicas", investimento: 800000, receitaAnual: 2240000, roi: "2.8x", payback: "14 meses", risco: "Médio", prioridade: "MÉDIA" },
+      { id: 4, iniciativa: "Campanha Reinvente-se", investimento: 1500000, receitaAnual: 3750000, roi: "2.5x", payback: "16 meses", risco: "Médio", prioridade: "MÉDIA" },
+      { id: 5, iniciativa: "Expansão Academias", investimento: 1500000, receitaAnual: 3150000, roi: "2.1x", payback: "18 meses", risco: "Médio-Alto", prioridade: "BAIXA" },
+      { id: 6, iniciativa: "Ajuste Precificação Regional", investimento: 250000, receitaAnual: 1470000, roi: "4.9x", payback: "5 meses", risco: "Baixo", prioridade: "ALTA" },
+      { id: 7, iniciativa: "Expansão Regional Sul", investimento: 1800000, receitaAnual: 2100000, roi: "2.3x", payback: "26 meses", risco: "Médio", prioridade: "MÉDIA" },
+      { id: 8, iniciativa: "Expansão Regional Nordeste", investimento: 1500000, receitaAnual: 1650000, roi: "2.2x", payback: "27 meses", risco: "Médio", prioridade: "MÉDIA" },
+      { id: 9, iniciativa: "Expansão Regional Sudeste", investimento: 2200000, receitaAnual: 3800000, roi: "3.4x", payback: "19 meses", risco: "Médio", prioridade: "MÉDIA" },
+      { id: 10, iniciativa: "Expansão Regional Centro-Oeste", investimento: 800000, receitaAnual: 920000, roi: "2.3x", payback: "26 meses", risco: "Médio", prioridade: "BAIXA" }
+    ],
+
+    totais: {
+      investimento: 12150000,
+      receitaAnual: 23719472,
+      roiMedio: "2.95x",
+      paybackMedio: "16 meses",
+      incrementoReceita: "+31%"
+    },
+
+    rankingPorROI: [
+      { posicao: 1, iniciativa: "Ajuste Precificação Regional", roi: "4.9x", investimento: 250000, receita: 1470000 },
+      { posicao: 2, iniciativa: "Expansão E-commerce", roi: "4.5x", investimento: 1200000, receita: 2719472 },
+      { posicao: 3, iniciativa: "Expansão Regional Sudeste", roi: "3.4x", investimento: 2200000, receita: 3800000 }
+    ],
+
+    cenariosPortfolio: [
+      {
+        nome: "Orçamento Limitado (R$ 2M)",
+        iniciativas: ["Ajuste Precificação", "Expansão E-commerce", "Mini Barras"],
+        investimento: 2050000,
+        receita: 6109472,
+        roiMedio: "4.2x",
+        paybackMedio: "8 meses"
+      },
+      {
+        nome: "Orçamento Moderado (R$ 5M)",
+        iniciativas: ["Top 5 por ROI"],
+        investimento: 5050000,
+        receita: 12929472,
+        roiMedio: "3.8x",
+        paybackMedio: "12 meses"
+      },
+      {
+        nome: "Orçamento Completo (R$ 12M)",
+        iniciativas: ["Todas as 10 iniciativas"],
+        investimento: 12150000,
+        receita: 23719472,
+        roiMedio: "2.95x",
+        paybackMedio: "16 meses"
+      }
+    ]
+  },
+
+  // Proposta de Estratégia de Distribuição
+  estrategiaDistribuicao: {
+    descricao: "Plano detalhado para expansão de distribuição: novos distribuidores, canais premium e logística",
+    fonte: "Análise MTRIX (35 distribuidores, 25 UFs) + Benchmarks de mercado",
+    
+    situacaoAtual: {
+      distribuidores: 35,
+      ufs: 25,
+      volumeAnual: 372297,
+      shareMedio: 1.67
+    },
+
+    meta2026: {
+      distribuidores: 50,
+      ufs: 27,
+      novosPDVs: 5000,
+      academias: 300,
+      farmacias: 500,
+      shareMedio: 2.47
+    },
+
+    estrategias: [
+      {
+        nome: "Expansão Distribuidores",
+        investimento: 1125000,
+        receita: 3500000,
+        roi: "3.1x",
+        novosDistribuidores: 15,
+        regioesPrioritarias: ["Sul (4)", "Nordeste (3)", "Sudeste (2)", "Centro-Oeste (2)"]
+      },
+      {
+        nome: "Novos Canais (Academias + Farmácias)",
+        investimento: 2500000,
+        receita: 5000000,
+        roi: "2.0x",
+        academias: 300,
+        farmacias: 500,
+        parceiros: ["Smart Fit", "Drogasil", "Pague Menos"]
+      },
+      {
+        nome: "E-commerce e Marketplaces",
+        investimento: 1500000,
+        receita: 4000000,
+        roi: "2.7x",
+        marketplaces: ["Amazon (expandir)", "Mercado Livre", "Magazine Luiza", "Carrefour", "Rappi"]
+      },
+      {
+        nome: "Logística (CDs Regionais)",
+        investimento: 1350000,
+        receita: 1500000,
+        roi: "1.1x",
+        cds: ["CD Sul (Curitiba)", "CD Nordeste (Recife)"],
+        beneficios: "Lead time: 7d → 3d, Disponibilidade: 85% → 95%"
+      }
+    ],
+
+    resumoFinanceiro: {
+      investimentoTotal: 7225000,
+      receitaTotal: 16000000,
+      roiMedio: "2.2x",
+      paybackMedio: "16 meses"
+    },
+
+    kpisAcompanhamento: [
+      { kpi: "Distribuidores Ativos", baseline: 35, meta: 50 },
+      { kpi: "PDVs Ativos", baseline: 5000, meta: 10000 },
+      { kpi: "Academias", baseline: 0, meta: 300 },
+      { kpi: "Farmácias", baseline: 0, meta: 500 },
+      { kpi: "Share Médio", baseline: "1,67%", meta: "2,47%" }
+    ]
   }
 };
 
@@ -1110,6 +1242,8 @@ export const getEstrategiaMetodologia = () => estrategiaData.metodologiaEstimati
 export const getEstrategiaPrecificacao = () => estrategiaData.estrategiaPrecificacao;
 export const getEstrategiaFocoCrescimento = () => estrategiaData.focoCrescimentoRegional;
 export const getEstrategiaResumoExecutivo = () => estrategiaData.resumoExecutivo;
+export const getEstrategiaTabelaImpacto = () => estrategiaData.tabelaImpacto;
+export const getEstrategiaDistribuicao = () => estrategiaData.estrategiaDistribuicao;
 
 // Função para obter fonte de dados específica
 export const getEstrategiaFonteDados = (secao) => {

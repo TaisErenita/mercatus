@@ -58,6 +58,11 @@ function App() {
     expansion: 2
   })
 
+  // Função auxiliar para prevenir erros com valores undefined/null
+  const safeNumber = (value, defaultValue = 0) => {
+    return (value !== null && value !== undefined && !isNaN(value)) ? value : defaultValue;
+  };
+
   // Dados filtrados dinamicamente
   const currentData = getFilteredData(selectedCategory, selectedPeriod)
   const kpiData = {
@@ -468,6 +473,7 @@ function App() {
 
           {/* Mercado Total de Barras */}
           {(() => {
+            try {
             const mercadoData = getScanntechMercadoTotal(selectedCategory, selectedPeriod);
             const calcVariacao = (atual, anterior) => {
               if (!atual || !anterior || anterior === 0) return '0.0';
@@ -548,7 +554,7 @@ function App() {
                       <div className="text-sm text-slate-600 font-medium mb-3">Preço Médio (R$/un)</div>
                       <div className="flex items-baseline space-x-2 mb-2">
                         <div className="text-3xl font-bold text-cyan-500">
-                          R$ {mercadoData.preco.atual.toFixed(2)}
+                          R$ {safeNumber(mercadoData?.preco?.atual).toFixed(2)}
                         </div>
                         {parseFloat(precoVar) > 0 ? (
                           <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -564,18 +570,23 @@ function App() {
                         </span>
                       </div>
                       <div className="text-sm text-slate-400">
-                        Anterior: R$ {mercadoData.preco.anterior.toFixed(2)}
+                        Anterior: R$ {safeNumber(mercadoData?.preco?.anterior).toFixed(2)}
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             );
+            } catch(error) {
+              console.error('Erro no Mercado Total:', error);
+              return <div className="p-4 bg-red-100 text-red-800 rounded">Erro ao carregar dados: {error.message}</div>;
+            }
           })()}
 
 
           {/* Marcas por Região */}
           {(() => {
+            try {
             const marcasData = getScanntechMarcasRegiaoComparativo(selectedCategory, selectedPeriod);
             const regioes = [
               { id: 'brasil', label: 'BRASIL', icon: '🇧🇷' },
@@ -584,6 +595,11 @@ function App() {
             ];
             
             const renderTabela = (marcas, regiaoLabel) => {
+              // Validar se marcas existe
+              if (!marcas || !Array.isArray(marcas)) {
+                return <div className="p-4 text-gray-500">Dados não disponíveis para esta região</div>;
+              }
+              
               // Encontrar preço do mercado total
               const precoMercado = marcas.find(m => m.marca === 'Mercado Total')?.preco || 0;
               
@@ -607,21 +623,23 @@ function App() {
                       <tbody>
                         {marcas.map((item) => {
                           const deltaShareValor = item.shareValor - (item.shareValorAnterior || item.shareValor);
-                          const deltaShareVolume = item.shareVolumeUN - (item.shareVolumeUNAnterior || item.shareVolumeUN);
-                          const deltaPreco = item.precoUN - (item.precoUNAnterior || item.precoUN);
+                          const deltaShareVolume = item.shareVolumeKG - (item.shareVolumeKGAnterior || item.shareVolumeKG);
+                          const deltaPreco = item.precoKG - (item.precoKGAnterior || item.precoKG);
                           
                           const renderComparacao = (atual, anterior, unidade = '%') => {
-                            const delta = atual - anterior;
+                            const safeAtual = safeNumber(atual);
+                            const safeAnterior = safeNumber(anterior);
+                            const delta = safeAtual - safeAnterior;
                             const deltaAbs = Math.abs(delta);
                             const seta = delta > 0 ? '↑' : delta < 0 ? '↓' : '→';
                             const cor = delta > 0 ? 'text-green-600' : delta < 0 ? 'text-red-600' : 'text-slate-500';
                             
                             return (
                               <div className="flex flex-col items-end">
-                                <div className="font-semibold">{atual.toFixed(1)}{unidade}</div>
+                                <div className="font-semibold">{safeAtual.toFixed(1)}{unidade}</div>
                                 <div className={`text-xs ${cor} flex items-center gap-1`}>
                                   <span>{seta}</span>
-                                  <span>{anterior.toFixed(1)}{unidade}</span>
+                                  <span>{safeAnterior.toFixed(1)}{unidade}</span>
                                   {deltaAbs > 0.1 && <span>({delta > 0 ? '+' : ''}{delta.toFixed(1)})</span>}
                                 </div>
                               </div>
@@ -648,7 +666,7 @@ function App() {
                               </td>
                               <td className="p-3 text-sm text-right">
                                 <div className={item.marca === 'NUTRY' ? 'text-cyan-600' : item.marca === 'Mercado Total' ? 'text-slate-700' : 'text-slate-600'}>
-                                  {renderComparacao(item.volumeUN, item.volumeUNAnterior || item.volumeUN, '')}
+                                  {renderComparacao(item.volumeKG, item.volumeKGAnterior || item.volumeKG, '')}
                                 </div>
                               </td>
                               <td className="p-3 text-sm text-right">
@@ -658,12 +676,12 @@ function App() {
                               </td>
                               <td className="p-3 text-sm text-right">
                                 <div className={item.marca === 'NUTRY' ? 'text-cyan-600' : item.marca === 'Mercado Total' ? 'text-slate-700' : 'text-slate-600'}>
-                                  {renderComparacao(item.shareVolumeUN, item.shareVolumeUNAnterior || item.shareVolumeUN, '%')}
+                                  {renderComparacao(item.shareVolumeKG, item.shareVolumeKGAnterior || item.shareVolumeKG, '%')}
                                 </div>
                               </td>
                               <td className="p-3 text-sm text-right">
                                 <div className={item.marca === 'NUTRY' ? 'text-cyan-600' : item.marca === 'Mercado Total' ? 'text-slate-700' : 'text-slate-600'}>
-                                  {renderComparacao(item.precoUN, item.precoUNAnterior || item.precoUN, '')}
+                                  {renderComparacao(item.precoKG, item.precoKGAnterior || item.precoKG, '')}
                                 </div>
                               </td>
                             </tr>
@@ -695,13 +713,17 @@ function App() {
                   <div className="space-y-6">
                     {regioes.map((regiao) => (
                       <div key={regiao.id}>
-                        {renderTabela(marcasData[regiao.id], `${regiao.icon} ${regiao.label}`)}
+                        {marcasData[regiao.id] && renderTabela(marcasData[regiao.id], `${regiao.icon} ${regiao.label}`)}
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
             );
+            } catch(error) {
+              console.error('Erro em Marcas por Região:', error);
+              return <div className="p-4 bg-red-100 text-red-800 rounded">Erro ao carregar Marcas por Região: {error.message}</div>;
+            }
           })()}
 
           {/* Nutrimental - Bloco Integrado */}
@@ -751,21 +773,21 @@ function App() {
                       </div>
                       <div className="bg-white rounded-lg p-4 border border-cyan-200">
                         <div className="text-xs text-gray-600 mb-1">Receita Total</div>
-                        <div className="text-2xl font-bold text-purple-600">R$ {(consolidado.receita / 1000000).toFixed(1)}M</div>
+                        <div className="text-2xl font-bold text-purple-600">R$ {(safeNumber(consolidado?.receita) / 1000000).toFixed(1)}M</div>
                         <div className={`text-xs font-medium mt-1 ${parseFloat(variacaoReceita) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {parseFloat(variacaoReceita) >= 0 ? '↑' : '↓'} {variacaoReceita}% vs Ago/24
                         </div>
                       </div>
                       <div className="bg-white rounded-lg p-4 border border-cyan-200">
                         <div className="text-xs text-gray-600 mb-1">Volume Total</div>
-                        <div className="text-2xl font-bold text-blue-600">{(consolidado.volume / 1000).toFixed(0)}k un</div>
+                        <div className="text-2xl font-bold text-blue-600">{(safeNumber(consolidado?.volume) / 1000).toFixed(0)}k un</div>
                         <div className={`text-xs font-medium mt-1 ${parseFloat(variacaoVolume) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {parseFloat(variacaoVolume) >= 0 ? '↑' : '↓'} {variacaoVolume}% vs Ago/24
                         </div>
                       </div>
                       <div className="bg-white rounded-lg p-4 border border-cyan-200">
                         <div className="text-xs text-gray-600 mb-1">Preço Médio</div>
-                        <div className="text-2xl font-bold text-green-600">R$ {consolidado.precoMedio.toFixed(2)}</div>
+                        <div className="text-2xl font-bold text-green-600">R$ {safeNumber(consolidado?.precoMedio).toFixed(2)}</div>
                         <div className={`text-xs font-medium mt-1 ${parseFloat(variacaoPreco) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {parseFloat(variacaoPreco) >= 0 ? '↑' : '↓'} {variacaoPreco}% vs Ago/24
                         </div>
@@ -810,15 +832,15 @@ function App() {
                           <div className="pt-2 border-t border-gray-100">
                             <div className="flex justify-between items-center mb-1">
                               <span className="text-xs text-gray-500">Receita</span>
-                              <span className="text-sm font-semibold text-purple-600">R$ {(cat.receita / 1000000).toFixed(1)}M</span>
+                              <span className="text-sm font-semibold text-purple-600">R$ {(safeNumber(cat?.receita) / 1000000).toFixed(1)}M</span>
                             </div>
                             <div className="flex justify-between items-center mb-1">
                               <span className="text-xs text-gray-500">Volume</span>
-                              <span className="text-sm font-semibold text-blue-600">{(cat.volume / 1000).toFixed(0)}k un</span>
+                              <span className="text-sm font-semibold text-blue-600">{(safeNumber(cat?.volume) / 1000).toFixed(0)}k un</span>
                             </div>
                             <div className="flex justify-between items-center">
                               <span className="text-xs text-gray-500">Preço Médio</span>
-                              <span className="text-sm font-semibold text-green-600">R$ {cat.precoMedio.toFixed(2)}</span>
+                              <span className="text-sm font-semibold text-green-600">R$ {safeNumber(cat?.precoMedio).toFixed(2)}</span>
                             </div>
                           </div>
                         </div>
@@ -1043,21 +1065,21 @@ function App() {
                     <div className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg border border-orange-200">
                       <div className="text-sm text-orange-700 font-medium mb-1">Faturamento Total</div>
                       <div className="text-2xl font-bold text-orange-900">
-                        R$ {(totalFaturamento / 1000000).toFixed(2)}M
+                        R$ {(safeNumber(totalFaturamento) / 1000000).toFixed(2)}M
                       </div>
                       <div className="text-xs text-orange-600 mt-1">Top 5 distribuidores Brasil</div>
                     </div>
                     <div className="p-4 bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg border border-cyan-200">
                       <div className="text-sm text-cyan-700 font-medium mb-1">Volume Total</div>
                       <div className="text-2xl font-bold text-cyan-900">
-                        {(totalVolume / 1000).toFixed(0)}k un
+                        {(safeNumber(totalVolume) / 1000).toFixed(0)}k un
                       </div>
                       <div className="text-xs text-cyan-600 mt-1">Unidades vendidas</div>
                     </div>
                     <div className="p-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg border border-slate-200">
                       <div className="text-sm text-slate-700 font-medium mb-1">Preço Médio Geral</div>
                       <div className="text-2xl font-bold text-slate-900">
-                        R$ {precoMedioGeral.toFixed(2)}
+                        R$ {safeNumber(precoMedioGeral).toFixed(2)}
                       </div>
                       <div className="text-xs text-slate-600 mt-1">Média ponderada</div>
                     </div>
@@ -1098,10 +1120,10 @@ function App() {
                                 <div className="text-xs text-slate-500">{dist.uf}</div>
                               </td>
                               <td className="text-right py-3 px-4 font-semibold text-slate-900">
-                                R$ {(dist.faturamento / 1000).toFixed(0)}k
+                                R$ {(safeNumber(dist?.faturamento) / 1000).toFixed(0)}k
                               </td>
                               <td className="text-right py-3 px-4 text-slate-900">
-                                {(dist.volume / 1000).toFixed(1)}k
+                                {(safeNumber(dist?.volume) / 1000).toFixed(1)}k
                               </td>
                               <td className="text-right py-3 px-4">
                                 <span className="inline-block bg-cyan-100 text-cyan-800 px-2 py-1 rounded text-xs font-semibold">
@@ -1109,7 +1131,7 @@ function App() {
                                 </span>
                               </td>
                               <td className="text-right py-3 px-4 text-slate-900">
-                                R$ {dist.precoMedio.toFixed(2)}
+                                R$ {safeNumber(dist?.precoMedio).toFixed(2)}
                               </td>
                             </tr>
                           ))}
@@ -1198,13 +1220,13 @@ function App() {
                                 <div className="text-xs text-slate-500">{dist.uf}</div>
                               </td>
                               <td className="text-right py-3 px-4 font-semibold text-slate-900">
-                                R$ {(dist.faturamento / 1000).toFixed(0)}k
+                                R$ {(safeNumber(dist?.faturamento) / 1000).toFixed(0)}k
                               </td>
                               <td className="text-right py-3 px-4 text-slate-900">
-                                {(dist.volume / 1000).toFixed(1)}k
+                                {(safeNumber(dist?.volume) / 1000).toFixed(1)}k
                               </td>
                               <td className="text-right py-3 px-4 text-slate-900">
-                                R$ {dist.precoMedio.toFixed(2)}
+                                R$ {safeNumber(dist?.precoMedio).toFixed(2)}
                               </td>
                             </tr>
                           ))}

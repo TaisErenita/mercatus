@@ -1,0 +1,36 @@
+{
+  "filename": "MTRIX-Sellout-Nutry-2024-2semestre.xlsx",
+  "rows": 367345,
+  "columns": 13,
+  "column_names": [
+    "Agente de Distribuição",
+    "Ano/Mês",
+    "Segmento do PDV",
+    "CNPJ",
+    "Razão Social PDV",
+    "UF",
+    "SKU",
+    "Marca",
+    "Categoria",
+    "Descrição",
+    "# Sell-Out \n(R$)",
+    "# Sell-Out \n(Und)",
+    "Preço Médio Unitário"
+  ],
+  "dtypes": {
+    "Agente de Distribuição": "object",
+    "Ano/Mês": "object",
+    "Segmento do PDV": "object",
+    "CNPJ": "int64",
+    "Razão Social PDV": "object",
+    "UF": "object",
+    "SKU": "int64",
+    "Marca": "object",
+    "Categoria": "object",
+    "Descrição": "object",
+    "# Sell-Out \n(R$)": "float64",
+    "# Sell-Out \n(Und)": "float64",
+    "Preço Médio Unitário": "object"
+  },
+  "missing_values": {}
+}

@@ -1,0 +1,151 @@
+{
+  "metadata": {
+    "arquivo_origem": "MTRIX-Sellout-Nutry-2025-2semestre-atualizado-12112025(Sheet1).csv",
+    "total_registros": 328984,
+    "registros_validos": 324660,
+    "data_processamento": "2025-11-26T12:06:08.614915",
+    "periodo": "2025 - 2º Semestre (Jul-Dez)"
+  },
+  "vendas_por_estado": [
+    {
+      "UF": "SP",
+      "Unidades": 3557052.0,
+      "Valor_RS": 5381848.14
+    },
+    {
+      "UF": "MG",
+      "Unidades": 2273387.0,
+      "Valor_RS": 3617738.19
+    },
+    {
+      "UF": "PR",
+      "Unidades": 2202401.0,
+      "Valor_RS": 3547946.29
+    },
+    {
+      "UF": "RJ",
+      "Unidades": 1558024.0,
+      "Valor_RS": 1847983.32
+    },
+    {
+      "UF": "GO",
+      "Unidades": 817203.0,
+      "Valor_RS": 1640516.39
+    },
+    {
+      "UF": "SC",
+      "Unidades": 735808.0,
+      "Valor_RS": 1194416.12
+    },
+    {
+      "UF": "RN",
+      "Unidades": 593872.0,
+      "Valor_RS": 1090526.1
+    },
+    {
+      "UF": "ES",
+      "Unidades": 444124.0,
+      "Valor_RS": 768105.53
+    },
+    {
+      "UF": "CE",
+      "Unidades": 412608.0,
+      "Valor_RS": 881878.1
+    },
+    {
+      "UF": "RS",
+      "Unidades": 373387.0,
+      "Valor_RS": 624956.67
+    }
+  ],
+  "vendas_por_marca": [
+    {
+      "Marca": "NUTRY",
+      "Unidades": 14105485.0,
+      "Valor_RS": 22956917.26
+    }
+  ],
+  "vendas_por_categoria": [
+    {
+      "Categoria": "BARRA DE CEREAIS",
+      "Unidades": 11089177.0,
+      "Valor_RS": 14062486.94,
+      "Preco_Medio": 1.4035772236916402
+    },
+    {
+      "Categoria": "BARRA NUTS",
+      "Unidades": 903383.0,
+      "Valor_RS": 1920073.87,
+      "Preco_Medio": 2.5406227294908637
+    },
+    {
+      "Categoria": "BARRA PROTEICA",
+      "Unidades": 883937.0,
+      "Valor_RS": 3513181.3,
+      "Preco_Medio": 4.56844251563788
+    },
+    {
+      "Categoria": "AVEIA",
+      "Unidades": 456113.0,
+      "Valor_RS": 1288430.48,
+      "Preco_Medio": 3.389993758915834
+    },
+    {
+      "Categoria": "BARRAS DE FRUTAS",
+      "Unidades": 371893.0,
+      "Valor_RS": 656397.31,
+      "Preco_Medio": 1.893958909521928
+    },
+    {
+      "Categoria": "DOCE DE FRUTAS",
+      "Unidades": 237582.0,
+      "Valor_RS": 519636.76,
+      "Preco_Medio": 2.3051308509047406
+    },
+    {
+      "Categoria": "TUBE PROTEICO",
+      "Unidades": 163400.0,
+      "Valor_RS": 996710.6,
+      "Preco_Medio": 6.841404948245392
+    }
+  ],
+  "evolucao_mensal": [
+    {
+      "Ano/Mês": "2025/AGO",
+      "Unidades": 3209910.0,
+      "Valor_RS": 5285478.64
+    },
+    {
+      "Ano/Mês": "2025/JUL",
+      "Unidades": 3083514.0,
+      "Valor_RS": 5044137.95
+    },
+    {
+      "Ano/Mês": "2025/NOV",
+      "Unidades": 688172.0,
+      "Valor_RS": 1096105.77
+    },
+    {
+      "Ano/Mês": "2025/OUT",
+      "Unidades": 3642502.0,
+      "Valor_RS": 5845071.16
+    },
+    {
+      "Ano/Mês": "2025/SET",
+      "Unidades": 3481387.0,
+      "Valor_RS": 5686123.74
+    }
+  ],
+  "market_share": {
+    "NUTRY": 100.0
+  },
+  "resumo_geral": {
+    "total_unidades": 14105485.0,
+    "total_valor_rs": 22956917.259999998,
+    "preco_medio": 2.23481303517526,
+    "num_estados": 25,
+    "num_marcas": 1,
+    "num_categorias": 7,
+    "num_produtos": 64
+  }
+}

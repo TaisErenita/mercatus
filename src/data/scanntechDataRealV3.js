@@ -493,5 +493,29 @@ export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo
   return [...marcasArray, mercadoTotal];
 }
 
+export function getScanntechShareNutrimental(categoria = 'total', periodo = 'mes_yoy') {
+  // Dados consolidados Nutrimental
+  const consolidado = {
+    share: 27.4,
+    shareAnterior: 26.7,
+    receita: 10700000,
+    receitaAnterior: 9900000,
+    volume: 64812,
+    volumeAnterior: 61500,
+    precoMedio: 165.05,
+    precoMedioAnterior: 161.0
+  };
+  
+  // Shares por categoria
+  const categorias = [
+    { categoria: 'Cereais', share: 42.0, trend: '+2.1%', icon: '🌾', receita: 4494000, volume: 27221, precoMedio: 165.05 },
+    { categoria: 'Frutas', share: 31.6, trend: '+1.5%', icon: '🍎', receita: 3381200, volume: 20481, precoMedio: 165.05 },
+    { categoria: 'Nuts', share: 9.86, trend: '-0.3%', icon: '🥜', receita: 1055020, volume: 6392, precoMedio: 165.05 },
+    { categoria: 'Proteína', share: 5.59, trend: '+0.8%', icon: '🥩', receita: 598130, volume: 3623, precoMedio: 165.05 }
+  ];
+  
+  return { consolidado, categorias };
+}
+
 export default scanntechData;
 // Force rebuild: 1764247362

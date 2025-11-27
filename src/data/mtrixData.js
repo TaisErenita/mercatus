@@ -88,6 +88,8 @@ const gerarEstruturaMtrix = () => {
 // Exportar dados no formato compatível
 export const mtrixData = gerarEstruturaMtrix();
 
+export const getMtrixData = () => mtrixData;
+
 // Exportar também funções auxiliares
 export const getMtrixDataByCategoria = (categoria) => {
   return mtrixData[categoria] || mtrixData.total;

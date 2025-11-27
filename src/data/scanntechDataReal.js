@@ -30,7 +30,7 @@ const mercadoTotalBase = {
     volume_atual: 214964,     // kg (convertido de gramas)
     preco_atual: 97.72        // R$/kg (calculado)
   },
-  'proteína': {
+  'proteina': {
     valor_atual: 60019266,    // R$ 60.0M (BARRA DE PROTEÍNA)
     volume_atual: 319126,     // kg (convertido de gramas)
     preco_atual: 188.07       // R$/kg (calculado)

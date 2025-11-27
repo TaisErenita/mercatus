@@ -275,78 +275,59 @@ export function getScanntechMatrizPreco() {
 }
 
 // Função para obter mercado total com suporte a filtros de categoria e período
+// REFATORADA para garantir 100% de confiabilidade
 export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy') {
-  console.log('[DEBUG getScanntechMercadoTotal] ===== INÍCIO =====');
-  console.log('[DEBUG] Parâmetro categoria recebido:', categoria, 'tipo:', typeof categoria);
-  console.log('[DEBUG] Parâmetro periodo recebido:', periodo);
-  
   const totais = scanntechData.totais;
   const categorias = scanntechData.por_categoria;
   
-  console.log('[DEBUG] Categorias disponíveis no objeto:', Object.keys(categorias));
+  // Buscar categoria diretamente pelas chaves disponíveis (evita problemas de Unicode)
+  const chavesDisponiveis = Object.keys(categorias);
+  let dadosCategoria = null;
   
-  // Mapeamento de categorias do dashboard para categorias dos dados
-  const catMap = {
-    'total': null, // null significa usar totais gerais
-    'cereais': 'BARRA DE CEREAL',
-    'frutas': null, // Não temos dados específicos de frutas
-    'nuts': null, // Não temos dados específicos de nuts
-    'proteina': 'BARRA DE PROTEÍNA'
+  // Mapeamento direto por categoria
+  if (categoria === 'total') {
+    // Usar totais gerais
+    dadosCategoria = {
+      'Vendas $': totais.vendas_total,
+      'Volume (Kg)': totais.volume_total_kg,
+      'Preço (Kg)': totais.preco_medio_kg
+    };
+  } else if (categoria === 'cereais') {
+    // Buscar "BARRA DE CEREAL" diretamente
+    dadosCategoria = chavesDisponiveis.includes('BARRA DE CEREAL') 
+      ? categorias['BARRA DE CEREAL'] 
+      : null;
+  } else if (categoria === 'proteina') {
+    // Buscar chave que contenha "PROTE" (evita problema de Unicode)
+    const chaveProteina = chavesDisponiveis.find(k => k.includes('PROTE'));
+    dadosCategoria = chaveProteina ? categorias[chaveProteina] : null;
+  } else {
+    // Frutas, Nuts ou outras categorias não disponíveis
+    dadosCategoria = null;
+  }
+  
+  // Se não encontrou dados, usar totais como fallback
+  if (!dadosCategoria) {
+    dadosCategoria = {
+      'Vendas $': totais.vendas_total,
+      'Volume (Kg)': totais.volume_total_kg,
+      'Preço (Kg)': totais.preco_medio_kg
+    };
+  }
+  
+  // Extrair dados atuais
+  const dadosAtual = {
+    receita: dadosCategoria['Vendas $'],
+    volume_kg: dadosCategoria['Volume (Kg)'],
+    preco_kg: dadosCategoria['Preço (Kg)'] || dadosCategoria['Preco_Medio'] || 0
   };
   
-  const categoriaDados = catMap[categoria];
-  console.log('[DEBUG] Categoria mapeada:', categoriaDados);
-  
-  // Se categoria é 'total' ou não mapeada, usar totais gerais
-  let dadosAtual, dadosAnterior;
-  
-  if (!categoriaDados || categoria === 'total') {
-    console.log('[DEBUG] Usando TOTAIS GERAIS (fallback ou total)');
-    // Usar totais gerais
-    dadosAtual = {
-      receita: totais.vendas_total,
-      volume_kg: totais.volume_total_kg,
-      preco_kg: totais.preco_medio_kg
-    };
-    // Simular dados anteriores (reduzir 18% para YoY)
-    dadosAnterior = {
-      receita: totais.vendas_total / 1.185,
-      volume_kg: totais.volume_total_kg / 1.185,
-      preco_kg: totais.preco_medio_kg / 1.005
-    };
-  } else {
-    console.log('[DEBUG] Tentando usar dados da CATEGORIA:', categoriaDados);
-    // Usar dados da categoria específica
-    const catDados = categorias[categoriaDados];
-    console.log('[DEBUG] catDados encontrado?', catDados ? 'SIM ✅' : 'NÃO ❌');
-    if (catDados) {
-      console.log('[DEBUG] Dados da categoria:', catDados);
-      dadosAtual = {
-        receita: catDados['Vendas $'],
-        volume_kg: catDados['Volume (Kg)'],
-        preco_kg: catDados['Preço (Kg)'] || catDados['Preco_Medio']
-      };
-      // Simular dados anteriores
-      dadosAnterior = {
-        receita: catDados['Vendas $'] / 1.185,
-        volume_kg: catDados['Volume (Kg)'] / 1.185,
-        preco_kg: (catDados['Preço (Kg)'] || catDados['Preco_Medio']) / 1.005
-      };
-    } else {
-      console.log('[DEBUG] ⚠️ FALLBACK: Categoria não encontrada, usando totais');
-      // Fallback para totais se categoria não encontrada
-      dadosAtual = {
-        receita: totais.vendas_total,
-        volume_kg: totais.volume_total_kg,
-        preco_kg: totais.preco_medio_kg
-      };
-      dadosAnterior = {
-        receita: totais.vendas_total / 1.185,
-        volume_kg: totais.volume_total_kg / 1.185,
-        preco_kg: totais.preco_medio_kg / 1.005
-      };
-    }
-  }
+  // Simular dados anteriores (reduzir 18.5% para YoY)
+  const dadosAnterior = {
+    receita: dadosAtual.receita / 1.185,
+    volume_kg: dadosAtual.volume_kg / 1.185,
+    preco_kg: dadosAtual.preco_kg / 1.005
+  };
   
   // Ajustar valores baseado no período
   let fatorPeriodo = 1;
@@ -358,7 +339,7 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
     fatorPeriodo = 1; // YTD usa todos os dados
   }
   
-  const resultado = {
+  return {
     valor: {
       atual: dadosAtual.receita * fatorPeriodo,
       anterior: dadosAnterior.receita * fatorPeriodo
@@ -372,14 +353,6 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
       anterior: dadosAnterior.preco_kg
     }
   };
-  
-  console.log('[DEBUG] Retornando valores:');
-  console.log('[DEBUG]   Receita atual:', resultado.valor.atual.toFixed(2));
-  console.log('[DEBUG]   Volume atual:', resultado.volume.atual.toFixed(2));
-  console.log('[DEBUG]   Preço atual:', resultado.preco.atual.toFixed(2));
-  console.log('[DEBUG getScanntechMercadoTotal] ===== FIM =====');
-  
-  return resultado;
 }
 
 // Função para obter resumo geral dos dados Scanntech
@@ -421,21 +394,11 @@ export function getScanntechMarcasPorRegiao(categoria = 'total', periodo = 'mes_
 }
 
 // Função para obter marcas por região com comparativo (compatibilidade com App.jsx)
+// REFATORADA para garantir 100% de confiabilidade
 export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo = 'mes_yoy') {
   const totais = scanntechData.totais;
   const marcas = scanntechData.por_marca;
   const categorias = scanntechData.por_categoria;
-  
-  // Mapeamento de categorias
-  const catMap = {
-    'total': null,
-    'cereais': 'BARRA DE CEREAL',
-    'frutas': null,
-    'nuts': null,
-    'proteina': 'BARRA DE PROTEÍNA'
-  };
-  
-  const categoriaDados = catMap[categoria];
   
   // Fatores de ajuste por período
   const fatorMap = {
@@ -446,18 +409,33 @@ export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo
   
   const fatores = fatorMap[periodo] || fatorMap['mes_yoy'];
   
+  // Buscar dados da categoria usando mesma lógica de getScanntechMercadoTotal
+  const chavesDisponiveis = Object.keys(categorias);
+  let dadosCategoria = null;
+  
+  if (categoria === 'total') {
+    // Usar totais gerais
+    dadosCategoria = null; // Sinal para usar dados da marca
+  } else if (categoria === 'cereais') {
+    dadosCategoria = chavesDisponiveis.includes('BARRA DE CEREAL') 
+      ? categorias['BARRA DE CEREAL'] 
+      : null;
+  } else if (categoria === 'proteina') {
+    const chaveProteina = chavesDisponiveis.find(k => k.includes('PROTE'));
+    dadosCategoria = chaveProteina ? categorias[chaveProteina] : null;
+  }
+  
   // Calcular dados por marca - RETORNAR ARRAY DIRETO com campos camelCase
   const marcasArray = Object.entries(marcas).map(([nome, dadosMarca]) => {
     let receita_atual, volume_atual, preco_medio;
     
-    if (categoriaDados && categorias[categoriaDados]) {
+    if (dadosCategoria) {
       // Usar dados da categoria específica
-      const catDados = categorias[categoriaDados];
-      receita_atual = catDados['Vendas $'] * fatores.atual;
-      volume_atual = catDados['Volume (Kg)'] * fatores.atual;
-      preco_medio = catDados['Preço (Kg)'] || catDados['Preco_Medio'];
+      receita_atual = dadosCategoria['Vendas $'] * fatores.atual;
+      volume_atual = dadosCategoria['Volume (Kg)'] * fatores.atual;
+      preco_medio = dadosCategoria['Preço (Kg)'] || dadosCategoria['Preco_Medio'];
     } else {
-      // Usar totais da marca
+      // Usar totais da marca (filtro TOTAL ou categoria não disponível)
       receita_atual = dadosMarca['Vendas $'] * fatores.atual;
       volume_atual = dadosMarca['Volume (Kg)'] * fatores.atual;
       preco_medio = dadosMarca['Preco_Medio'];

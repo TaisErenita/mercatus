@@ -630,13 +630,12 @@ export const estrategiaData = {
     premissas: [
       {
         nome: "Elasticidade Preço-Demanda",
-        valor: "-0,302",
-        fonte: "Regressão log-log Scanntech (6.297 registros)",
+        valor: "+1,734",
+        fonte: "Regressão log-log Scanntech (70 registros, nova base)",
         metodo: "ln(Share) = α + β*ln(Preço)",
-        qualidade: "R² = 0,050, p-value < 0,000001",
-        interpretacao: "Para cada 1% ↑ preço → 0,30% ↓ share (demanda inelástica)",
-        benchmark: "Alimentos: -0,5 a -0,8 (nossa elasticidade é MENOR = menos sensível)"
-      },
+        qualidade: "R² = 0,266, p-value < 0,000005",
+        interpretacao: "Para cada 1% ↑ preço → 1,73% ↑ share (demanda elástica positiva - efeito qualidade)",
+        benchmark: "ATENÇÃO: Elasticidade positiva indica efeito premium/qualidade percebida"      },
       {
         nome: "CAC (Custo Aquisição Cliente)",
         valor: "R$ 6,91",
@@ -727,7 +726,7 @@ export const estrategiaData = {
         probabilidade: "20%",
         premissas: {
           crescimento_mercado: "+1,5% a.a. (50% do histórico)",
-          elasticidade: "-0,4 (mais sensível ao preço)",
+          elasticidade: "+1,0 (efeito qualidade reduzido)",
           taxa_conversao: "1,5% (60% da atual)",
           cac: "R$ 10,00 (+45%)",
           ltv: "R$ 350 (frequência reduzida)",
@@ -747,7 +746,7 @@ export const estrategiaData = {
         probabilidade: "60%",
         premissas: {
           crescimento_mercado: "+2,9% a.a. (calculado Scanntech)",
-          elasticidade: "-0,302 (calculado)",
+          elasticidade: "+1,734 (calculado - nova base)",
           taxa_conversao: "2,5% (atual)",
           cac: "R$ 6,91 (calculado Amazon)",
           ltv: "R$ 553 (calculado Amazon)",
@@ -767,7 +766,7 @@ export const estrategiaData = {
         probabilidade: "20%",
         premissas: {
           crescimento_mercado: "+5,0% a.a. (aceleração)",
-          elasticidade: "-0,2 (marca forte, menor sensibilidade)",
+          elasticidade: "+2,5 (efeito qualidade amplificado)",
           taxa_conversao: "4,0% (otimização agressiva)",
           cac: "R$ 5,00 (eficiência em escala)",
           ltv: "R$ 800 (maior retenção)",

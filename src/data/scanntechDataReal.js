@@ -11,17 +11,17 @@ const mercadoTotalBase = {
   'total': {
     valor_atual: 114931609,   // R$ 114.9M (REAL)
     volume_atual: 1581352,    // kg (REAL)
-    preco_atual: 72.68        // R$/kg (REAL)
+    preco_atual: 105.64       // R$/kg (REAL - coluna Preço/kg ponderado)
   },
   'cereais': {
     valor_atual: 63827461,    // R$ 63.8M (REAL - classificado por ingrediente)
     volume_atual: 964834,     // kg (REAL)
-    preco_atual: 66.15        // R$/kg (REAL)
+    preco_atual: 106.99       // R$/kg (REAL - coluna Preço/kg ponderado)
   },
   'frutas': {
     valor_atual: 33377102,    // R$ 33.4M (REAL - classificado por ingrediente)
     volume_atual: 477399,     // kg (REAL)
-    preco_atual: 69.91        // R$/kg (REAL)
+    preco_atual: 96.57        // R$/kg (REAL - coluna Preço/kg ponderado)
   },
   'nuts': {
     valor_atual: 6221656,     // R$ 6.2M (REAL - classificado por ingrediente)
@@ -70,7 +70,7 @@ const marcasPorRegiao = {
   total: {
     mes_yoy: {
       brasil: [
-        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 72.68 },
+        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 105.64 },
         { marca: 'NUTRATA', shareValor: 15.3, shareVolume: 7.9, preco: 207.5 },
         { marca: 'BOLD', shareValor: 13.3, shareVolume: 5.6, preco: 255.5 },
         { marca: 'RITTER', shareValor: 12.8, shareVolume: 18.5, preco: 74.4 },
@@ -78,7 +78,7 @@ const marcasPorRegiao = {
         { marca: 'MAIS MU', shareValor: 3.6, shareVolume: 1.4, preco: 281.0 },
         { marca: 'TRIO', shareValor: 2.7, shareVolume: 3.5, preco: 81.4 },
         { marca: 'ENJOY', shareValor: 2.5, shareVolume: 2.1, preco: 128.3 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 72.68 },
+        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 105.64 },
         { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.4 }
       ],
       sp_rj_mg_es: [
@@ -108,11 +108,11 @@ const marcasPorRegiao = {
     },
     trimestre_yoy: {
       brasil: [
-        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 72.68 },
+        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 105.64 },
         { marca: 'NUTRATA', shareValor: 15.3, shareVolume: 7.9, preco: 207.5 },
         { marca: 'BOLD', shareValor: 13.3, shareVolume: 5.6, preco: 255.5 },
         { marca: 'RITTER', shareValor: 12.8, shareVolume: 18.5, preco: 74.4 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 72.68 },
+        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 105.64 },
         { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.4 }
       ],
       sp_rj_mg_es: [
@@ -139,11 +139,11 @@ const marcasPorRegiao = {
     },
     ytd_yoy: {
       brasil: [
-        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 72.68 },
+        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 105.64 },
         { marca: 'NUTRATA', shareValor: 15.3, shareVolume: 7.9, preco: 207.5 },
         { marca: 'BOLD', shareValor: 13.3, shareVolume: 5.6, preco: 255.5 },
         { marca: 'RITTER', shareValor: 12.8, shareVolume: 18.5, preco: 74.4 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 72.68 },
+        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 105.64 },
         { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.4 }
       ],
       sp_rj_mg_es: [
@@ -172,29 +172,29 @@ const marcasPorRegiao = {
   cereais: {
     mes_yoy: {
       brasil: [
-        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 66.15 },
+        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 106.99 },
         { marca: 'NUTRATA', shareValor: 16.5, shareVolume: 8.5, preco: 180.0 },
         { marca: 'BOLD', shareValor: 14.2, shareVolume: 6.0, preco: 220.0 },
         { marca: 'RITTER', shareValor: 11.0, shareVolume: 16.5, preco: 70.0 },
-        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 66.15 },
+        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 106.99 },
         { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 106.01 }
       ]
     },
     trimestre_yoy: {
       brasil: [
-        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 66.15 },
+        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 106.99 },
         { marca: 'NUTRATA', shareValor: 16.5, shareVolume: 8.5, preco: 180.0 },
         { marca: 'BOLD', shareValor: 14.2, shareVolume: 6.0, preco: 220.0 },
-        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 66.15 },
+        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 106.99 },
         { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 106.01 }
       ]
     },
     ytd_yoy: {
       brasil: [
-        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 66.15 },
+        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 106.99 },
         { marca: 'NUTRATA', shareValor: 16.5, shareVolume: 8.5, preco: 180.0 },
         { marca: 'BOLD', shareValor: 14.2, shareVolume: 6.0, preco: 220.0 },
-        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 66.15 },
+        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 106.99 },
         { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 106.01 }
       ]
     }
@@ -252,8 +252,8 @@ export const getScanntechShareNutrimental = (categoria, periodo) => {
     receitaAnterior: 96900000, // R$ 96.9M (calculado com -15.7%)
     volume: 1581352,         // kg (REAL)
     volumeAnterior: 1334000, // kg (calculado com -15.7%)
-    precoMedio: 72.68,       // R$/kg (REAL)
-    precoMedioAnterior: 72.60 // R$/kg (variação mínima)
+    precoMedio: 105.64,      // R$/kg (REAL - coluna Preço/kg ponderado)
+    precoMedioAnterior: 105.12 // R$/kg (variação mínima)
   };
   
   // Dados por categoria com receita, volume e preço - TODOS REAIS
@@ -265,7 +265,7 @@ export const getScanntechShareNutrimental = (categoria, periodo) => {
       icon: '🌾',
       receita: 63827461,   // R$ 63.8M (REAL - extraído da base)
       volume: 964834,      // kg (REAL)
-      precoMedio: 66.15    // R$/kg (REAL)
+      precoMedio: 106.99   // R$/kg (REAL - coluna Preço/kg ponderado)
     },
     { 
       categoria: 'Frutas', 
@@ -274,7 +274,7 @@ export const getScanntechShareNutrimental = (categoria, periodo) => {
       icon: '🍎',
       receita: 33377102,   // R$ 33.4M (REAL - extraído da base)
       volume: 477399,      // kg (REAL)
-      precoMedio: 69.91    // R$/kg (REAL)
+      precoMedio: 96.57    // R$/kg (REAL - coluna Preço/kg ponderado)
     },
     { 
       categoria: 'Nuts', 

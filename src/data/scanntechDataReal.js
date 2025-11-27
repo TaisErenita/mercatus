@@ -404,6 +404,7 @@ export function getScanntechMarcasPorRegiao(categoria = 'total', periodo = 'mes_
 export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo = 'mes_yoy') {
   const totais = scanntechData.totais;
   const marcas = scanntechData.por_marca;
+  const categorias = scanntechData.por_categoria;
   
   // Mapeamento de categorias
   const catMap = {
@@ -425,45 +426,64 @@ export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo
   
   const fatores = fatorMap[periodo] || fatorMap['mes_yoy'];
   
-  // Estrutura de retorno compativel com o componente
-  const resultado = {
-    brasil: []
-  };
-  
-  // Como só temos dados da NUTRY, criar estrutura para ela
-  Object.entries(marcas).forEach(([nome, dados]) => {
-    let receita_atual, volume_atual;
+  // Calcular dados por marca - RETORNAR ARRAY DIRETO com campos camelCase
+  const marcasArray = Object.entries(marcas).map(([nome, dadosMarca]) => {
+    let receita_atual, volume_atual, preco_medio;
     
-    if (categoriaDados && scanntechData.por_categoria[categoriaDados]) {
+    if (categoriaDados && categorias[categoriaDados]) {
       // Usar dados da categoria específica
-      const catDados = scanntechData.por_categoria[categoriaDados];
+      const catDados = categorias[categoriaDados];
       receita_atual = catDados['Vendas $'] * fatores.atual;
       volume_atual = catDados['Volume (Kg)'] * fatores.atual;
+      preco_medio = catDados['Preço (Kg)'] || catDados['Preco_Medio'];
     } else {
-      // Usar totais
-      receita_atual = dados['Vendas $'] * fatores.atual;
-      volume_atual = dados['Volume (Kg)'] * fatores.atual;
+      // Usar totais da marca
+      receita_atual = dadosMarca['Vendas $'] * fatores.atual;
+      volume_atual = dadosMarca['Volume (Kg)'] * fatores.atual;
+      preco_medio = dadosMarca['Preco_Medio'];
     }
     
     const receita_anterior = receita_atual / 1.185;
     const volume_anterior = volume_atual / 1.185;
+    const preco_anterior = preco_medio / 1.005;
     
-    resultado.brasil.push({
-      MARCA: nome,
-      RECEITA_MIL: receita_atual / 1000, // Converter para milhares
-      VOLUME_UN: volume_atual,
-      SHARE_VALOR: 100, // NUTRY é 100% dos nossos dados
-      SHARE_VOLUME: 100,
-      PRECO_MEDIO: dados['Preco_Medio'],
-      RECEITA_ANTERIOR_MIL: receita_anterior / 1000,
-      VOLUME_ANTERIOR: volume_anterior,
-      SHARE_VALOR_ANTERIOR: 100,
-      SHARE_VOLUME_ANTERIOR: 100,
-      PRECO_MEDIO_ANTERIOR: dados['Preco_Medio'] / 1.005
-    });
+    // Calcular shares (NUTRY = 100% dos nossos dados)
+    const share_valor = 100;
+    const share_volume = 100;
+    
+    // ESTRUTURA CORRETA: camelCase, campos esperados pelo componente
+    return {
+      marca: nome,                                    // minúscula!
+      receita: receita_atual / 1000,                  // em milhares
+      receitaAnterior: receita_anterior / 1000,       // camelCase
+      volumeKG: volume_atual,                         // camelCase com KG
+      volumeKGAnterior: volume_anterior,
+      shareValor: share_valor,                        // camelCase
+      shareValorAnterior: share_valor,
+      shareVolumeKG: share_volume,                    // camelCase com KG
+      shareVolumeKGAnterior: share_volume,
+      precoKG: preco_medio,                           // camelCase com KG
+      precoKGAnterior: preco_anterior
+    };
   });
   
-  return resultado;
+  // Adicionar linha "MERCADO TOTAL" (soma de todas as marcas)
+  const mercadoTotal = {
+    marca: "MERCADO TOTAL",
+    receita: marcasArray.reduce((sum, m) => sum + m.receita, 0),
+    receitaAnterior: marcasArray.reduce((sum, m) => sum + m.receitaAnterior, 0),
+    volumeKG: marcasArray.reduce((sum, m) => sum + m.volumeKG, 0),
+    volumeKGAnterior: marcasArray.reduce((sum, m) => sum + m.volumeKGAnterior, 0),
+    shareValor: 100,
+    shareValorAnterior: 100,
+    shareVolumeKG: 100,
+    shareVolumeKGAnterior: 100,
+    precoKG: marcasArray[0]?.precoKG || 0,
+    precoKGAnterior: marcasArray[0]?.precoKGAnterior || 0
+  };
+  
+  // RETORNAR ARRAY DIRETO (não objeto com chave 'brasil')
+  return [...marcasArray, mercadoTotal];
 }
 
 export default scanntechData;

@@ -494,3 +494,4 @@ export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo
 }
 
 export default scanntechData;
+// Force rebuild: 1764247362

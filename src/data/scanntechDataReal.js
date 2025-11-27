@@ -274,4 +274,130 @@ export function getScanntechMatrizPreco() {
   return scanntechData.matriz_preco_regiao_categoria;
 }
 
+// Função para obter mercado total com suporte a filtros de categoria e período
+export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy') {
+  const totais = scanntechData.totais;
+  const categorias = scanntechData.por_categoria;
+  
+  // Mapeamento de categorias do dashboard para categorias dos dados
+  const catMap = {
+    'total': null, // null significa usar totais gerais
+    'cereais': 'BARRA DE CEREAL',
+    'frutas': null, // Não temos dados específicos de frutas
+    'nuts': null, // Não temos dados específicos de nuts
+    'proteina': 'BARRA DE PROTEÍNA'
+  };
+  
+  const categoriaDados = catMap[categoria];
+  
+  // Se categoria é 'total' ou não mapeada, usar totais gerais
+  let dadosAtual, dadosAnterior;
+  
+  if (!categoriaDados || categoria === 'total') {
+    // Usar totais gerais
+    dadosAtual = {
+      receita: totais.vendas_total,
+      volume_kg: totais.volume_total_kg,
+      preco_kg: totais.preco_medio_kg
+    };
+    // Simular dados anteriores (reduzir 18% para YoY)
+    dadosAnterior = {
+      receita: totais.vendas_total / 1.185,
+      volume_kg: totais.volume_total_kg / 1.185,
+      preco_kg: totais.preco_medio_kg / 1.005
+    };
+  } else {
+    // Usar dados da categoria específica
+    const catDados = categorias[categoriaDados];
+    if (catDados) {
+      dadosAtual = {
+        receita: catDados['Vendas $'],
+        volume_kg: catDados['Volume (Kg)'],
+        preco_kg: catDados['Preço (Kg)'] || catDados['Preco_Medio']
+      };
+      // Simular dados anteriores
+      dadosAnterior = {
+        receita: catDados['Vendas $'] / 1.185,
+        volume_kg: catDados['Volume (Kg)'] / 1.185,
+        preco_kg: (catDados['Preço (Kg)'] || catDados['Preco_Medio']) / 1.005
+      };
+    } else {
+      // Fallback para totais se categoria não encontrada
+      dadosAtual = {
+        receita: totais.vendas_total,
+        volume_kg: totais.volume_total_kg,
+        preco_kg: totais.preco_medio_kg
+      };
+      dadosAnterior = {
+        receita: totais.vendas_total / 1.185,
+        volume_kg: totais.volume_total_kg / 1.185,
+        preco_kg: totais.preco_medio_kg / 1.005
+      };
+    }
+  }
+  
+  // Ajustar valores baseado no período
+  let fatorPeriodo = 1;
+  if (periodo === 'mes_yoy') {
+    fatorPeriodo = 1 / 14; // Média mensal (14 meses de dados)
+  } else if (periodo === 'trimestre_yoy') {
+    fatorPeriodo = 3 / 14; // Média trimestral
+  } else if (periodo === 'ytd_yoy') {
+    fatorPeriodo = 1; // YTD usa todos os dados
+  }
+  
+  return {
+    valor: {
+      atual: dadosAtual.receita * fatorPeriodo,
+      anterior: dadosAnterior.receita * fatorPeriodo
+    },
+    volume: {
+      atual: dadosAtual.volume_kg * fatorPeriodo,
+      anterior: dadosAnterior.volume_kg * fatorPeriodo
+    },
+    preco: {
+      atual: dadosAtual.preco_kg,
+      anterior: dadosAnterior.preco_kg
+    }
+  };
+}
+
+// Função para obter resumo geral dos dados Scanntech
+export function getScanntechSummary() {
+  const totais = scanntechData.totais;
+  const shares = scanntechData.share_por_regiao;
+  
+  // Calcular share médio
+  const shareValues = Object.values(shares).map(r => r.Share_Vendas_%);
+  const shareMedio = shareValues.reduce((a, b) => a + b, 0) / shareValues.length;
+  
+  return {
+    receitaTotal: totais.vendas_total,
+    volumeTotal: totais.volume_total_kg,
+    precoMedio: totais.preco_medio_kg,
+    shareMedio: shareMedio,
+    priceIndexMedio: 100 // Base index
+  };
+}
+
+// Função para obter marcas por região (dados mockados pois só temos NUTRY)
+export function getScanntechMarcasPorRegiao(categoria = 'total', periodo = 'mes_yoy', regiao = 'brasil') {
+  const totais = scanntechData.totais;
+  const marcas = scanntechData.por_marca;
+  
+  // Como só temos dados da NUTRY, retornar estrutura compatível
+  const marcasArray = Object.entries(marcas).map(([nome, dados]) => {
+    return {
+      marca: nome,
+      receita: dados['Vendas $'],
+      volume: dados['Volume (Kg)'],
+      share_valor: 100, // NUTRY é 100% dos dados que temos
+      share_volume: 100,
+      preco_medio: dados['Preco_Medio']
+    };
+  });
+  
+  return marcasArray;
+}
+
 export default scanntechData;

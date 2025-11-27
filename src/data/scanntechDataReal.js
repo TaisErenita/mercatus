@@ -285,7 +285,7 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
     'cereais': 'BARRA DE CEREAL',
     'frutas': null, // Não temos dados específicos de frutas
     'nuts': null, // Não temos dados específicos de nuts
-    'proteina': 'BARRA DE PROTEÍNA'
+    'proteina': 'BARRA DE PROTE\u00cdNA'
   };
   
   const categoriaDados = catMap[categoria];

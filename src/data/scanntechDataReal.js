@@ -5,33 +5,35 @@
 // Registros Nutrimental: 6,118 (25,998 total mercado)
 // Fonte: Planilha "Top100 SKUs" filtrada por marca NUTRY
 
-// Dados de mercado NUTRIMENTAL por categoria
-// Valores REAIS extraídos da base (não estimados)
+// Dados de MERCADO TOTAL CONSOLIDADO (todas as marcas)
+// Fonte: Aba "Totais" da planilha BaseScanntech-VOLUMETRIA.xlsx
+// Volumes convertidos de gramas para kg
+// Período: 14 meses consolidados (Ago/2024 - Set/2025)
 const mercadoTotalBase = {
   'total': {
-    valor_atual: 114931609,   // R$ 114.9M (REAL)
-    volume_atual: 1581352,    // kg (REAL)
-    preco_atual: 105.64       // R$/kg (REAL - coluna Preço/kg ponderado)
+    valor_atual: 159195270,   // R$ 159.2M (MERCADO TOTAL - todas as marcas)
+    volume_atual: 2668558,    // kg (convertido de gramas)
+    preco_atual: 59.66        // R$/kg (calculado)
   },
   'cereais': {
-    valor_atual: 63827461,    // R$ 63.8M (REAL - classificado por ingrediente)
-    volume_atual: 964834,     // kg (REAL)
-    preco_atual: 106.99       // R$/kg (REAL - coluna Preço/kg ponderado)
+    valor_atual: 62491502,    // R$ 62.5M (BARRA DE CEREAL)
+    volume_atual: 1892648,    // kg (convertido de gramas)
+    preco_atual: 33.02        // R$/kg (calculado)
   },
   'frutas': {
-    valor_atual: 33377102,    // R$ 33.4M (REAL - classificado por ingrediente)
-    volume_atual: 477399,     // kg (REAL)
-    preco_atual: 96.57        // R$/kg (REAL - coluna Preço/kg ponderado)
+    valor_atual: 15677514,    // R$ 15.7M (BARRA DE FRUTAS)
+    volume_atual: 241821,     // kg (convertido de gramas)
+    preco_atual: 64.83        // R$/kg (calculado)
   },
   'nuts': {
-    valor_atual: 6221656,     // R$ 6.2M (REAL - classificado por ingrediente)
-    volume_atual: 74306,      // kg (REAL)
-    preco_atual: 83.73        // R$/kg (REAL)
+    valor_atual: 21006988,    // R$ 21.0M (BARRA DE NUTS)
+    volume_atual: 214964,     // kg (convertido de gramas)
+    preco_atual: 97.72        // R$/kg (calculado)
   },
   'proteína': {
-    valor_atual: 11505390,    // R$ 11.5M (REAL - BARRA DE PROTEÍNA)
-    volume_atual: 64813,      // kg (REAL)
-    preco_atual: 177.52       // R$/kg (REAL)
+    valor_atual: 60019266,    // R$ 60.0M (BARRA DE PROTEÍNA)
+    volume_atual: 319126,     // kg (convertido de gramas)
+    preco_atual: 188.07       // R$/kg (calculado)
   }
 };
 

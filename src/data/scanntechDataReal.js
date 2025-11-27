@@ -285,7 +285,7 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
     'cereais': 'BARRA DE CEREAL',
     'frutas': null, // Não temos dados específicos de frutas
     'nuts': null, // Não temos dados específicos de nuts
-    'proteina': 'BARRA DE PROTE\u00cdNA'
+    'proteina': 'BARRA DE PROTEÍNA'
   };
   
   const categoriaDados = catMap[categoria];
@@ -411,7 +411,7 @@ export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo
     'cereais': 'BARRA DE CEREAL',
     'frutas': null,
     'nuts': null,
-    'proteina': 'BARRA DE PROTE\u00cdNA'
+    'proteina': 'BARRA DE PROTEÍNA'
   };
   
   const categoriaDados = catMap[categoria];

@@ -1,0 +1,181 @@
+{
+  "performance_regiao": {
+    "Norte": {
+      "Share_Medio": 2.07,
+      "Share_DP": 1.97,
+      "Share_Min": 0.0,
+      "Share_Max": 9.81,
+      "Price_Medio": 533.54,
+      "Price_DP": 1772.32,
+      "Price_Min": 39.48,
+      "Price_Max": 14433.49,
+      "SKUs_Unicos": 47
+    },
+    "Sudeste": {
+      "Share_Medio": 1.99,
+      "Share_DP": 2.12,
+      "Share_Min": 0.01,
+      "Share_Max": 11.87,
+      "Price_Medio": 475.24,
+      "Price_DP": 1087.14,
+      "Price_Min": 32.77,
+      "Price_Max": 11180.51,
+      "SKUs_Unicos": 41
+    },
+    "Centro-Oeste": {
+      "Share_Medio": 1.94,
+      "Share_DP": 1.82,
+      "Share_Min": 0.01,
+      "Share_Max": 9.37,
+      "Price_Medio": 849.46,
+      "Price_DP": 2394.34,
+      "Price_Min": 50.93,
+      "Price_Max": 13194.3,
+      "SKUs_Unicos": 36
+    },
+    "Nordeste": {
+      "Share_Medio": 1.32,
+      "Share_DP": 1.25,
+      "Share_Min": 0.0,
+      "Share_Max": 6.51,
+      "Price_Medio": 820.72,
+      "Price_DP": 2623.42,
+      "Price_Min": 45.32,
+      "Price_Max": 16237.54,
+      "SKUs_Unicos": 33
+    },
+    "Sul": {
+      "Share_Medio": 0.97,
+      "Share_DP": 0.93,
+      "Share_Min": 0.0,
+      "Share_Max": 5.56,
+      "Price_Medio": 1017.68,
+      "Price_DP": 3100.9,
+      "Price_Min": 54.8,
+      "Price_Max": 16914.83,
+      "SKUs_Unicos": 32
+    }
+  },
+  "pricing_matrix": {
+    "Centro-Oeste": {
+      "Cereais": 967.33,
+      "Frutas": 935.37,
+      "Nuts": 260.24
+    },
+    "Nordeste": {
+      "Cereais": 818.7,
+      "Frutas": 1105.12,
+      "Nuts": 208.65
+    },
+    "Norte": {
+      "Cereais": 539.59,
+      "Frutas": 680.41,
+      "Nuts": 228.71
+    },
+    "Sudeste": {
+      "Cereais": 562.18,
+      "Frutas": 434.18,
+      "Nuts": 286.12
+    },
+    "Sul": {
+      "Cereais": 1184.94,
+      "Frutas": 1063.79,
+      "Nuts": 149.65
+    }
+  },
+  "share_matrix": {
+    "Centro-Oeste": {
+      "Cereais": 1.79,
+      "Frutas": 2.59,
+      "Nuts": 1.12
+    },
+    "Nordeste": {
+      "Cereais": 1.18,
+      "Frutas": 1.84,
+      "Nuts": 0.83
+    },
+    "Norte": {
+      "Cereais": 1.97,
+      "Frutas": 2.7,
+      "Nuts": 1.22
+    },
+    "Sudeste": {
+      "Cereais": 1.81,
+      "Frutas": 2.8,
+      "Nuts": 0.97
+    },
+    "Sul": {
+      "Cereais": 0.94,
+      "Frutas": 1.17,
+      "Nuts": 0.52
+    }
+  },
+  "oportunidades_regiao": {
+    "Sul": {
+      "Share_Medio": 0.97,
+      "Price_Medio": 1017.68,
+      "SKUs_Unicos": 32,
+      "Score_Oportunidade": 60.83
+    },
+    "Nordeste": {
+      "Share_Medio": 1.32,
+      "Price_Medio": 820.72,
+      "SKUs_Unicos": 33,
+      "Score_Oportunidade": 47.62
+    },
+    "Centro-Oeste": {
+      "Share_Medio": 1.94,
+      "Price_Medio": 849.46,
+      "SKUs_Unicos": 36,
+      "Score_Oportunidade": 34.57
+    },
+    "Sudeste": {
+      "Share_Medio": 1.99,
+      "Price_Medio": 475.24,
+      "SKUs_Unicos": 41,
+      "Score_Oportunidade": 19.38
+    },
+    "Norte": {
+      "Share_Medio": 2.07,
+      "Price_Medio": 533.54,
+      "SKUs_Unicos": 47,
+      "Score_Oportunidade": 15.73
+    }
+  },
+  "top_skus_regiao": {
+    "Centro-Oeste": {
+      "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": 5.531981675017858,
+      "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": 5.095336226410715,
+      "CEREAL BARRA NUTRY MORANGO CHOC 22G": 4.543854193017857
+    },
+    "Nordeste": {
+      "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": 3.715005546625,
+      "CEREAL BARRA NUTRY MORANGO CHOC 22G": 3.4290488538214285,
+      "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": 3.388288390642857
+    },
+    "Norte": {
+      "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 24X22G": 7.320042213214285,
+      "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": 4.561420442178571,
+      "CEREAL BARRA NUTRY MORANGO CHOC 22G": 4.434076512267857
+    },
+    "Sudeste": {
+      "CEREAL BARRA NUTRY MORANGO CHOC 22G": 5.103224649857142,
+      "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": 4.685919353303572,
+      "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": 4.092178335535714
+    },
+    "Sul": {
+      "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": 2.748449532160714,
+      "CEREAL BARRA NUTRY MORANGO CHOC 22G": 2.6820036596607144,
+      "CEREAL EM BARRA SAUD NUTRY AVELA/CHOCOLATE 22G": 2.1627708551607143
+    }
+  },
+  "resumo": {
+    "total_registros": 7098,
+    "regioes": 5,
+    "skus_unicos": 51,
+    "share_medio_geral": 1.6965272171577817,
+    "price_index_medio_geral": 717.1872522356357,
+    "periodo_inicio": "abr./25",
+    "periodo_fim": "set./25"
+  }
+}

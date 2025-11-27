@@ -1,0 +1,19 @@
+{
+  "total_rows": 328984,
+  "columns": [
+    "Agente de Distribuição",
+    "Ano/Mês",
+    "Segmento do PDV",
+    "CNPJ",
+    "Razão Social PDV",
+    "UF",
+    "SKU",
+    "Marca",
+    "Categoria",
+    "Descrição",
+    "# Sell-Out \n(R$)",
+    "# Sell-Out \n(Und)",
+    "Preço Médio Unitário"
+  ],
+  "processed_at": "2025-11-26T14:54:50.133871"
+}

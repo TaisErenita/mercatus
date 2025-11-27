@@ -1,0 +1,380 @@
+{
+  "analise_uf": {
+    "AL": {
+      "Volume": 208829.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.49
+    },
+    "AM": {
+      "Volume": 35788.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 3,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.26
+    },
+    "BA": {
+      "Volume": 247319.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 5,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.76
+    },
+    "CE": {
+      "Volume": 404445.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 2.88
+    },
+    "DF": {
+      "Volume": 624.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0
+    },
+    "ES": {
+      "Volume": 442537.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 3,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 3.16
+    },
+    "GO": {
+      "Volume": 816159.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 5.82
+    },
+    "MA": {
+      "Volume": 696.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 1,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0
+    },
+    "MG": {
+      "Volume": 2259750.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 7,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 16.12
+    },
+    "MS": {
+      "Volume": 192.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 1,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0
+    },
+    "MT": {
+      "Volume": 408.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0
+    },
+    "PA": {
+      "Volume": 235595.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.68
+    },
+    "PB": {
+      "Volume": 159633.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 3,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.14
+    },
+    "PE": {
+      "Volume": 237720.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.7
+    },
+    "PI": {
+      "Volume": 168.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 1,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0
+    }
+  },
+  "analise_regiao": {
+    "Centro-Oeste": {
+      "Volume": 817383.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "UFs": 4,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN
+    },
+    "Nordeste": {
+      "Volume": 1848094.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "UFs": 9,
+      "Distribuidores": 11,
+      "Part_Receita_%": NaN
+    },
+    "Norte": {
+      "Volume": 273705.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "UFs": 4,
+      "Distribuidores": 5,
+      "Part_Receita_%": NaN
+    },
+    "Sudeste": {
+      "Volume": 7795002.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "UFs": 4,
+      "Distribuidores": 18,
+      "Part_Receita_%": NaN
+    },
+    "Sul": {
+      "Volume": 3284643.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "UFs": 3,
+      "Distribuidores": 8,
+      "Part_Receita_%": NaN
+    }
+  },
+  "analise_categoria": {
+    "Cereais": {
+      "Volume": 14019139.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Part_Receita_%": NaN
+    }
+  },
+  "pricing_matrix": {
+    "Centro-Oeste": {
+      "Cereais": 0.0
+    },
+    "Nordeste": {
+      "Cereais": 0.0
+    },
+    "Norte": {
+      "Cereais": 0.0
+    },
+    "Sudeste": {
+      "Cereais": 0.0
+    },
+    "Sul": {
+      "Cereais": 0.0
+    }
+  },
+  "oportunidades_uf": {
+    "AL": {
+      "Volume": 208829.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.49,
+      "Score_Preco": NaN,
+      "Score_Volume": 5.89,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "AM": {
+      "Volume": 35788.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 3,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.26,
+      "Score_Preco": NaN,
+      "Score_Volume": 1.01,
+      "Score_Distribuicao": 70.0,
+      "Score_Oportunidade": NaN
+    },
+    "BA": {
+      "Volume": 247319.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 5,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.76,
+      "Score_Preco": NaN,
+      "Score_Volume": 6.98,
+      "Score_Distribuicao": 50.0,
+      "Score_Oportunidade": NaN
+    },
+    "CE": {
+      "Volume": 404445.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 2.88,
+      "Score_Preco": NaN,
+      "Score_Volume": 11.41,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "DF": {
+      "Volume": 624.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0,
+      "Score_Preco": NaN,
+      "Score_Volume": 0.02,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "ES": {
+      "Volume": 442537.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 3,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 3.16,
+      "Score_Preco": NaN,
+      "Score_Volume": 12.48,
+      "Score_Distribuicao": 70.0,
+      "Score_Oportunidade": NaN
+    },
+    "GO": {
+      "Volume": 816159.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 5.82,
+      "Score_Preco": NaN,
+      "Score_Volume": 23.02,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "MA": {
+      "Volume": 696.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 1,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0,
+      "Score_Preco": NaN,
+      "Score_Volume": 0.02,
+      "Score_Distribuicao": 90.0,
+      "Score_Oportunidade": NaN
+    },
+    "MG": {
+      "Volume": 2259750.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 7,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 16.12,
+      "Score_Preco": NaN,
+      "Score_Volume": 63.75,
+      "Score_Distribuicao": 30.0,
+      "Score_Oportunidade": NaN
+    },
+    "MS": {
+      "Volume": 192.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 1,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0,
+      "Score_Preco": NaN,
+      "Score_Volume": 0.01,
+      "Score_Distribuicao": 90.0,
+      "Score_Oportunidade": NaN
+    },
+    "MT": {
+      "Volume": 408.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0,
+      "Score_Preco": NaN,
+      "Score_Volume": 0.01,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "PA": {
+      "Volume": 235595.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.68,
+      "Score_Preco": NaN,
+      "Score_Volume": 6.65,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "PB": {
+      "Volume": 159633.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 3,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.14,
+      "Score_Preco": NaN,
+      "Score_Volume": 4.5,
+      "Score_Distribuicao": 70.0,
+      "Score_Oportunidade": NaN
+    },
+    "PE": {
+      "Volume": 237720.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 2,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 1.7,
+      "Score_Preco": NaN,
+      "Score_Volume": 6.71,
+      "Score_Distribuicao": 80.0,
+      "Score_Oportunidade": NaN
+    },
+    "PI": {
+      "Volume": 168.0,
+      "Receita": 0.0,
+      "Preco_Medio": 0.0,
+      "Distribuidores": 1,
+      "Part_Receita_%": NaN,
+      "Part_Volume_%": 0.0,
+      "Score_Preco": NaN,
+      "Score_Volume": 0.0,
+      "Score_Distribuicao": 90.0,
+      "Score_Oportunidade": NaN
+    }
+  },
+  "totais": {
+    "volume_total": 14019139,
+    "receita_total": 0.0,
+    "preco_medio_geral": 0.0,
+    "ufs_ativas": 25,
+    "distribuidores_ativos": 35
+  }
+}

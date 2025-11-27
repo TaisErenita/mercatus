@@ -1,0 +1,14 @@
+{
+  "total_rows": 20493,
+  "columns": [
+    "Data",
+    "ASIN",
+    "Nome do produto",
+    "Marca",
+    "Receita de enviados",
+    "COGS enviados",
+    "Unidades enviadas",
+    "Devoluções de cliente"
+  ],
+  "processed_at": "2025-11-26T14:55:20.246818"
+}

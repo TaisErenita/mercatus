@@ -370,7 +370,7 @@ export function getScanntechSummary() {
   const shares = scanntechData.share_por_regiao;
   
   // Calcular share médio
-  const shareValues = Object.values(shares).map(r => r.Share_Vendas_%);
+  const shareValues = Object.values(shares).map(r => r['Share_Vendas_%']);
   const shareMedio = shareValues.reduce((a, b) => a + b, 0) / shareValues.length;
   
   return {

@@ -1,0 +1,69 @@
+{
+  "data_analise": "2025-11-26 16:53:39",
+  "fontes": {
+    "mtrix": {
+      "fonte": "MTRIX",
+      "total_registros": 328984,
+      "total_campos": 13,
+      "completude_media": 100.0,
+      "completude_por_campo": {
+        "Agente de Distribuição": 100.0,
+        "Ano/Mês": 100.0,
+        "Segmento do PDV": 100.0,
+        "CNPJ": 100.0,
+        "Razão Social PDV": 100.0
+      },
+      "consistencia": 99.47,
+      "duplicatas": 0,
+      "taxa_duplicatas": 0.0,
+      "valores_unicos_por_campo": {
+        "Agente de Distribuição": 35,
+        "Ano/Mês": 5,
+        "Segmento do PDV": 28,
+        "UF": 25,
+        "SKU": 71,
+        "Marca": 1,
+        "Categoria": 7,
+        "Descrição": 71
+      },
+      "periodo_cobertura": "N/A",
+      "distribuidores_unicos": 35,
+      "ufs_cobertas": 25,
+      "skus_unicos": 71,
+      "score_qualidade": 99.79
+    },
+    "amazon": {
+      "fonte": "Amazon",
+      "erro": "unsupported operand type(s) for +: 'float' and 'str'"
+    },
+    "scanntech": {
+      "fonte": "Scanntech",
+      "total_registros": 28000,
+      "total_campos": 7,
+      "completude_media": 98.5,
+      "completude_por_campo": {
+        "Reg Canal": 100.0,
+        "Mês de Data Campo": 100.0,
+        "Visão SKU Player + outros": 100.0,
+        "KPI 3 Player (Data)": 97.38,
+        "KPI 4 Player (Data)": 97.38
+      },
+      "consistencia": 98.18,
+      "duplicatas": 0,
+      "taxa_duplicatas": 0.0,
+      "valores_unicos_por_campo": {
+        "Reg Canal": 20,
+        "Mês de Data Campo": 14
+      },
+      "registros_nutrimental": 7098,
+      "percentual_nutrimental": 25.35,
+      "periodo_cobertura": "abr./25 a set./25",
+      "meses_cobertura": 14,
+      "regioes_cobertas": 20,
+      "skus_nutrimental": 51,
+      "score_qualidade": 98.37
+    }
+  },
+  "score_geral": 99.08,
+  "classificacao": "EXCELENTE"
+}

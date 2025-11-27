@@ -1,0 +1,118 @@
+================================================================================
+RECALCULANDO MÉTRICAS - NOVA BASE SCANNTECH
+================================================================================
+
+📊 Total registros: 25,998
+📊 Registros Nutrimental: 6,118 (23.5%)
+
+================================================================================
+1. ANÁLISE POR REGIÃO
+================================================================================
+
+📊 VENDAS E VOLUME POR REGIÃO:
+           Vendas $  Volume (Kg)  Preço (Kg)  Preco_Medio
+Regiao                                                   
+SE      58912456.90    774090.18      130.26        76.11
+SU      20657086.18    273935.86      107.87        75.41
+NE      18968165.03    262917.98      111.12        72.14
+CO      11443468.90    207268.27      119.77        55.21
+NO       4950432.04     63139.45      118.46        78.40
+
+================================================================================
+2. ANÁLISE POR CATEGORIA
+================================================================================
+
+📊 VENDAS E VOLUME POR CATEGORIA:
+                           Vendas $  Volume (Kg)  Preço (Kg)  Preco_Medio
+Categoria Nutrimental                                                    
+BARRA DE CEREAL        1.034262e+08   1516538.87      106.01        68.20
+BARRA DE PROTEÍNA      1.150539e+07     64812.88      187.54       177.52
+
+================================================================================
+3. ANÁLISE POR MARCA NUTRIMENTAL
+================================================================================
+
+📊 VENDAS E VOLUME POR MARCA:
+           Vendas $  Volume (Kg)  Preço (Kg)  Preco_Medio
+Marca                                                    
+NUTRY  1.149316e+08   1581351.75      117.49        72.68
+
+================================================================================
+4. ANÁLISE TEMPORAL
+================================================================================
+
+📊 VENDAS E VOLUME POR MÊS:
+                     Vendas $  Volume (Kg)  Preço (Kg)  Preco_Medio
+Mês de Data Campo                                                  
+abr./25            7916012.48    105301.28      107.34        75.17
+ago./25            9791130.61    132922.96      119.79        73.66
+dez./24            6606284.07     90553.96      124.78        72.95
+fev./25            8480111.28    121043.57      116.93        70.06
+jan./25            7943333.16    112757.78      118.64        70.45
+jul./25            8264085.83    115290.31      120.77        71.68
+jun./25            7975561.91    106008.03      114.30        75.24
+mai./25            8625709.84    113973.75      114.58        75.68
+mar./25            8778434.28    119072.57      115.89        73.72
+nov./24            8838176.04    126199.47      114.00        70.03
+nov./25            3420199.63     43989.25      117.74        77.75
+out./24            8967914.92    129630.82      116.87        69.18
+out./25            9753026.32    133960.81      121.25        72.81
+set./25            9571628.67    130647.19      122.11        73.26
+
+================================================================================
+5. TOP 20 SKUs NUTRIMENTAL
+================================================================================
+
+📊 TOP 20 SKUs:
+                                                             Vendas $  Volume (Kg)  Preço (Kg)  Preco_Medio
+Visão SKU Player + outros                                                                                  
+CEREAL BARRA NUTRY MORANGO CHOC 22G                        9433955.59    116458.41       93.50        81.01
+CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G                   9190063.78    116389.51       91.11        78.96
+CEREAL BARRA NUTRY BANANA AVEIA MEL 22G                    8186117.44    106137.58       85.22        77.13
+CEREAL EM BARRA SAUD NUTRY AVELA/CHOCOLATE 22G             7811452.23    101382.44       90.93        77.05
+CEREAL BARRA NUTRY MORANGO COM CHOCOLATE 24X22G            6376693.85    106554.12       66.44        59.84
+CEREAL BARRA NUTRY BOLO DE CHOCOLATE 24X22G                6150026.83    103920.43       66.45        59.18
+CEREAL BARRA NUTRY MORANGO CHOCOLATE 3X22G                 6134175.79     71229.44       86.87        86.12
+CEREAL BARRA NUTRY AVEIA BAN MEL 24X22G                    6004963.55    164253.17      206.04        36.56
+CEREAL BARRA NUTRY AVEIA BANANA MEL 3X22G                  5845381.41     68481.40       86.96        85.36
+CEREAL EM BARRA SAUD NUTRY AVELA CHOCOLATE 3X22G           5371352.69     64429.20       86.47        83.37
+CEREAL BARRA NUTRY AVELA CHOCOLATE 24X22G                  5328861.95    118296.31      206.35        45.05
+CEREAL BARRA NUTRY BOLO DE CHOCOLATE 3X22G                 5254308.55     64860.71       85.04        81.01
+CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 22G               5159122.29     66650.64       91.42        77.41
+CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN CHOC 30G     4521415.87     25492.21      188.19       177.36
+CEREAL BARRA NUTRY CASTANHA CAJU CHOCOLATE 3X22G           3585117.59     43769.35       85.38        81.91
+CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN COOKIES 30G  3529520.98     19707.63      188.26       179.09
+CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN AMEND 30G    3454453.33     19613.04      186.16       176.13
+CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 3X22G             3234730.36     40489.48       87.94        79.89
+CEREAL BARRA NUTRY FRUTAS VERM 24X22G                      3038423.83     76017.22      240.03        39.97
+CEREAL BARRA NUTRY CASTANHA CAJU 22G                       2636538.37     30536.50       91.39        86.34
+
+================================================================================
+6. MATRIZ REGIÃO x CATEGORIA
+================================================================================
+
+📊 PREÇO MÉDIO (R$/kg) POR REGIÃO E CATEGORIA:
+Categoria Nutrimental  BARRA DE CEREAL  BARRA DE PROTEÍNA
+Regiao                                                   
+CO                              106.75             198.29
+NE                              100.73             176.31
+NO                              105.15             193.28
+SE                              122.03             182.39
+SU                               95.18             187.42
+
+================================================================================
+7. SHARE DE MERCADO NUTRIMENTAL
+================================================================================
+Traceback (most recent call last):
+  File "/home/ubuntu/mercatus-nutrimental-dashboard/dados_processados/recalcular_metricas_nova_base.py", line 156, in <module>
+    total_mercado = df.groupby('Regiao').agg({
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pandas/core/frame.py", line 9210, in groupby
+    return DataFrameGroupBy(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pandas/core/groupby/groupby.py", line 1331, in __init__
+    grouper, exclusions, obj = get_grouper(
+                               ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pandas/core/groupby/grouper.py", line 1043, in get_grouper
+    raise KeyError(gpr)
+KeyError: 'Regiao'

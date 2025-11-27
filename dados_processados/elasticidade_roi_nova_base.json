@@ -1,0 +1,64 @@
+{
+  "data_calculo": "2025-11-26 19:36:11",
+  "fonte": "BaseScanntech-VOLUMETRIA.xlsx",
+  "elasticidade": {
+    "valor": 1.733812704985621,
+    "r_squared": 0.26607900381361405,
+    "p_value": 4.874586383277077e-06,
+    "erro_padrao": 0.349194245241452,
+    "interpretacao": "ELÁSTICA",
+    "registros_usados": 70
+  },
+  "base_atual": {
+    "vendas_total": 114931609.0515,
+    "volume_total_kg": 1581351.7497659998,
+    "preco_medio_kg": 117.48649195775543
+  },
+  "roi_iniciativas": [
+    {
+      "nome": "Ajuste Precificação Regional",
+      "investimento": 250000,
+      "receita_incremental_ano": -16854527.316993475,
+      "lucro_anual": -5899084.560947716,
+      "roi": -23.596338243790864,
+      "payback_meses": 999,
+      "margem": 0.35
+    },
+    {
+      "nome": "Expansão E-commerce",
+      "investimento": 1200000,
+      "receita_incremental_ano": 46446867.4078164,
+      "lucro_anual": 18578746.963126563,
+      "roi": 15.482289135938801,
+      "payback_meses": 0.7750791820664673,
+      "margem": 0.4
+    },
+    {
+      "nome": "Expansão Sul",
+      "investimento": 1800000,
+      "receita_incremental_ano": 11910392.031711709,
+      "lucro_anual": 4168637.211099098,
+      "roi": 2.315909561721721,
+      "payback_meses": 5.1815494863619875,
+      "margem": 0.35
+    },
+    {
+      "nome": "Expansão Norte (Consolidação)",
+      "investimento": 1500000,
+      "receita_incremental_ano": 655457.9007665515,
+      "lucro_anual": 229410.265268293,
+      "roi": 0.15294017684552866,
+      "payback_meses": 78.46205129029069,
+      "margem": 0.35
+    },
+    {
+      "nome": "Linha Premium (Proteína)",
+      "investimento": 800000,
+      "receita_incremental_ano": 9250000,
+      "lucro_anual": 4162500.0,
+      "roi": 5.203125,
+      "payback_meses": 2.3063063063063063,
+      "margem": 0.45
+    }
+  ]
+}

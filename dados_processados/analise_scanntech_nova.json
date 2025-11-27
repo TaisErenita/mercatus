@@ -1,0 +1,28 @@
+{
+  "data_processamento": "2025-11-26 19:27:15",
+  "total_registros": 25998,
+  "total_colunas": 16,
+  "colunas": {
+    "vendas": "Vendas $",
+    "volume": "Volume (Kg)",
+    "preco": "Pre\u00e7o (Kg)"
+  },
+  "metricas": {
+    "vendas": {
+      "total": 353125432.0779,
+      "media": 14105.833349760325,
+      "mediana": 4259.229450000001
+    },
+    "volume": {
+      "total_kg": 3320474.3646235,
+      "media_kg": 127.72037712991384,
+      "mediana_kg": 27.44
+    },
+    "preco": {
+      "media_kg": 161.9420479349735,
+      "mediana_kg": 145.35306627988967,
+      "min_kg": 6.666666666666666,
+      "max_kg": 996.9047218954797
+    }
+  }
+}

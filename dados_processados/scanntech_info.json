@@ -1,0 +1,13 @@
+{
+  "total_rows": 28000,
+  "columns": [
+    "Reg Canal",
+    "Mês de Data Campo",
+    "Visão SKU Player + outros",
+    "KPI 3 Player (Data)",
+    "KPI 4 Player (Data)",
+    "Preço/Price Index (Data)",
+    "Vendas/Share/Share in Handlers  (Data)  (SS Data)"
+  ],
+  "processed_at": "2025-11-26T14:54:04.567477"
+}

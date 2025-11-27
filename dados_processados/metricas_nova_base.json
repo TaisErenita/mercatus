@@ -1,0 +1,232 @@
+{
+  "data_calculo": "2025-11-26 19:28:44",
+  "fonte": "BaseScanntech-VOLUMETRIA.xlsx",
+  "total_registros": 25998,
+  "registros_nutrimental": 6118,
+  "percentual_nutrimental": 23.53,
+  "totais_nutrimental": {
+    "vendas_total": 114931609.0515,
+    "volume_total_kg": 1581351.7497659998,
+    "preco_medio_kg": 117.48649195775543
+  },
+  "por_regiao": {
+    "SE": {
+      "Vendas $": 58912456.9,
+      "Volume (Kg)": 774090.18,
+      "Preço (Kg)": 130.26,
+      "Preco_Medio": 76.11
+    },
+    "SU": {
+      "Vendas $": 20657086.18,
+      "Volume (Kg)": 273935.86,
+      "Preço (Kg)": 107.87,
+      "Preco_Medio": 75.41
+    },
+    "NE": {
+      "Vendas $": 18968165.03,
+      "Volume (Kg)": 262917.98,
+      "Preço (Kg)": 111.12,
+      "Preco_Medio": 72.14
+    },
+    "CO": {
+      "Vendas $": 11443468.9,
+      "Volume (Kg)": 207268.27,
+      "Preço (Kg)": 119.77,
+      "Preco_Medio": 55.21
+    },
+    "NO": {
+      "Vendas $": 4950432.04,
+      "Volume (Kg)": 63139.45,
+      "Preço (Kg)": 118.46,
+      "Preco_Medio": 78.4
+    }
+  },
+  "por_categoria": {
+    "BARRA DE CEREAL": {
+      "Vendas $": 103426218.88,
+      "Volume (Kg)": 1516538.87,
+      "Preço (Kg)": 106.01,
+      "Preco_Medio": 68.2
+    },
+    "BARRA DE PROTEÍNA": {
+      "Vendas $": 11505390.18,
+      "Volume (Kg)": 64812.88,
+      "Preço (Kg)": 187.54,
+      "Preco_Medio": 177.52
+    }
+  },
+  "por_marca": {
+    "NUTRY": {
+      "Vendas $": 114931609.05,
+      "Volume (Kg)": 1581351.75,
+      "Preço (Kg)": 117.49,
+      "Preco_Medio": 72.68
+    }
+  },
+  "top_20_skus": {
+    "CEREAL BARRA NUTRY MORANGO CHOC 22G": {
+      "Vendas $": 9433955.59,
+      "Volume (Kg)": 116458.41,
+      "Preço (Kg)": 93.5,
+      "Preco_Medio": 81.01
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": {
+      "Vendas $": 9190063.78,
+      "Volume (Kg)": 116389.51,
+      "Preço (Kg)": 91.11,
+      "Preco_Medio": 78.96
+    },
+    "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": {
+      "Vendas $": 8186117.44,
+      "Volume (Kg)": 106137.58,
+      "Preço (Kg)": 85.22,
+      "Preco_Medio": 77.13
+    },
+    "CEREAL EM BARRA SAUD NUTRY AVELA/CHOCOLATE 22G": {
+      "Vendas $": 7811452.23,
+      "Volume (Kg)": 101382.44,
+      "Preço (Kg)": 90.93,
+      "Preco_Medio": 77.05
+    },
+    "CEREAL BARRA NUTRY MORANGO COM CHOCOLATE 24X22G": {
+      "Vendas $": 6376693.85,
+      "Volume (Kg)": 106554.12,
+      "Preço (Kg)": 66.44,
+      "Preco_Medio": 59.84
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 24X22G": {
+      "Vendas $": 6150026.83,
+      "Volume (Kg)": 103920.43,
+      "Preço (Kg)": 66.45,
+      "Preco_Medio": 59.18
+    },
+    "CEREAL BARRA NUTRY MORANGO CHOCOLATE 3X22G": {
+      "Vendas $": 6134175.79,
+      "Volume (Kg)": 71229.44,
+      "Preço (Kg)": 86.87,
+      "Preco_Medio": 86.12
+    },
+    "CEREAL BARRA NUTRY AVEIA BAN MEL 24X22G": {
+      "Vendas $": 6004963.55,
+      "Volume (Kg)": 164253.17,
+      "Preço (Kg)": 206.04,
+      "Preco_Medio": 36.56
+    },
+    "CEREAL BARRA NUTRY AVEIA BANANA MEL 3X22G": {
+      "Vendas $": 5845381.41,
+      "Volume (Kg)": 68481.4,
+      "Preço (Kg)": 86.96,
+      "Preco_Medio": 85.36
+    },
+    "CEREAL EM BARRA SAUD NUTRY AVELA CHOCOLATE 3X22G": {
+      "Vendas $": 5371352.69,
+      "Volume (Kg)": 64429.2,
+      "Preço (Kg)": 86.47,
+      "Preco_Medio": 83.37
+    },
+    "CEREAL BARRA NUTRY AVELA CHOCOLATE 24X22G": {
+      "Vendas $": 5328861.95,
+      "Volume (Kg)": 118296.31,
+      "Preço (Kg)": 206.35,
+      "Preco_Medio": 45.05
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 3X22G": {
+      "Vendas $": 5254308.55,
+      "Volume (Kg)": 64860.71,
+      "Preço (Kg)": 85.04,
+      "Preco_Medio": 81.01
+    },
+    "CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 22G": {
+      "Vendas $": 5159122.29,
+      "Volume (Kg)": 66650.64,
+      "Preço (Kg)": 91.42,
+      "Preco_Medio": 77.41
+    },
+    "CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN CHOC 30G": {
+      "Vendas $": 4521415.87,
+      "Volume (Kg)": 25492.21,
+      "Preço (Kg)": 188.19,
+      "Preco_Medio": 177.36
+    },
+    "CEREAL BARRA NUTRY CASTANHA CAJU CHOCOLATE 3X22G": {
+      "Vendas $": 3585117.59,
+      "Volume (Kg)": 43769.35,
+      "Preço (Kg)": 85.38,
+      "Preco_Medio": 81.91
+    },
+    "CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN COOKIES 30G": {
+      "Vendas $": 3529520.98,
+      "Volume (Kg)": 19707.63,
+      "Preço (Kg)": 188.26,
+      "Preco_Medio": 179.09
+    },
+    "CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN AMEND 30G": {
+      "Vendas $": 3454453.33,
+      "Volume (Kg)": 19613.04,
+      "Preço (Kg)": 186.16,
+      "Preco_Medio": 176.13
+    },
+    "CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 3X22G": {
+      "Vendas $": 3234730.36,
+      "Volume (Kg)": 40489.48,
+      "Preço (Kg)": 87.94,
+      "Preco_Medio": 79.89
+    },
+    "CEREAL BARRA NUTRY FRUTAS VERM 24X22G": {
+      "Vendas $": 3038423.83,
+      "Volume (Kg)": 76017.22,
+      "Preço (Kg)": 240.03,
+      "Preco_Medio": 39.97
+    },
+    "CEREAL BARRA NUTRY CASTANHA CAJU 22G": {
+      "Vendas $": 2636538.37,
+      "Volume (Kg)": 30536.5,
+      "Preço (Kg)": 91.39,
+      "Preco_Medio": 86.34
+    }
+  },
+  "share_por_regiao": {
+    "CO": {
+      "Share_Vendas_%": 38.38,
+      "Share_Volume_%": 59.09
+    },
+    "NE": {
+      "Share_Vendas_%": 31.05,
+      "Share_Volume_%": 47.71
+    },
+    "NO": {
+      "Share_Vendas_%": 57.38,
+      "Share_Volume_%": 71.19
+    },
+    "SE": {
+      "Share_Vendas_%": 36.68,
+      "Share_Volume_%": 57.53
+    },
+    "SU": {
+      "Share_Vendas_%": 22.22,
+      "Share_Volume_%": 27.82
+    }
+  },
+  "matriz_preco_regiao_categoria": {
+    "CO": {
+      "BARRA DE CEREAL": 106.75,
+      "BARRA DE PROTEÍNA": 198.29
+    },
+    "NE": {
+      "BARRA DE CEREAL": 100.73,
+      "BARRA DE PROTEÍNA": 176.31
+    },
+    "NO": {
+      "BARRA DE CEREAL": 105.15,
+      "BARRA DE PROTEÍNA": 193.28
+    },
+    "SE": {
+      "BARRA DE CEREAL": 122.03,
+      "BARRA DE PROTEÍNA": 182.39
+    },
+    "SU": {
+      "BARRA DE CEREAL": 95.18,
+      "BARRA DE PROTEÍNA": 187.42
+    }
+  }
+}

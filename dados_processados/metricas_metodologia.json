@@ -1,0 +1,44 @@
+{
+  "elasticidade": {
+    "valor": -0.30206117903393737,
+    "r_squared": 0.050414505558338644,
+    "p_value": 8.676585863250931e-73,
+    "interpretacao": "Para cada 1% de aumento no preço, o share varia -0.30%",
+    "fonte": "Scanntech (6,297 registros)",
+    "metodo": "Regressão log-log: ln(Share) = a + b*ln(Price)"
+  },
+  "cac_ltv": {
+    "cac": 6.914654168191169,
+    "ltv": 553.1723334552936,
+    "razao_ltv_cac": 80.00000000000001,
+    "ticket_medio": 13.829308336382338,
+    "frequencia_anual": 40.0,
+    "tempo_vida_meses": 12,
+    "fonte": "Amazon (20,318 registros, 35 meses)",
+    "premissas": {
+      "taxa_novos_clientes": 0.3,
+      "investimento_marketing_pct": 0.15,
+      "tempo_vida_cliente": "12 meses"
+    }
+  },
+  "conversao": {
+    "taxa": 0.025,
+    "crescimento_mensal": 0.1601249644625394,
+    "fonte": "Benchmark mercado e-commerce + dados Amazon"
+  },
+  "margem": {
+    "margem_regular": 0.35,
+    "margem_premium": 0.45,
+    "incremento_premium": 0.2857142857142858,
+    "custo_regular": 8.989050418648521,
+    "custo_premium": 9.887955460513373,
+    "fonte": "Padrão indústria alimentos + análise Amazon"
+  },
+  "crescimento_mercado": {
+    "anual": 2.883522166295238,
+    "mensal": 0.23717506271137,
+    "total_periodo": 3.3721290232259475,
+    "meses_analisados": 14,
+    "fonte": "Scanntech timeline (14 meses)"
+  }
+}

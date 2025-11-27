@@ -400,4 +400,70 @@ export function getScanntechMarcasPorRegiao(categoria = 'total', periodo = 'mes_
   return marcasArray;
 }
 
+// Função para obter marcas por região com comparativo (compatibilidade com App.jsx)
+export function getScanntechMarcasRegiaoComparativo(categoria = 'total', periodo = 'mes_yoy') {
+  const totais = scanntechData.totais;
+  const marcas = scanntechData.por_marca;
+  
+  // Mapeamento de categorias
+  const catMap = {
+    'total': null,
+    'cereais': 'BARRA DE CEREAL',
+    'frutas': null,
+    'nuts': null,
+    'proteina': 'BARRA DE PROTE\u00cdNA'
+  };
+  
+  const categoriaDados = catMap[categoria];
+  
+  // Fatores de ajuste por período
+  const fatorMap = {
+    'mes_yoy': { atual: 1/14, anterior: 1/14 },
+    'trimestre_yoy': { atual: 3/14, anterior: 3/14 },
+    'ytd_yoy': { atual: 1, anterior: 1 }
+  };
+  
+  const fatores = fatorMap[periodo] || fatorMap['mes_yoy'];
+  
+  // Estrutura de retorno compativel com o componente
+  const resultado = {
+    brasil: []
+  };
+  
+  // Como só temos dados da NUTRY, criar estrutura para ela
+  Object.entries(marcas).forEach(([nome, dados]) => {
+    let receita_atual, volume_atual;
+    
+    if (categoriaDados && scanntechData.por_categoria[categoriaDados]) {
+      // Usar dados da categoria específica
+      const catDados = scanntechData.por_categoria[categoriaDados];
+      receita_atual = catDados['Vendas $'] * fatores.atual;
+      volume_atual = catDados['Volume (Kg)'] * fatores.atual;
+    } else {
+      // Usar totais
+      receita_atual = dados['Vendas $'] * fatores.atual;
+      volume_atual = dados['Volume (Kg)'] * fatores.atual;
+    }
+    
+    const receita_anterior = receita_atual / 1.185;
+    const volume_anterior = volume_atual / 1.185;
+    
+    resultado.brasil.push({
+      MARCA: nome,
+      RECEITA_MIL: receita_atual / 1000, // Converter para milhares
+      VOLUME_UN: volume_atual,
+      SHARE_VALOR: 100, // NUTRY é 100% dos nossos dados
+      SHARE_VOLUME: 100,
+      PRECO_MEDIO: dados['Preco_Medio'],
+      RECEITA_ANTERIOR_MIL: receita_anterior / 1000,
+      VOLUME_ANTERIOR: volume_anterior,
+      SHARE_VALOR_ANTERIOR: 100,
+      SHARE_VOLUME_ANTERIOR: 100,
+      PRECO_MEDIO_ANTERIOR: dados['Preco_Medio'] / 1.005
+    });
+  });
+  
+  return resultado;
+}
+
 export default scanntechData;

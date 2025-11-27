@@ -91,9 +91,28 @@ export const getAmazonStats = () => amazonDataRaw.summary;
 
 // Função para obter dados de uma categoria específica
 export const getAmazonDataByCategoria = (categoria) => {
+  let produtos = amazonDataRaw.top10;
+  
+  if (categoria !== 'Todos') {
+    produtos = produtos.filter(p => p.Categoria === categoria);
+  }
+  
+  // Separar produtos por crescimento e queda
+  const crescimentos = produtos
+    .filter(p => p.Variacao_Pct > 0)
+    .sort((a, b) => b.Variacao_Pct - a.Variacao_Pct)
+    .slice(0, 5);
+  
+  const quedas = produtos
+    .filter(p => p.Variacao_Pct < 0)
+    .sort((a, b) => a.Variacao_Pct - b.Variacao_Pct)
+    .slice(0, 5);
+  
   return {
-    produtos: amazonDataRaw.top10.filter(p => p.Categoria === categoria),
-    stats: amazonDataRaw.vendasPorCategoria[categoria]
+    top10: produtos.slice(0, 10),
+    crescimentos,
+    quedas,
+    stats: categoria !== 'Todos' ? amazonDataRaw.vendasPorCategoria[categoria] : null
   };
 };
 
@@ -113,6 +132,24 @@ export const getAmazonCrescimentoPorCategoria = () => {
       produtos: produtos.length
     };
   });
+};
+
+// Funções de formatação
+export const formatarNomeProduto = (nome) => {
+  if (!nome) return '';
+  // Capitalizar primeira letra de cada palavra e limitar tamanho
+  return nome.length > 60 ? nome.substring(0, 57) + '...' : nome;
+};
+
+export const formatarVariacao = (variacao) => {
+  const valor = Number(variacao);
+  if (isNaN(valor)) return { texto: '0%', cor: 'text-slate-600', seta: '' };
+  
+  const texto = `${valor > 0 ? '+' : ''}${valor.toFixed(1)}%`;
+  const cor = valor > 0 ? 'text-green-600' : valor < 0 ? 'text-red-600' : 'text-slate-600';
+  const seta = valor > 0 ? '↑' : valor < 0 ? '↓' : '→';
+  
+  return { texto, cor, seta };
 };
 
 // Função para obter métricas agregadas por categoria

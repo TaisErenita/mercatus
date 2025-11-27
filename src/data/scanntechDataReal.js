@@ -276,8 +276,14 @@ export function getScanntechMatrizPreco() {
 
 // Função para obter mercado total com suporte a filtros de categoria e período
 export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy') {
+  console.log('[DEBUG getScanntechMercadoTotal] ===== INÍCIO =====');
+  console.log('[DEBUG] Parâmetro categoria recebido:', categoria, 'tipo:', typeof categoria);
+  console.log('[DEBUG] Parâmetro periodo recebido:', periodo);
+  
   const totais = scanntechData.totais;
   const categorias = scanntechData.por_categoria;
+  
+  console.log('[DEBUG] Categorias disponíveis no objeto:', Object.keys(categorias));
   
   // Mapeamento de categorias do dashboard para categorias dos dados
   const catMap = {
@@ -289,11 +295,13 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
   };
   
   const categoriaDados = catMap[categoria];
+  console.log('[DEBUG] Categoria mapeada:', categoriaDados);
   
   // Se categoria é 'total' ou não mapeada, usar totais gerais
   let dadosAtual, dadosAnterior;
   
   if (!categoriaDados || categoria === 'total') {
+    console.log('[DEBUG] Usando TOTAIS GERAIS (fallback ou total)');
     // Usar totais gerais
     dadosAtual = {
       receita: totais.vendas_total,
@@ -307,9 +315,12 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
       preco_kg: totais.preco_medio_kg / 1.005
     };
   } else {
+    console.log('[DEBUG] Tentando usar dados da CATEGORIA:', categoriaDados);
     // Usar dados da categoria específica
     const catDados = categorias[categoriaDados];
+    console.log('[DEBUG] catDados encontrado?', catDados ? 'SIM ✅' : 'NÃO ❌');
     if (catDados) {
+      console.log('[DEBUG] Dados da categoria:', catDados);
       dadosAtual = {
         receita: catDados['Vendas $'],
         volume_kg: catDados['Volume (Kg)'],
@@ -322,6 +333,7 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
         preco_kg: (catDados['Preço (Kg)'] || catDados['Preco_Medio']) / 1.005
       };
     } else {
+      console.log('[DEBUG] ⚠️ FALLBACK: Categoria não encontrada, usando totais');
       // Fallback para totais se categoria não encontrada
       dadosAtual = {
         receita: totais.vendas_total,
@@ -346,7 +358,7 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
     fatorPeriodo = 1; // YTD usa todos os dados
   }
   
-  return {
+  const resultado = {
     valor: {
       atual: dadosAtual.receita * fatorPeriodo,
       anterior: dadosAnterior.receita * fatorPeriodo
@@ -360,6 +372,14 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
       anterior: dadosAnterior.preco_kg
     }
   };
+  
+  console.log('[DEBUG] Retornando valores:');
+  console.log('[DEBUG]   Receita atual:', resultado.valor.atual.toFixed(2));
+  console.log('[DEBUG]   Volume atual:', resultado.volume.atual.toFixed(2));
+  console.log('[DEBUG]   Preço atual:', resultado.preco.atual.toFixed(2));
+  console.log('[DEBUG getScanntechMercadoTotal] ===== FIM =====');
+  
+  return resultado;
 }
 
 // Função para obter resumo geral dos dados Scanntech

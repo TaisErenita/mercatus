@@ -277,11 +277,15 @@ export function getScanntechMatrizPreco() {
 // Função para obter mercado total com suporte a filtros de categoria e período
 // REFATORADA para garantir 100% de confiabilidade
 export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy') {
+  // DEBUG: console.error não é removido em produção
+  console.error('[DEBUG] getScanntechMercadoTotal chamada com:', { categoria, periodo });
+  
   const totais = scanntechData.totais;
   const categorias = scanntechData.por_categoria;
   
   // Buscar categoria diretamente pelas chaves disponíveis (evita problemas de Unicode)
   const chavesDisponiveis = Object.keys(categorias);
+  console.error('[DEBUG] Chaves disponíveis:', chavesDisponiveis);
   let dadosCategoria = null;
   
   // Mapeamento direto por categoria
@@ -300,11 +304,16 @@ export function getScanntechMercadoTotal(categoria = 'total', periodo = 'mes_yoy
   } else if (categoria === 'proteina') {
     // Buscar chave que contenha "PROTE" (evita problema de Unicode)
     const chaveProteina = chavesDisponiveis.find(k => k.includes('PROTE'));
+    console.error('[DEBUG] Chave PROTEÍNA encontrada:', chaveProteina);
     dadosCategoria = chaveProteina ? categorias[chaveProteina] : null;
+    console.error('[DEBUG] Dados da categoria PROTEÍNA:', dadosCategoria);
   } else {
     // Frutas, Nuts ou outras categorias não disponíveis
+    console.error('[DEBUG] Categoria não mapeada:', categoria);
     dadosCategoria = null;
   }
+  
+  console.error('[DEBUG] dadosCategoria final:', dadosCategoria ? 'ENCONTRADO' : 'NULL (usará totais)');
   
   // Se não encontrou dados, usar totais como fallback
   if (!dadosCategoria) {

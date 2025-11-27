@@ -11,12 +11,12 @@ const SimuladorElasticidade = () => {
 
   const [results, setResults] = useState(null);
 
-  // Dados base
+  // Dados base - NUTRIMENTAL (Dados Scanntech atualizados)
   const baseData = {
-    revenue: 119500000,
-    volume: 351804,        // Unidades vendidas
-    marketShare: 50.16,
-    avgPrice: 339.7,       // Preço médio por unidade (R$ 119.5M / 351.8k)
+    revenue: 114931609,    // R$ 114.9M (Total Nutrimental YTD)
+    volume: 1581352,       // kg vendidos (Total Nutrimental)
+    marketShare: 28.9,     // 28.9% share de mercado
+    avgPrice: 105.64,      // R$ 105.64/kg (Preço médio ponderado)
     elasticityCoeff: -1.2  // Elasticidade típica para produtos alimentícios premium
   };
 

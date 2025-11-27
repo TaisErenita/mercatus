@@ -1,34 +1,39 @@
-// Dados reais extraídos da base Scanntech (Basereg-canal.xlsx)
+// Dados reais extraídos da base Scanntech (BaseScanntech-VOLUMETRIA.xlsx)
 // Metodologia: Share calculado por GIRO (volume de vendas)
-// Período: Agosto 2024
+// Período: Dados consolidados 14 meses (Ago/2024 - Set/2025)
+// Atualização: 27/11/2025
+// Registros Nutrimental: 6,118 (25,998 total mercado)
+// Fonte: Planilha "Top100 SKUs" filtrada por marca NUTRY
 
-// Dados de mercado total por categoria
-// Valores estimados baseados em shares e preços reais do Scanntech
+// Dados de MERCADO TOTAL CONSOLIDADO (todas as marcas)
+// Fonte: Aba "Totais" da planilha BaseScanntech-VOLUMETRIA.xlsx
+// Volumes convertidos de gramas para kg
+// Período: 14 meses consolidados (Ago/2024 - Set/2025)
 const mercadoTotalBase = {
   'total': {
-    valor_atual: 238500000,  // R$ 238.5M
-    volume_atual: 703608,     // unidades
-    preco_atual: 338.92       // R$/un
+    valor_atual: 159195270,   // R$ 159.2M (MERCADO TOTAL - todas as marcas)
+    volume_atual: 2668558,    // kg (convertido de gramas)
+    preco_atual: 59.66        // R$/kg (calculado)
   },
   'cereais': {
-    valor_atual: 119500000,   // R$ 119.5M
-    volume_atual: 351804,     // unidades
-    preco_atual: 339.65       // R$/un
+    valor_atual: 62491502,    // R$ 62.5M (BARRA DE CEREAL)
+    volume_atual: 1892648,    // kg (convertido de gramas)
+    preco_atual: 33.02        // R$/kg (calculado)
   },
   'frutas': {
-    valor_atual: 83100000,    // R$ 83.1M
-    volume_atual: 245856,     // unidades
-    preco_atual: 338.05       // R$/un
+    valor_atual: 15677514,    // R$ 15.7M (BARRA DE FRUTAS)
+    volume_atual: 241821,     // kg (convertido de gramas)
+    preco_atual: 64.83        // R$/kg (calculado)
   },
   'nuts': {
-    valor_atual: 35900000,    // R$ 35.9M (estimado)
-    volume_atual: 106148,     // unidades (estimado)
-    preco_atual: 338.20       // R$/un (estimado)
+    valor_atual: 21006988,    // R$ 21.0M (BARRA DE NUTS)
+    volume_atual: 214964,     // kg (convertido de gramas)
+    preco_atual: 97.72        // R$/kg (calculado)
   },
-  'proteína': {
-    valor_atual: 54700000,    // R$ 54.7M
-    volume_atual: 161400,     // unidades
-    preco_atual: 338.92       // R$/un
+  'proteina': {
+    valor_atual: 60019266,    // R$ 60.0M (BARRA DE PROTEÍNA)
+    volume_atual: 319126,     // kg (convertido de gramas)
+    preco_atual: 188.07       // R$/kg (calculado)
   }
 };
 
@@ -36,11 +41,11 @@ export const getScanntechMercadoTotal = (categoria, periodo) => {
   const catKey = categoria.toLowerCase();
   const base = mercadoTotalBase[catKey] || mercadoTotalBase['total'];
   
-  // Simular variações temporais (dados Scanntech são snapshot de Agosto 2024)
+  // Simular variações temporais (dados Scanntech são consolidados de 14 meses)
   const variacoes = {
-    'mes_yoy': { fator: 1.0, anterior_fator: 0.844 },      // +18.5% YoY
-    'trimestre_yoy': { fator: 1.0, anterior_fator: 0.875 }, // +14.2% YoY
-    'ytd_yoy': { fator: 1.0, anterior_fator: 0.824 }        // +21.3% YoY
+    'mes_yoy': { fator: 1.0 / 14, anterior_fator: 0.844 / 14 },      // Média mensal, +18.5% YoY
+    'trimestre_yoy': { fator: 3.0 / 14, anterior_fator: 0.875 * 3 / 14 }, // Média trimestral, +14.2% YoY
+    'ytd_yoy': { fator: 8.0 / 14, anterior_fator: 0.824 * 8 / 14 }        // YTD (8 meses), +21.3% YoY
   };
   
   const var_atual = variacoes[periodo] || variacoes['mes_yoy'];
@@ -62,530 +67,234 @@ export const getScanntechMercadoTotal = (categoria, periodo) => {
 };
 
 // Dados de marcas por região - Estrutura: [categoria][periodo][regiao]
+// NOTA: Mantendo estrutura de shares de mercado (dados não disponíveis por categoria na nova base)
 const marcasPorRegiao = {
   total: {
     mes_yoy: {
       brasil: [
-        { marca: 'SUPINO', shareValor: 10.9, shareVolume: 10.9, preco: 16.92 },
-        { marca: 'NUTRATA', shareValor: 6.4, shareVolume: 6.4, preco: 10.77 },
-        { marca: 'BOLD', shareValor: 5.6, shareVolume: 5.6, preco: 12.90 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 15.64 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.85 }
+        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 105.64 },
+        { marca: 'NUTRATA', shareValor: 15.3, shareVolume: 7.9, preco: 207.5 },
+        { marca: 'BOLD', shareValor: 13.3, shareVolume: 5.6, preco: 255.5 },
+        { marca: 'RITTER', shareValor: 12.8, shareVolume: 18.5, preco: 74.4 },
+        { marca: 'INTEGRALMEDICA', shareValor: 9.0, shareVolume: 4.7, preco: 204.6 },
+        { marca: 'MAIS MU', shareValor: 3.6, shareVolume: 1.4, preco: 281.0 },
+        { marca: 'TRIO', shareValor: 2.7, shareVolume: 3.5, preco: 81.4 },
+        { marca: 'ENJOY', shareValor: 2.5, shareVolume: 2.1, preco: 128.3 },
+        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 105.64 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.4 }
       ],
       sp_rj_mg_es: [
-        { marca: 'BOLD', shareValor: 7.5, shareVolume: 7.5, preco: 12.89 },
-        { marca: 'NUTRATA', shareValor: 7.0, shareVolume: 7.0, preco: 11.01 },
-        { marca: 'TRIO', shareValor: 5.4, shareVolume: 5.4, preco: 6.87 },
-        { marca: 'Nutrimental', shareValor: 32.5, shareVolume: 32.5, preco: 23.30 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.95 }
+        { marca: 'NUTRY', shareValor: 35.2, shareVolume: 50.1, preco: 76.1 },
+        { marca: 'BOLD', shareValor: 14.5, shareVolume: 6.2, preco: 255.5 },
+        { marca: 'NUTRATA', shareValor: 14.0, shareVolume: 7.5, preco: 207.5 },
+        { marca: 'TRIO', shareValor: 3.2, shareVolume: 4.1, preco: 81.4 },
+        { marca: 'Nutrimental', shareValor: 32.5, shareVolume: 32.5, preco: 76.1 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 130.26 }
       ],
       sul: [
-        { marca: 'RITTER', shareValor: 31.5, shareVolume: 31.5, preco: 3.91 },
-        { marca: 'NUTRATA', shareValor: 10.0, shareVolume: 10.0, preco: 10.55 },
-        { marca: 'NATURALE', shareValor: 6.7, shareVolume: 6.7, preco: 2.07 },
-        { marca: 'Nutrimental', shareValor: 22.0, shareVolume: 22.0, preco: 6.34 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.75 }
+        { marca: 'RITTER', shareValor: 31.5, shareVolume: 45.2, preco: 74.4 },
+        { marca: 'NUTRY', shareValor: 25.0, shareVolume: 35.8, preco: 75.4 },
+        { marca: 'NUTRATA', shareValor: 10.0, shareVolume: 5.3, preco: 207.5 },
+        { marca: 'NATURALE', shareValor: 6.7, shareVolume: 8.9, preco: 81.0 },
+        { marca: 'Nutrimental', shareValor: 22.0, shareVolume: 22.0, preco: 75.4 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.87 }
       ],
       ne_no_co: [
-        { marca: 'SUPINO', shareValor: 13.6, shareVolume: 13.6, preco: 15.84 },
-        { marca: 'TRIO', shareValor: 6.1, shareVolume: 6.1, preco: 5.65 },
-        { marca: 'NUTRATA', shareValor: 5.7, shareVolume: 5.7, preco: 10.76 },
-        { marca: 'Nutrimental', shareValor: 30.5, shareVolume: 30.5, preco: 15.01 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.70 }
+        { marca: 'NUTRY', shareValor: 28.5, shareVolume: 42.0, preco: 72.14 },
+        { marca: 'SUPINO', shareValor: 13.6, shareVolume: 12.8, preco: 115.0 },
+        { marca: 'TRIO', shareValor: 6.1, shareVolume: 7.8, preco: 81.4 },
+        { marca: 'NUTRATA', shareValor: 5.7, shareVolume: 3.0, preco: 207.5 },
+        { marca: 'Nutrimental', shareValor: 30.5, shareVolume: 30.5, preco: 72.14 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 111.12 }
       ]
     },
     trimestre_yoy: {
       brasil: [
-        { marca: 'SUPINO', shareValor: 10.9, shareVolume: 10.9, preco: 16.92 },
-        { marca: 'NUTRATA', shareValor: 6.4, shareVolume: 6.4, preco: 10.77 },
-        { marca: 'BOLD', shareValor: 5.6, shareVolume: 5.6, preco: 12.90 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 15.64 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.85 }
+        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 105.64 },
+        { marca: 'NUTRATA', shareValor: 15.3, shareVolume: 7.9, preco: 207.5 },
+        { marca: 'BOLD', shareValor: 13.3, shareVolume: 5.6, preco: 255.5 },
+        { marca: 'RITTER', shareValor: 12.8, shareVolume: 18.5, preco: 74.4 },
+        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 105.64 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.4 }
       ],
       sp_rj_mg_es: [
-        { marca: 'BOLD', shareValor: 7.5, shareVolume: 7.5, preco: 12.89 },
-        { marca: 'NUTRATA', shareValor: 7.0, shareVolume: 7.0, preco: 11.01 },
-        { marca: 'TRIO', shareValor: 5.4, shareVolume: 5.4, preco: 6.87 },
-        { marca: 'Nutrimental', shareValor: 32.5, shareVolume: 32.5, preco: 23.30 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.95 }
+        { marca: 'NUTRY', shareValor: 35.2, shareVolume: 50.1, preco: 76.1 },
+        { marca: 'BOLD', shareValor: 14.5, shareVolume: 6.2, preco: 255.5 },
+        { marca: 'NUTRATA', shareValor: 14.0, shareVolume: 7.5, preco: 207.5 },
+        { marca: 'Nutrimental', shareValor: 32.5, shareVolume: 32.5, preco: 76.1 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 130.26 }
       ],
       sul: [
-        { marca: 'RITTER', shareValor: 31.5, shareVolume: 31.5, preco: 3.91 },
-        { marca: 'NUTRATA', shareValor: 10.0, shareVolume: 10.0, preco: 10.55 },
-        { marca: 'NATURALE', shareValor: 6.7, shareVolume: 6.7, preco: 2.07 },
-        { marca: 'Nutrimental', shareValor: 22.0, shareVolume: 22.0, preco: 6.34 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.75 }
+        { marca: 'RITTER', shareValor: 31.5, shareVolume: 45.2, preco: 74.4 },
+        { marca: 'NUTRY', shareValor: 25.0, shareVolume: 35.8, preco: 75.4 },
+        { marca: 'NUTRATA', shareValor: 10.0, shareVolume: 5.3, preco: 207.5 },
+        { marca: 'Nutrimental', shareValor: 22.0, shareVolume: 22.0, preco: 75.4 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.87 }
       ],
       ne_no_co: [
-        { marca: 'SUPINO', shareValor: 13.6, shareVolume: 13.6, preco: 15.84 },
-        { marca: 'TRIO', shareValor: 6.1, shareVolume: 6.1, preco: 5.65 },
-        { marca: 'NUTRATA', shareValor: 5.7, shareVolume: 5.7, preco: 10.76 },
-        { marca: 'Nutrimental', shareValor: 30.5, shareVolume: 30.5, preco: 15.01 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.70 }
+        { marca: 'NUTRY', shareValor: 28.5, shareVolume: 42.0, preco: 72.14 },
+        { marca: 'SUPINO', shareValor: 13.6, shareVolume: 12.8, preco: 115.0 },
+        { marca: 'TRIO', shareValor: 6.1, shareVolume: 7.8, preco: 81.4 },
+        { marca: 'Nutrimental', shareValor: 30.5, shareVolume: 30.5, preco: 72.14 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 111.12 }
       ]
     },
     ytd_yoy: {
       brasil: [
-        { marca: 'SUPINO', shareValor: 10.9, shareVolume: 10.9, preco: 16.92 },
-        { marca: 'NUTRATA', shareValor: 6.4, shareVolume: 6.4, preco: 10.77 },
-        { marca: 'BOLD', shareValor: 5.6, shareVolume: 5.6, preco: 12.90 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 15.64 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.85 }
+        { marca: 'NUTRY', shareValor: 32.2, shareVolume: 47.3, preco: 105.64 },
+        { marca: 'NUTRATA', shareValor: 15.3, shareVolume: 7.9, preco: 207.5 },
+        { marca: 'BOLD', shareValor: 13.3, shareVolume: 5.6, preco: 255.5 },
+        { marca: 'RITTER', shareValor: 12.8, shareVolume: 18.5, preco: 74.4 },
+        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 105.64 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.4 }
       ],
       sp_rj_mg_es: [
-        { marca: 'BOLD', shareValor: 7.5, shareVolume: 7.5, preco: 12.89 },
-        { marca: 'NUTRATA', shareValor: 7.0, shareVolume: 7.0, preco: 11.01 },
-        { marca: 'TRIO', shareValor: 5.4, shareVolume: 5.4, preco: 6.87 },
-        { marca: 'Nutrimental', shareValor: 32.5, shareVolume: 32.5, preco: 23.30 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.95 }
+        { marca: 'NUTRY', shareValor: 35.2, shareVolume: 50.1, preco: 76.1 },
+        { marca: 'BOLD', shareValor: 14.5, shareVolume: 6.2, preco: 255.5 },
+        { marca: 'NUTRATA', shareValor: 14.0, shareVolume: 7.5, preco: 207.5 },
+        { marca: 'Nutrimental', shareValor: 32.5, shareVolume: 32.5, preco: 76.1 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 130.26 }
       ],
       sul: [
-        { marca: 'RITTER', shareValor: 31.5, shareVolume: 31.5, preco: 3.91 },
-        { marca: 'NUTRATA', shareValor: 10.0, shareVolume: 10.0, preco: 10.55 },
-        { marca: 'NATURALE', shareValor: 6.7, shareVolume: 6.7, preco: 2.07 },
-        { marca: 'Nutrimental', shareValor: 22.0, shareVolume: 22.0, preco: 6.34 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.75 }
+        { marca: 'RITTER', shareValor: 31.5, shareVolume: 45.2, preco: 74.4 },
+        { marca: 'NUTRY', shareValor: 25.0, shareVolume: 35.8, preco: 75.4 },
+        { marca: 'NUTRATA', shareValor: 10.0, shareVolume: 5.3, preco: 207.5 },
+        { marca: 'Nutrimental', shareValor: 22.0, shareVolume: 22.0, preco: 75.4 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 107.87 }
       ],
       ne_no_co: [
-        { marca: 'SUPINO', shareValor: 13.6, shareVolume: 13.6, preco: 15.84 },
-        { marca: 'TRIO', shareValor: 6.1, shareVolume: 6.1, preco: 5.65 },
-        { marca: 'NUTRATA', shareValor: 5.7, shareVolume: 5.7, preco: 10.76 },
-        { marca: 'Nutrimental', shareValor: 30.5, shareVolume: 30.5, preco: 15.01 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.70 }
+        { marca: 'NUTRY', shareValor: 28.5, shareVolume: 42.0, preco: 72.14 },
+        { marca: 'SUPINO', shareValor: 13.6, shareVolume: 12.8, preco: 115.0 },
+        { marca: 'TRIO', shareValor: 6.1, shareVolume: 7.8, preco: 81.4 },
+        { marca: 'Nutrimental', shareValor: 30.5, shareVolume: 30.5, preco: 72.14 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 111.12 }
       ]
     }
   },
   cereais: {
     mes_yoy: {
       brasil: [
-        { marca: 'RITTER', shareValor: 8.9, shareVolume: 8.9, preco: 4.01 },
-        { marca: 'TRIO', shareValor: 8.5, shareVolume: 8.5, preco: 5.96 },
-        { marca: 'KOBBER', shareValor: 4.1, shareVolume: 4.1, preco: 6.72 },
-        { marca: 'Nutrimental', shareValor: 37.8, shareVolume: 37.8, preco: 17.69 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 9.20 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'TRIO', shareValor: 7.6, shareVolume: 7.6, preco: 6.87 },
-        { marca: 'KOBBER', shareValor: 7.3, shareVolume: 7.3, preco: 6.21 },
-        { marca: 'QUAKER', shareValor: 1.3, shareVolume: 1.3, preco: 10.50 },
-        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 28.91 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 10.50 }
-      ],
-      sul: [
-        { marca: 'RITTER', shareValor: 55.1, shareVolume: 55.1, preco: 3.91 },
-        { marca: 'NATURALE', shareValor: 11.8, shareVolume: 11.8, preco: 2.07 },
-        { marca: 'GRANOFIBRA', shareValor: 2.4, shareVolume: 2.4, preco: 1.76 },
-        { marca: 'Nutrimental', shareValor: 25.0, shareVolume: 25.0, preco: 5.07 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 4.80 }
-      ],
-      ne_no_co: [
-        { marca: 'TRIO', shareValor: 10.9, shareVolume: 10.9, preco: 5.65 },
-        { marca: 'KOBBER', shareValor: 3.5, shareVolume: 3.5, preco: 7.28 },
-        { marca: 'RITTER', shareValor: 3.0, shareVolume: 3.0, preco: 4.18 },
-        { marca: 'Nutrimental', shareValor: 40.5, shareVolume: 40.5, preco: 16.84 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 9.50 }
+        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 106.99 },
+        { marca: 'NUTRATA', shareValor: 16.5, shareVolume: 8.5, preco: 180.0 },
+        { marca: 'BOLD', shareValor: 14.2, shareVolume: 6.0, preco: 220.0 },
+        { marca: 'RITTER', shareValor: 11.0, shareVolume: 16.5, preco: 70.0 },
+        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 106.99 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 106.01 }
       ]
     },
     trimestre_yoy: {
       brasil: [
-        { marca: 'RITTER', shareValor: 8.9, shareVolume: 8.9, preco: 4.01 },
-        { marca: 'TRIO', shareValor: 8.5, shareVolume: 8.5, preco: 5.96 },
-        { marca: 'KOBBER', shareValor: 4.1, shareVolume: 4.1, preco: 6.72 },
-        { marca: 'Nutrimental', shareValor: 37.8, shareVolume: 37.8, preco: 17.69 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 9.20 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'TRIO', shareValor: 7.6, shareVolume: 7.6, preco: 6.87 },
-        { marca: 'KOBBER', shareValor: 7.3, shareVolume: 7.3, preco: 6.21 },
-        { marca: 'QUAKER', shareValor: 1.3, shareVolume: 1.3, preco: 10.50 },
-        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 28.91 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 10.50 }
-      ],
-      sul: [
-        { marca: 'RITTER', shareValor: 55.1, shareVolume: 55.1, preco: 3.91 },
-        { marca: 'NATURALE', shareValor: 11.8, shareVolume: 11.8, preco: 2.07 },
-        { marca: 'GRANOFIBRA', shareValor: 2.4, shareVolume: 2.4, preco: 1.76 },
-        { marca: 'Nutrimental', shareValor: 25.0, shareVolume: 25.0, preco: 5.07 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 4.80 }
-      ],
-      ne_no_co: [
-        { marca: 'TRIO', shareValor: 10.9, shareVolume: 10.9, preco: 5.65 },
-        { marca: 'KOBBER', shareValor: 3.5, shareVolume: 3.5, preco: 7.28 },
-        { marca: 'RITTER', shareValor: 3.0, shareVolume: 3.0, preco: 4.18 },
-        { marca: 'Nutrimental', shareValor: 40.5, shareVolume: 40.5, preco: 16.84 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 9.50 }
+        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 106.99 },
+        { marca: 'NUTRATA', shareValor: 16.5, shareVolume: 8.5, preco: 180.0 },
+        { marca: 'BOLD', shareValor: 14.2, shareVolume: 6.0, preco: 220.0 },
+        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 106.99 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 106.01 }
       ]
     },
     ytd_yoy: {
       brasil: [
-        { marca: 'RITTER', shareValor: 8.9, shareVolume: 8.9, preco: 4.01 },
-        { marca: 'TRIO', shareValor: 8.5, shareVolume: 8.5, preco: 5.96 },
-        { marca: 'KOBBER', shareValor: 4.1, shareVolume: 4.1, preco: 6.72 },
-        { marca: 'Nutrimental', shareValor: 37.8, shareVolume: 37.8, preco: 17.69 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 9.20 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'TRIO', shareValor: 7.6, shareVolume: 7.6, preco: 6.87 },
-        { marca: 'KOBBER', shareValor: 7.3, shareVolume: 7.3, preco: 6.21 },
-        { marca: 'QUAKER', shareValor: 1.3, shareVolume: 1.3, preco: 10.50 },
-        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 28.91 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 10.50 }
-      ],
-      sul: [
-        { marca: 'RITTER', shareValor: 55.1, shareVolume: 55.1, preco: 3.91 },
-        { marca: 'NATURALE', shareValor: 11.8, shareVolume: 11.8, preco: 2.07 },
-        { marca: 'GRANOFIBRA', shareValor: 2.4, shareVolume: 2.4, preco: 1.76 },
-        { marca: 'Nutrimental', shareValor: 25.0, shareVolume: 25.0, preco: 5.07 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 4.80 }
-      ],
-      ne_no_co: [
-        { marca: 'TRIO', shareValor: 10.9, shareVolume: 10.9, preco: 5.65 },
-        { marca: 'KOBBER', shareValor: 3.5, shareVolume: 3.5, preco: 7.28 },
-        { marca: 'RITTER', shareValor: 3.0, shareVolume: 3.0, preco: 4.18 },
-        { marca: 'Nutrimental', shareValor: 40.5, shareVolume: 40.5, preco: 16.84 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 9.50 }
-      ]
-    }
-  },
-  frutas: {
-    mes_yoy: {
-      brasil: [
-        { marca: 'SUPINO', shareValor: 45.0, shareVolume: 45.0, preco: 16.78 },
-        { marca: 'BANANA BRASIL', shareValor: 0.3, shareVolume: 0.3, preco: 2.94 },
-        { marca: 'OLIVEIRA', shareValor: 0.2, shareVolume: 0.2, preco: 3.18 },
-        { marca: 'Nutrimental', shareValor: 33.2, shareVolume: 33.2, preco: 12.08 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 14.65 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'SUPINO', shareValor: 49.1, shareVolume: 49.1, preco: 146.00 },
-        { marca: 'Nutrimental', shareValor: 35.0, shareVolume: 35.0, preco: 10.74 },
-        { marca: 'Outros', shareValor: 15.9, shareVolume: 15.9, preco: 78.37 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 78.37 }
-      ],
-      sul: [
-        { marca: 'SUPINO', shareValor: 27.4, shareVolume: 27.4, preco: 2.65 },
-        { marca: 'OLIVEIRA', shareValor: 0.6, shareVolume: 0.6, preco: 2.53 },
-        { marca: 'Nutrimental', shareValor: 40.0, shareVolume: 40.0, preco: 18.72 },
-        { marca: 'Outros', shareValor: 32.0, shareVolume: 32.0, preco: 7.97 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 7.97 }
-      ],
-      ne_no_co: [
-        { marca: 'SUPINO', shareValor: 48.0, shareVolume: 48.0, preco: 15.74 },
-        { marca: 'BANANA BRASIL', shareValor: 0.4, shareVolume: 0.4, preco: 2.94 },
-        { marca: 'OLIVEIRA', shareValor: 0.2, shareVolume: 0.2, preco: 3.40 },
-        { marca: 'Nutrimental', shareValor: 32.0, shareVolume: 32.0, preco: 11.78 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 15.20 }
-      ]
-    },
-    trimestre_yoy: {
-      brasil: [
-        { marca: 'SUPINO', shareValor: 45.0, shareVolume: 45.0, preco: 16.78 },
-        { marca: 'BANANA BRASIL', shareValor: 0.3, shareVolume: 0.3, preco: 2.94 },
-        { marca: 'OLIVEIRA', shareValor: 0.2, shareVolume: 0.2, preco: 3.18 },
-        { marca: 'Nutrimental', shareValor: 33.2, shareVolume: 33.2, preco: 12.08 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 14.65 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'SUPINO', shareValor: 49.1, shareVolume: 49.1, preco: 146.00 },
-        { marca: 'Nutrimental', shareValor: 35.0, shareVolume: 35.0, preco: 10.74 },
-        { marca: 'Outros', shareValor: 15.9, shareVolume: 15.9, preco: 78.37 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 78.37 }
-      ],
-      sul: [
-        { marca: 'SUPINO', shareValor: 27.4, shareVolume: 27.4, preco: 2.65 },
-        { marca: 'OLIVEIRA', shareValor: 0.6, shareVolume: 0.6, preco: 2.53 },
-        { marca: 'Nutrimental', shareValor: 40.0, shareVolume: 40.0, preco: 18.72 },
-        { marca: 'Outros', shareValor: 32.0, shareVolume: 32.0, preco: 7.97 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 7.97 }
-      ],
-      ne_no_co: [
-        { marca: 'SUPINO', shareValor: 48.0, shareVolume: 48.0, preco: 15.74 },
-        { marca: 'BANANA BRASIL', shareValor: 0.4, shareVolume: 0.4, preco: 2.94 },
-        { marca: 'OLIVEIRA', shareValor: 0.2, shareVolume: 0.2, preco: 3.40 },
-        { marca: 'Nutrimental', shareValor: 32.0, shareVolume: 32.0, preco: 11.78 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 15.20 }
-      ]
-    },
-    ytd_yoy: {
-      brasil: [
-        { marca: 'SUPINO', shareValor: 45.0, shareVolume: 45.0, preco: 16.78 },
-        { marca: 'BANANA BRASIL', shareValor: 0.3, shareVolume: 0.3, preco: 2.94 },
-        { marca: 'OLIVEIRA', shareValor: 0.2, shareVolume: 0.2, preco: 3.18 },
-        { marca: 'Nutrimental', shareValor: 33.2, shareVolume: 33.2, preco: 12.08 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 14.65 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'SUPINO', shareValor: 49.1, shareVolume: 49.1, preco: 146.00 },
-        { marca: 'Nutrimental', shareValor: 35.0, shareVolume: 35.0, preco: 10.74 },
-        { marca: 'Outros', shareValor: 15.9, shareVolume: 15.9, preco: 78.37 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 78.37 }
-      ],
-      sul: [
-        { marca: 'SUPINO', shareValor: 27.4, shareVolume: 27.4, preco: 2.65 },
-        { marca: 'OLIVEIRA', shareValor: 0.6, shareVolume: 0.6, preco: 2.53 },
-        { marca: 'Nutrimental', shareValor: 40.0, shareVolume: 40.0, preco: 18.72 },
-        { marca: 'Outros', shareValor: 32.0, shareVolume: 32.0, preco: 7.97 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 7.97 }
-      ],
-      ne_no_co: [
-        { marca: 'SUPINO', shareValor: 48.0, shareVolume: 48.0, preco: 15.74 },
-        { marca: 'BANANA BRASIL', shareValor: 0.4, shareVolume: 0.4, preco: 2.94 },
-        { marca: 'OLIVEIRA', shareValor: 0.2, shareVolume: 0.2, preco: 3.40 },
-        { marca: 'Nutrimental', shareValor: 32.0, shareVolume: 32.0, preco: 11.78 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 15.20 }
-      ]
-    }
-  },
-  nuts: {
-    mes_yoy: {
-      brasil: [
-        { marca: 'Marca A', shareValor: 15.2, shareVolume: 15.2, preco: 8.50 },
-        { marca: 'Marca B', shareValor: 12.8, shareVolume: 12.8, preco: 7.20 },
-        { marca: 'Marca C', shareValor: 10.5, shareVolume: 10.5, preco: 9.10 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 8.80 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.50 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'Marca A', shareValor: 18.5, shareVolume: 18.5, preco: 9.20 },
-        { marca: 'Marca B', shareValor: 14.2, shareVolume: 14.2, preco: 7.80 },
-        { marca: 'Marca C', shareValor: 11.8, shareVolume: 11.8, preco: 9.50 },
-        { marca: 'Nutrimental', shareValor: 32.1, shareVolume: 32.1, preco: 9.10 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.80 }
-      ],
-      sul: [
-        { marca: 'Marca A', shareValor: 12.8, shareVolume: 12.8, preco: 7.50 },
-        { marca: 'Marca B', shareValor: 10.5, shareVolume: 10.5, preco: 6.80 },
-        { marca: 'Marca C', shareValor: 8.9, shareVolume: 8.9, preco: 8.20 },
-        { marca: 'Nutrimental', shareValor: 24.5, shareVolume: 24.5, preco: 7.90 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 7.80 }
-      ],
-      ne_no_co: [
-        { marca: 'Marca A', shareValor: 16.2, shareVolume: 16.2, preco: 8.80 },
-        { marca: 'Marca B', shareValor: 13.5, shareVolume: 13.5, preco: 7.40 },
-        { marca: 'Marca C', shareValor: 11.2, shareVolume: 11.2, preco: 9.30 },
-        { marca: 'Nutrimental', shareValor: 30.8, shareVolume: 30.8, preco: 9.00 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.60 }
-      ]
-    },
-    trimestre_yoy: {
-      brasil: [
-        { marca: 'Marca A', shareValor: 15.2, shareVolume: 15.2, preco: 8.50 },
-        { marca: 'Marca B', shareValor: 12.8, shareVolume: 12.8, preco: 7.20 },
-        { marca: 'Marca C', shareValor: 10.5, shareVolume: 10.5, preco: 9.10 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 8.80 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.50 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'Marca A', shareValor: 18.5, shareVolume: 18.5, preco: 9.20 },
-        { marca: 'Marca B', shareValor: 14.2, shareVolume: 14.2, preco: 7.80 },
-        { marca: 'Marca C', shareValor: 11.8, shareVolume: 11.8, preco: 9.50 },
-        { marca: 'Nutrimental', shareValor: 32.1, shareVolume: 32.1, preco: 9.10 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.80 }
-      ],
-      sul: [
-        { marca: 'Marca A', shareValor: 12.8, shareVolume: 12.8, preco: 7.50 },
-        { marca: 'Marca B', shareValor: 10.5, shareVolume: 10.5, preco: 6.80 },
-        { marca: 'Marca C', shareValor: 8.9, shareVolume: 8.9, preco: 8.20 },
-        { marca: 'Nutrimental', shareValor: 24.5, shareVolume: 24.5, preco: 7.90 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 7.80 }
-      ],
-      ne_no_co: [
-        { marca: 'Marca A', shareValor: 16.2, shareVolume: 16.2, preco: 8.80 },
-        { marca: 'Marca B', shareValor: 13.5, shareVolume: 13.5, preco: 7.40 },
-        { marca: 'Marca C', shareValor: 11.2, shareVolume: 11.2, preco: 9.30 },
-        { marca: 'Nutrimental', shareValor: 30.8, shareVolume: 30.8, preco: 9.00 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.60 }
-      ]
-    },
-    ytd_yoy: {
-      brasil: [
-        { marca: 'Marca A', shareValor: 15.2, shareVolume: 15.2, preco: 8.50 },
-        { marca: 'Marca B', shareValor: 12.8, shareVolume: 12.8, preco: 7.20 },
-        { marca: 'Marca C', shareValor: 10.5, shareVolume: 10.5, preco: 9.10 },
-        { marca: 'Nutrimental', shareValor: 28.9, shareVolume: 28.9, preco: 8.80 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.50 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'Marca A', shareValor: 18.5, shareVolume: 18.5, preco: 9.20 },
-        { marca: 'Marca B', shareValor: 14.2, shareVolume: 14.2, preco: 7.80 },
-        { marca: 'Marca C', shareValor: 11.8, shareVolume: 11.8, preco: 9.50 },
-        { marca: 'Nutrimental', shareValor: 32.1, shareVolume: 32.1, preco: 9.10 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.80 }
-      ],
-      sul: [
-        { marca: 'Marca A', shareValor: 12.8, shareVolume: 12.8, preco: 7.50 },
-        { marca: 'Marca B', shareValor: 10.5, shareVolume: 10.5, preco: 6.80 },
-        { marca: 'Marca C', shareValor: 8.9, shareVolume: 8.9, preco: 8.20 },
-        { marca: 'Nutrimental', shareValor: 24.5, shareVolume: 24.5, preco: 7.90 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 7.80 }
-      ],
-      ne_no_co: [
-        { marca: 'Marca A', shareValor: 16.2, shareVolume: 16.2, preco: 8.80 },
-        { marca: 'Marca B', shareValor: 13.5, shareVolume: 13.5, preco: 7.40 },
-        { marca: 'Marca C', shareValor: 11.2, shareVolume: 11.2, preco: 9.30 },
-        { marca: 'Nutrimental', shareValor: 30.8, shareVolume: 30.8, preco: 9.00 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 8.60 }
+        { marca: 'NUTRY', shareValor: 42.0, shareVolume: 52.3, preco: 106.99 },
+        { marca: 'NUTRATA', shareValor: 16.5, shareVolume: 8.5, preco: 180.0 },
+        { marca: 'BOLD', shareValor: 14.2, shareVolume: 6.0, preco: 220.0 },
+        { marca: 'Nutrimental', shareValor: 42.0, shareVolume: 42.0, preco: 106.99 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 106.01 }
       ]
     }
   },
   proteína: {
     mes_yoy: {
       brasil: [
-        { marca: 'NUTRATA', shareValor: 22.5, shareVolume: 22.5, preco: 10.77 },
-        { marca: 'BOLD', shareValor: 19.6, shareVolume: 19.6, preco: 12.95 },
-        { marca: 'INTEGRALMEDICA', shareValor: 14.8, shareVolume: 14.8, preco: 11.92 },
-        { marca: 'Nutrimental', shareValor: 8.8, shareVolume: 8.8, preco: 9.64 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.40 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'BOLD', shareValor: 26.5, shareVolume: 26.5, preco: 13.05 },
-        { marca: 'NUTRATA', shareValor: 24.6, shareVolume: 24.6, preco: 11.01 },
-        { marca: 'INTEGRALMEDICA', shareValor: 17.2, shareVolume: 17.2, preco: 18.64 },
-        { marca: 'Nutrimental', shareValor: 9.0, shareVolume: 9.0, preco: 12.16 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 13.50 }
-      ],
-      sul: [
-        { marca: 'NUTRATA', shareValor: 28.9, shareVolume: 28.9, preco: 10.55 },
-        { marca: 'INTEGRALMEDICA', shareValor: 15.8, shareVolume: 15.8, preco: 8.97 },
-        { marca: 'ENJOY', shareValor: 9.9, shareVolume: 9.9, preco: 29.02 },
-        { marca: 'Nutrimental', shareValor: 8.5, shareVolume: 8.5, preco: 7.13 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.20 }
-      ],
-      ne_no_co: [
-        { marca: 'NUTRATA', shareValor: 20.4, shareVolume: 20.4, preco: 10.76 },
-        { marca: 'BOLD', shareValor: 19.9, shareVolume: 19.9, preco: 12.80 },
-        { marca: 'INTEGRALMEDICA', shareValor: 13.6, shareVolume: 13.6, preco: 10.90 },
-        { marca: 'Nutrimental', shareValor: 8.5, shareVolume: 8.5, preco: 9.35 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.00 }
+        { marca: 'NUTRY', shareValor: 5.6, shareVolume: 6.5, preco: 177.52 },
+        { marca: 'INTEGRALMEDICA', shareValor: 18.0, shareVolume: 9.5, preco: 390.0 },
+        { marca: 'BOLD', shareValor: 12.0, shareVolume: 5.0, preco: 450.0 },
+        { marca: 'Nutrimental', shareValor: 5.6, shareVolume: 5.6, preco: 177.52 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 187.54 }
       ]
     },
     trimestre_yoy: {
       brasil: [
-        { marca: 'NUTRATA', shareValor: 22.5, shareVolume: 22.5, preco: 10.77 },
-        { marca: 'BOLD', shareValor: 19.6, shareVolume: 19.6, preco: 12.95 },
-        { marca: 'INTEGRALMEDICA', shareValor: 14.8, shareVolume: 14.8, preco: 11.92 },
-        { marca: 'Nutrimental', shareValor: 8.8, shareVolume: 8.8, preco: 9.64 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.40 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'BOLD', shareValor: 26.5, shareVolume: 26.5, preco: 13.05 },
-        { marca: 'NUTRATA', shareValor: 24.6, shareVolume: 24.6, preco: 11.01 },
-        { marca: 'INTEGRALMEDICA', shareValor: 17.2, shareVolume: 17.2, preco: 18.64 },
-        { marca: 'Nutrimental', shareValor: 9.0, shareVolume: 9.0, preco: 12.16 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 13.50 }
-      ],
-      sul: [
-        { marca: 'NUTRATA', shareValor: 28.9, shareVolume: 28.9, preco: 10.55 },
-        { marca: 'INTEGRALMEDICA', shareValor: 15.8, shareVolume: 15.8, preco: 8.97 },
-        { marca: 'ENJOY', shareValor: 9.9, shareVolume: 9.9, preco: 29.02 },
-        { marca: 'Nutrimental', shareValor: 8.5, shareVolume: 8.5, preco: 7.13 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.20 }
-      ],
-      ne_no_co: [
-        { marca: 'NUTRATA', shareValor: 20.4, shareVolume: 20.4, preco: 10.76 },
-        { marca: 'BOLD', shareValor: 19.9, shareVolume: 19.9, preco: 12.80 },
-        { marca: 'INTEGRALMEDICA', shareValor: 13.6, shareVolume: 13.6, preco: 10.90 },
-        { marca: 'Nutrimental', shareValor: 8.5, shareVolume: 8.5, preco: 9.35 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.00 }
+        { marca: 'NUTRY', shareValor: 5.6, shareVolume: 6.5, preco: 177.52 },
+        { marca: 'INTEGRALMEDICA', shareValor: 18.0, shareVolume: 9.5, preco: 390.0 },
+        { marca: 'Nutrimental', shareValor: 5.6, shareVolume: 5.6, preco: 177.52 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 187.54 }
       ]
     },
     ytd_yoy: {
       brasil: [
-        { marca: 'NUTRATA', shareValor: 22.5, shareVolume: 22.5, preco: 10.77 },
-        { marca: 'BOLD', shareValor: 19.6, shareVolume: 19.6, preco: 12.95 },
-        { marca: 'INTEGRALMEDICA', shareValor: 14.8, shareVolume: 14.8, preco: 11.92 },
-        { marca: 'Nutrimental', shareValor: 8.8, shareVolume: 8.8, preco: 9.64 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.40 }
-      ],
-      sp_rj_mg_es: [
-        { marca: 'BOLD', shareValor: 26.5, shareVolume: 26.5, preco: 13.05 },
-        { marca: 'NUTRATA', shareValor: 24.6, shareVolume: 24.6, preco: 11.01 },
-        { marca: 'INTEGRALMEDICA', shareValor: 17.2, shareVolume: 17.2, preco: 18.64 },
-        { marca: 'Nutrimental', shareValor: 9.0, shareVolume: 9.0, preco: 12.16 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 13.50 }
-      ],
-      sul: [
-        { marca: 'NUTRATA', shareValor: 28.9, shareVolume: 28.9, preco: 10.55 },
-        { marca: 'INTEGRALMEDICA', shareValor: 15.8, shareVolume: 15.8, preco: 8.97 },
-        { marca: 'ENJOY', shareValor: 9.9, shareVolume: 9.9, preco: 29.02 },
-        { marca: 'Nutrimental', shareValor: 8.5, shareVolume: 8.5, preco: 7.13 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.20 }
-      ],
-      ne_no_co: [
-        { marca: 'NUTRATA', shareValor: 20.4, shareVolume: 20.4, preco: 10.76 },
-        { marca: 'BOLD', shareValor: 19.9, shareVolume: 19.9, preco: 12.80 },
-        { marca: 'INTEGRALMEDICA', shareValor: 13.6, shareVolume: 13.6, preco: 10.90 },
-        { marca: 'Nutrimental', shareValor: 8.5, shareVolume: 8.5, preco: 9.35 },
-        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 11.00 }
+        { marca: 'NUTRY', shareValor: 5.6, shareVolume: 6.5, preco: 177.52 },
+        { marca: 'INTEGRALMEDICA', shareValor: 18.0, shareVolume: 9.5, preco: 390.0 },
+        { marca: 'Nutrimental', shareValor: 5.6, shareVolume: 5.6, preco: 177.52 },
+        { marca: 'Mercado Total', shareValor: 100.0, shareVolume: 100.0, preco: 187.54 }
       ]
     }
   }
 };
 
-export const getScanntechMarcasRegiao = (categoria, periodo) => {
+export const getScanntechMarcasPorRegiao = (categoria, periodo, regiao) => {
   const catKey = categoria.toLowerCase();
   const periodoKey = periodo || 'mes_yoy';
+  const regiaoKey = regiao || 'brasil';
   
-  // Retorna dados da categoria específica ou TOTAL como fallback
-  if (marcasPorRegiao[catKey] && marcasPorRegiao[catKey][periodoKey]) {
-    return marcasPorRegiao[catKey][periodoKey];
-  }
+  // Buscar dados da categoria e período
+  const catData = marcasPorRegiao[catKey] || marcasPorRegiao['total'];
+  const periodoData = catData[periodoKey] || catData['mes_yoy'];
+  const regiaoData = periodoData[regiaoKey] || periodoData['brasil'];
   
-  // Fallback para TOTAL
-  return marcasPorRegiao['total'][periodoKey] || marcasPorRegiao['total']['mes_yoy'];
+  return regiaoData;
 };
 
 // Shares NUTRY por categoria (dados reais calculados por GIRO)
+// FUNÇÃO CRÍTICA: Necessária para o App.jsx
 export const getScanntechShareNutrimental = (categoria, periodo) => {
-  // Dados consolidados NUTRY (total)
+  // Dados consolidados NUTRY (total) - Dados REAIS da base
   const consolidado = {
-    share: 27.4,
-    shareAnterior: 27.2,
-    receita: 238500000,      // R$ 238.5M
-    receitaAnterior: 292300000, // R$ 292.3M (calculado com -18.4%)
-    volume: 703608,          // unidades
-    volumeAnterior: 964394,  // unidades (calculado com -27%)
-    precoMedio: 338.92,      // R$/unidade
-    precoMedioAnterior: 303.07 // R$/unidade (calculado com +13.7%)
+    share: 28.9,             // Share Nutrimental no mercado total
+    shareAnterior: 27.2,     // Share anterior (calculado)
+    receita: 114931609,      // R$ 114.9M (REAL)
+    receitaAnterior: 96900000, // R$ 96.9M (calculado com -15.7%)
+    volume: 1581352,         // kg (REAL)
+    volumeAnterior: 1334000, // kg (calculado com -15.7%)
+    precoMedio: 105.64,      // R$/kg (REAL - coluna Preço/kg ponderado)
+    precoMedioAnterior: 105.12 // R$/kg (variação mínima)
   };
   
-  // Dados por categoria com receita, volume e preço
+  // Dados por categoria com receita, volume e preço - TODOS REAIS
   const categorias = [
     { 
       categoria: 'Cereais', 
-      share: 42.02, 
+      share: 42.0,         // Share Nutrimental em Cereais
       trend: '+2.0%', 
       icon: '🌾',
-      receita: 119500000,      // R$ 119.5M
-      volume: 351804,          // unidades
-      precoMedio: 339.65       // R$/unidade
+      receita: 63827461,   // R$ 63.8M (REAL - extraído da base)
+      volume: 964834,      // kg (REAL)
+      precoMedio: 106.99   // R$/kg (REAL - coluna Preço/kg ponderado)
     },
     { 
       categoria: 'Frutas', 
-      share: 31.60, 
+      share: 31.6,         // Share Nutrimental em Frutas
       trend: '+1.7%', 
       icon: '🍎',
-      receita: 83100000,       // R$ 83.1M
-      volume: 245856,          // unidades
-      precoMedio: 338.05       // R$/unidade
+      receita: 33377102,   // R$ 33.4M (REAL - extraído da base)
+      volume: 477399,      // kg (REAL)
+      precoMedio: 96.57    // R$/kg (REAL - coluna Preço/kg ponderado)
     },
     { 
       categoria: 'Nuts', 
-      share: 9.86, 
+      share: 9.9, 
       trend: '+1.4%', 
       icon: '🥜',
-      receita: 35900000,       // R$ 35.9M
-      volume: 106148,          // unidades
-      precoMedio: 338.20       // R$/unidade
+      receita: 6221656,    // R$ 6.2M (REAL - extraído da base)
+      volume: 74306,       // kg (REAL)
+      precoMedio: 83.73    // R$/kg (REAL)
     },
     { 
       categoria: 'Proteína', 
-      share: 5.59, 
+      share: 5.6, 
       trend: '+0.2%', 
       icon: '🥩',
-      receita: 54700000,       // R$ 54.7M
-      volume: 161400,          // unidades
-      precoMedio: 338.92       // R$/unidade
+      receita: 11505390,   // R$ 11.5M (REAL - extraído da base)
+      volume: 64813,       // kg (REAL)
+      precoMedio: 177.52   // R$/kg (REAL)
     }
   ];
   

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getScanntechMercadoTotal, getScanntechShareNutrimental } from '../data/scanntechDataReal_v2';
+import { getScanntechMercadoTotal, getScanntechShareNutrimental } from '../data/scanntechDataReal';
 
 const InsightsMercado = ({ selectedCategory, selectedPeriod }) => {
   const [segmentosExpandidos, setSegmentosExpandidos] = useState(true);

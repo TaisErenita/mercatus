@@ -115,4 +115,26 @@ export const getAmazonCrescimentoPorCategoria = () => {
   });
 };
 
+// Função para obter métricas agregadas por categoria
+export const getAmazonMetrics = (categoria = 'Todos') => {
+  let produtos = amazonDataRaw.top10;
+  
+  if (categoria !== 'Todos') {
+    produtos = produtos.filter(p => p.Categoria === categoria);
+  }
+  
+  const totalUnidades2025 = produtos.reduce((sum, p) => sum + p['Unidades enviadas_2025'], 0);
+  const totalUnidades2024 = produtos.reduce((sum, p) => sum + p['Unidades enviadas_2024'], 0);
+  const variacaoTotal = produtos.length > 0
+    ? produtos.reduce((sum, p) => sum + p.Variacao_Pct, 0) / produtos.length
+    : 0;
+  
+  return {
+    qtdProdutos: produtos.length,
+    totalUnidades2025,
+    totalUnidades2024,
+    variacaoTotal: Number(variacaoTotal.toFixed(1))
+  };
+};
+
 export default amazonData;

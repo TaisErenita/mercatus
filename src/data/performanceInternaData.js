@@ -28,7 +28,7 @@ const calcularPerformanceIntegrada = () => {
   
   // Share médio por região
   const shareData = getScanntechSharePorRegiao();
-  const shareMedio = Object.values(shareData).reduce((acc, r) => acc + r.Share_Vendas_%, 0) / Object.keys(shareData).length;
+  const shareMedio = Object.values(shareData).reduce((acc, r) => acc + r['Share_Vendas_%'], 0) / Object.keys(shareData).length;
   
   return {
     receitaTotal,

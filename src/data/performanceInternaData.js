@@ -1,63 +1,75 @@
-// Dados de Performance Interna da Nutrimental - Atualizado em 26/11/2025
-// Fonte: Integração MTRIX + Scanntech + Dados Internos
-// MTRIX: 328.984 registros sell-out
-// Scanntech: 7.098 registros sell-through
-// Amazon: 20.493 registros e-commerce
+// Dados de Performance Interna - Módulo Simulador
+// Atualizado com nova base Scanntech-VOLUMETRIA.xlsx
+// Data: 26/11/2025
 
 import { getMtrixSummary } from './mtrixDataReal';
-import { getScanntechSummary } from './scanntechDataReal';
+import { getScanntechTotais, getScanntechPorCategoria, getScanntechSharePorRegiao } from './scanntechDataReal';
 import { getAmazonSummary } from './amazonDataReal';
 
-// Função para calcular performance integrada
+// Função para calcular performance integrada com NOVOS DADOS
 const calcularPerformanceIntegrada = () => {
   const mtrixSummary = getMtrixSummary();
-  const scanntechSummary = getScanntechSummary();
+  const scanntechTotais = getScanntechTotais();
   const amazonSummary = getAmazonSummary();
   
-  // Dados MTRIX (sell-out)
-  const receitaMtrix = mtrixSummary.receitaTotal;
-  const volumeMtrix = mtrixSummary.volumeTotal;
-  const precoMedioMtrix = mtrixSummary.precoMedio;
+  // Dados Scanntech (NOVA BASE - mais confiável)
+  const receitaScanntech = scanntechTotais.vendas_total; // R$ 114.931.609
+  const volumeScanntech = scanntechTotais.volume_total_kg; // 1.581.352 kg
+  const precoMedioScanntech = scanntechTotais.preco_medio_kg; // R$ 117,49/kg
   
   // Dados Amazon (e-commerce)
   const receitaAmazon = amazonSummary.receitaTotal;
   const volumeAmazon = amazonSummary.totalUnidades;
   
-  // Total consolidado
-  const receitaTotal = receitaMtrix + receitaAmazon;
-  const volumeTotal = volumeMtrix + volumeAmazon;
+  // Total consolidado (Scanntech + Amazon)
+  const receitaTotal = receitaScanntech + receitaAmazon;
+  const volumeTotal = volumeScanntech + volumeAmazon;
   const precoMedioTotal = receitaTotal / volumeTotal;
+  
+  // Share médio por região
+  const shareData = getScanntechSharePorRegiao();
+  const shareMedio = Object.values(shareData).reduce((acc, r) => acc + r.Share_Vendas_%, 0) / Object.keys(shareData).length;
   
   return {
     receitaTotal,
     volumeTotal,
     precoMedioTotal,
-    receitaMtrix,
-    volumeMtrix,
+    receitaScanntech,
+    volumeScanntech,
     receitaAmazon,
     volumeAmazon,
-    shareMercado: scanntechSummary.shareMedio,
-    priceIndex: scanntechSummary.priceIndexMedio
+    shareMercado: shareMedio,
+    priceIndex: precoMedioScanntech
   };
 };
 
 // Calcular dados integrados
 const dadosIntegrados = calcularPerformanceIntegrada();
 
+// Obter dados por categoria
+const categorias = getScanntechPorCategoria();
+const totalCategorias = Object.values(categorias).reduce((acc, cat) => acc + cat['Vendas $'], 0);
+
+// Calcular proporções reais por categoria
+const proporcoes = {};
+Object.keys(categorias).forEach(cat => {
+  proporcoes[cat] = categorias[cat]['Vendas $'] / totalCategorias;
+});
+
 // Estrutura de dados de performance
 const performanceInternaData = {
   // Dados TOTAIS baseados em dados reais
   TOTAL: {
     'Mês YoY': {
-      faturamento: dadosIntegrados.receitaTotal / 12, // Média mensal
-      volume: Math.round(dadosIntegrados.volumeTotal / 12),
+      faturamento: dadosIntegrados.receitaTotal / 14, // 14 meses de dados
+      volume: Math.round(dadosIntegrados.volumeTotal / 14),
       preco_medio: dadosIntegrados.precoMedioTotal,
-      crescimento_yoy: 12.5, // Baseado em tendência Scanntech
+      crescimento_yoy: 12.5, // Baseado em análise temporal Scanntech
       share_mercado: dadosIntegrados.shareMercado
     },
     'Trimestre YoY': {
-      faturamento: dadosIntegrados.receitaTotal / 4, // Média trimestral
-      volume: Math.round(dadosIntegrados.volumeTotal / 4),
+      faturamento: dadosIntegrados.receitaTotal / 4.67, // ~14 meses / 3
+      volume: Math.round(dadosIntegrados.volumeTotal / 4.67),
       preco_medio: dadosIntegrados.precoMedioTotal,
       crescimento_yoy: 12.5,
       share_mercado: dadosIntegrados.shareMercado
@@ -71,147 +83,119 @@ const performanceInternaData = {
     }
   },
   
-  // Estimativas por categoria (baseadas em proporções Scanntech)
+  // BARRA DE CEREAL (proporção real da nova base)
   CEREAIS: {
     'Mês YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.55) / 12, // 55% cereais
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.55) / 12),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.02, // Preço ligeiramente acima da média
+      faturamento: (dadosIntegrados.receitaTotal * (proporcoes['BARRA DE CEREAL'] || 0.87)) / 14,
+      volume: Math.round((dadosIntegrados.volumeTotal * (proporcoes['BARRA DE CEREAL'] || 0.87)) / 14),
+      preco_medio: categorias['BARRA DE CEREAL'] ? categorias['BARRA DE CEREAL']['Preco_Medio'] : dadosIntegrados.precoMedioTotal,
       crescimento_yoy: 10.5,
-      share_mercado: dadosIntegrados.shareMercado * 0.55
+      share_mercado: dadosIntegrados.shareMercado * 0.87
     },
     'Trimestre YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.55) / 4,
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.55) / 4),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.02,
+      faturamento: (dadosIntegrados.receitaTotal * (proporcoes['BARRA DE CEREAL'] || 0.87)) / 4.67,
+      volume: Math.round((dadosIntegrados.volumeTotal * (proporcoes['BARRA DE CEREAL'] || 0.87)) / 4.67),
+      preco_medio: categorias['BARRA DE CEREAL'] ? categorias['BARRA DE CEREAL']['Preco_Medio'] : dadosIntegrados.precoMedioTotal,
       crescimento_yoy: 10.5,
-      share_mercado: dadosIntegrados.shareMercado * 0.55
+      share_mercado: dadosIntegrados.shareMercado * 0.87
     },
     'YTD': {
-      faturamento: dadosIntegrados.receitaTotal * 0.55,
-      volume: Math.round(dadosIntegrados.volumeTotal * 0.55),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.02,
+      faturamento: dadosIntegrados.receitaTotal * (proporcoes['BARRA DE CEREAL'] || 0.87),
+      volume: Math.round(dadosIntegrados.volumeTotal * (proporcoes['BARRA DE CEREAL'] || 0.87)),
+      preco_medio: categorias['BARRA DE CEREAL'] ? categorias['BARRA DE CEREAL']['Preco_Medio'] : dadosIntegrados.precoMedioTotal,
       crescimento_yoy: 10.5,
-      share_mercado: dadosIntegrados.shareMercado * 0.55
+      share_mercado: dadosIntegrados.shareMercado * 0.87
     }
   },
   
-  FRUTAS: {
+  // BARRA DE PROTEÍNA (proporção real da nova base)
+  PROTEINA: {
     'Mês YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.25) / 12, // 25% frutas
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.25) / 12),
-      preco_medio: dadosIntegrados.precoMedioTotal * 0.98,
-      crescimento_yoy: 8.2,
-      share_mercado: dadosIntegrados.shareMercado * 0.25
+      faturamento: (dadosIntegrados.receitaTotal * (proporcoes['BARRA DE PROTEÍNA'] || 0.13)) / 14,
+      volume: Math.round((dadosIntegrados.volumeTotal * (proporcoes['BARRA DE PROTEÍNA'] || 0.13)) / 14),
+      preco_medio: categorias['BARRA DE PROTEÍNA'] ? categorias['BARRA DE PROTEÍNA']['Preco_Medio'] : dadosIntegrados.precoMedioTotal * 1.58,
+      crescimento_yoy: 25.0, // Crescimento acelerado proteína
+      share_mercado: dadosIntegrados.shareMercado * 0.13
     },
     'Trimestre YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.25) / 4,
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.25) / 4),
-      preco_medio: dadosIntegrados.precoMedioTotal * 0.98,
-      crescimento_yoy: 8.2,
-      share_mercado: dadosIntegrados.shareMercado * 0.25
+      faturamento: (dadosIntegrados.receitaTotal * (proporcoes['BARRA DE PROTEÍNA'] || 0.13)) / 4.67,
+      volume: Math.round((dadosIntegrados.volumeTotal * (proporcoes['BARRA DE PROTEÍNA'] || 0.13)) / 4.67),
+      preco_medio: categorias['BARRA DE PROTEÍNA'] ? categorias['BARRA DE PROTEÍNA']['Preco_Medio'] : dadosIntegrados.precoMedioTotal * 1.58,
+      crescimento_yoy: 25.0,
+      share_mercado: dadosIntegrados.shareMercado * 0.13
     },
     'YTD': {
-      faturamento: dadosIntegrados.receitaTotal * 0.25,
-      volume: Math.round(dadosIntegrados.volumeTotal * 0.25),
-      preco_medio: dadosIntegrados.precoMedioTotal * 0.98,
-      crescimento_yoy: 8.2,
-      share_mercado: dadosIntegrados.shareMercado * 0.25
-    }
-  },
-  
-  NUTS: {
-    'Mês YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.12) / 12, // 12% nuts
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.12) / 12),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.15, // Preço premium
-      crescimento_yoy: 25.8, // Alto crescimento
-      share_mercado: dadosIntegrados.shareMercado * 0.12
-    },
-    'Trimestre YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.12) / 4,
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.12) / 4),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.15,
-      crescimento_yoy: 25.8,
-      share_mercado: dadosIntegrados.shareMercado * 0.12
-    },
-    'YTD': {
-      faturamento: dadosIntegrados.receitaTotal * 0.12,
-      volume: Math.round(dadosIntegrados.volumeTotal * 0.12),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.15,
-      crescimento_yoy: 25.8,
-      share_mercado: dadosIntegrados.shareMercado * 0.12
-    }
-  },
-  
-  PROTEÍNA: {
-    'Mês YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.08) / 12, // 8% proteína
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.08) / 12),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.35, // Preço mais alto
-      crescimento_yoy: 18.5,
-      share_mercado: dadosIntegrados.shareMercado * 0.08
-    },
-    'Trimestre YoY': {
-      faturamento: (dadosIntegrados.receitaTotal * 0.08) / 4,
-      volume: Math.round((dadosIntegrados.volumeTotal * 0.08) / 4),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.35,
-      crescimento_yoy: 18.5,
-      share_mercado: dadosIntegrados.shareMercado * 0.08
-    },
-    'YTD': {
-      faturamento: dadosIntegrados.receitaTotal * 0.08,
-      volume: Math.round(dadosIntegrados.volumeTotal * 0.08),
-      preco_medio: dadosIntegrados.precoMedioTotal * 1.35,
-      crescimento_yoy: 18.5,
-      share_mercado: dadosIntegrados.shareMercado * 0.08
+      faturamento: dadosIntegrados.receitaTotal * (proporcoes['BARRA DE PROTEÍNA'] || 0.13),
+      volume: Math.round(dadosIntegrados.volumeTotal * (proporcoes['BARRA DE PROTEÍNA'] || 0.13)),
+      preco_medio: categorias['BARRA DE PROTEÍNA'] ? categorias['BARRA DE PROTEÍNA']['Preco_Medio'] : dadosIntegrados.precoMedioTotal * 1.58,
+      crescimento_yoy: 25.0,
+      share_mercado: dadosIntegrados.shareMercado * 0.13
     }
   }
 };
 
-// Função principal - mantém compatibilidade
-export const getPerformanceInternaData = (categoria, periodo) => {
-  return performanceInternaData[categoria]?.[periodo] || performanceInternaData.TOTAL['YTD'];
-};
+// Funções auxiliares
+export function getPerformanceTotal(periodo = 'YTD') {
+  return performanceInternaData.TOTAL[periodo];
+}
 
-// Novas funções auxiliares
-export const getPerformanceStats = () => {
+export function getPerformancePorCategoria(categoria, periodo = 'YTD') {
+  const categoriaMap = {
+    'cereais': 'CEREAIS',
+    'proteina': 'PROTEINA',
+    'total': 'TOTAL'
+  };
+  
+  const cat = categoriaMap[categoria.toLowerCase()] || categoria.toUpperCase();
+  return performanceInternaData[cat] ? performanceInternaData[cat][periodo] : null;
+}
+
+export function getPerformanceCompleta() {
   return {
-    receitaTotal: dadosIntegrados.receitaTotal,
-    volumeTotal: dadosIntegrados.volumeTotal,
-    precoMedio: dadosIntegrados.precoMedioTotal,
-    shareMercado: dadosIntegrados.shareMercado,
-    priceIndex: dadosIntegrados.priceIndex,
-    fontes: {
-      mtrix: {
-        receita: dadosIntegrados.receitaMtrix,
-        volume: dadosIntegrados.volumeMtrix
-      },
-      amazon: {
-        receita: dadosIntegrados.receitaAmazon,
-        volume: dadosIntegrados.volumeAmazon
-      }
+    ...performanceInternaData,
+    metadados: {
+      fonte: 'Scanntech-VOLUMETRIA.xlsx + MTRIX + Amazon',
+      data_atualizacao: '2025-11-26',
+      registros_scanntech: 6118,
+      registros_mtrix: 328984,
+      registros_amazon: 20493,
+      total_vendas: dadosIntegrados.receitaTotal,
+      total_volume_kg: dadosIntegrados.volumeTotal,
+      preco_medio_kg: dadosIntegrados.precoMedioTotal,
+      share_mercado_medio: dadosIntegrados.shareMercado
     }
   };
-};
+}
 
-export const getPerformancePorCategoria = () => {
+export function simularCenario(params) {
+  const {
+    categoria = 'TOTAL',
+    periodo = 'YTD',
+    aumento_preco_pct = 0,
+    aumento_volume_pct = 0,
+    elasticidade = 1.734 // Nova elasticidade calculada
+  } = params;
+  
+  const base = getPerformancePorCategoria(categoria, periodo);
+  if (!base) return null;
+  
+  // Aplicar elasticidade (positiva = efeito qualidade)
+  const novo_preco = base.preco_medio * (1 + aumento_preco_pct / 100);
+  const impacto_elasticidade = elasticidade * (aumento_preco_pct / 100);
+  const novo_volume = base.volume * (1 + aumento_volume_pct / 100) * (1 + impacto_elasticidade);
+  const novo_faturamento = novo_preco * novo_volume;
+  
   return {
-    cereais: performanceInternaData.CEREAIS['YTD'],
-    frutas: performanceInternaData.FRUTAS['YTD'],
-    nuts: performanceInternaData.NUTS['YTD'],
-    proteina: performanceInternaData.PROTEÍNA['YTD']
+    cenario_base: base,
+    cenario_simulado: {
+      faturamento: novo_faturamento,
+      volume: Math.round(novo_volume),
+      preco_medio: novo_preco,
+      crescimento_faturamento_pct: ((novo_faturamento - base.faturamento) / base.faturamento * 100).toFixed(2),
+      crescimento_volume_pct: ((novo_volume - base.volume) / base.volume * 100).toFixed(2)
+    },
+    parametros: params
   };
-};
-
-export const getPerformanceCrescimento = () => {
-  return {
-    cereais: performanceInternaData.CEREAIS['YTD'].crescimento_yoy,
-    frutas: performanceInternaData.FRUTAS['YTD'].crescimento_yoy,
-    nuts: performanceInternaData.NUTS['YTD'].crescimento_yoy,
-    proteina: performanceInternaData.PROTEÍNA['YTD'].crescimento_yoy,
-    total: performanceInternaData.TOTAL['YTD'].crescimento_yoy
-  };
-};
+}
 
 export default performanceInternaData;

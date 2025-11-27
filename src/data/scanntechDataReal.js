@@ -1,326 +1,277 @@
-// Dados Scanntech - Atualizado em 26/11/2025 15:45
-// Total de registros Nutrimental: 7,098
+// Dados Scanntech - Nova Base VOLUMETRIA
+// Gerado automaticamente em: 2025-11-26 19:28:44
+// Fonte: BaseScanntech-VOLUMETRIA.xlsx
+// Registros Nutrimental: 6118
 
-export const getScanntechPorRegiao = () => {
-  return {
-  "CO": {
-    "share": 1.9332,
-    "priceIndex": 847.48,
-    "canais": {
-      "10+": {
-        "share": 1.4555,
-        "priceIndex": 425.36
-      },
-      "1a4": {
-        "share": 2.451,
-        "priceIndex": 150.26
-      },
-      "5a9": {
-        "share": 2.4184,
-        "priceIndex": 167.24
-      },
-      "atc": {
-        "share": 1.8015,
-        "priceIndex": 2145.28
-      }
-    }
+const scanntechData = {
+  totais: {
+    vendas_total: 114931609.0515,
+    volume_total_kg: 1581351.7497659998,
+    preco_medio_kg: 117.48649195775543
   },
-  "NE": {
-    "share": 1.3195,
-    "priceIndex": 818.35,
-    "canais": {
-      "10+": {
-        "share": 1.178,
-        "priceIndex": 136.53
-      },
-      "1a4": {
-        "share": 1.27,
-        "priceIndex": 221.65
-      },
-      "5a9": {
-        "share": 1.1793,
-        "priceIndex": 197.65
-      },
-      "atc": {
-        "share": 1.5375,
-        "priceIndex": 2081.92
-      }
-    }
-  },
-  "NO": {
-    "share": 1.9369,
-    "priceIndex": 499.18,
-    "canais": {
-      "10+": {
-        "share": 1.7576,
-        "priceIndex": 223.32
-      },
-      "1a4": {
-        "share": 2.1597,
-        "priceIndex": 114.91
-      },
-      "5a9": {
-        "share": 1.8715,
-        "priceIndex": 101.58
-      },
-      "atc": {
-        "share": 2.0149,
-        "priceIndex": 1389.55
-      }
-    }
-  },
-  "SE": {
-    "share": 1.9924,
-    "priceIndex": 474.93,
-    "canais": {
-      "10+": {
-        "share": 2.482,
-        "priceIndex": 130.13
-      },
-      "1a4": {
-        "share": 1.7781,
-        "priceIndex": 292.08
-      },
-      "5a9": {
-        "share": 1.8416,
-        "priceIndex": 303.95
-      },
-      "atc": {
-        "share": 1.9796,
-        "priceIndex": 1044.72
-      }
-    }
-  },
-  "SU": {
-    "share": 0.972,
-    "priceIndex": 1015.95,
-    "canais": {
-      " 10+": {
-        "share": 1.0931,
-        "priceIndex": 141.31
-      },
-      " 1a4": {
-        "share": 1.0126,
-        "priceIndex": 172.11
-      },
-      " 5a9": {
-        "share": 0.7415,
-        "priceIndex": 181.03
-      },
-      " atc": {
-        "share": 1.0182,
-        "priceIndex": 3144.16
-      }
-    }
-  }
-};
-};
-
-export const getScanntechTopSkus = () => {
-  return [
-  {
-    "sku": "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G",
-    "share": 4.1209,
-    "priceIndex": 76.71
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY MORANGO CHOC 22G",
-    "share": 4.0384,
-    "priceIndex": 78.6
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G",
-    "share": 3.9343,
-    "priceIndex": 71.73
-  },
-  {
-    "sku": "CEREAL EM BARRA SAUD NUTRY AVELA/CHOCOLATE 22G",
-    "share": 3.3884,
-    "priceIndex": 76.6
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 24X22G",
-    "share": 2.9777,
-    "priceIndex": 1105.51
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY MORANGO COM CHOCOLATE 24X22G",
-    "share": 2.6955,
-    "priceIndex": 1173.55
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY AVEIA BAN MEL 24X22G",
-    "share": 2.3217,
-    "priceIndex": 609.97
-  },
-  {
-    "sku": "CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 22G",
-    "share": 2.135,
-    "priceIndex": 77.02
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY AVELA CHOCOLATE 24X22G",
-    "share": 2.1335,
-    "priceIndex": 689.59
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY AVEIA BANANA MEL 3X22G",
-    "share": 2.0456,
-    "priceIndex": 214.71
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY MORANGO CHOCOLATE 3X22G",
-    "share": 1.9889,
-    "priceIndex": 213.17
-  },
-  {
-    "sku": "CEREAL EM BARRA SAUD NUTRY AVELA CHOCOLATE 3X22G",
-    "share": 1.9288,
-    "priceIndex": 216.11
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 3X22G",
-    "share": 1.7552,
-    "priceIndex": 212.22
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY FRUTAS VERM 24X22G",
-    "share": 1.5043,
-    "priceIndex": 778.84
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY CASTANHA CAJU 22G",
-    "share": 1.4784,
-    "priceIndex": 76.3
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY CASTANHA CAJU CHOCOLATE 3X22G",
-    "share": 1.4499,
-    "priceIndex": 213.82
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY TRUFA 24X20G",
-    "share": 1.3902,
-    "priceIndex": 1102.93
-  },
-  {
-    "sku": "CEREAL EM BARRA NUTRY COCO C/CHOCOLATE 22G",
-    "share": 1.1698,
-    "priceIndex": 75.22
-  },
-  {
-    "sku": "CEREAL BARRA NUTRY CASTANHA 24X22G",
-    "share": 1.1331,
-    "priceIndex": 1092.94
-  },
-  {
-    "sku": "CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 3X22G",
-    "share": 1.0183,
-    "priceIndex": 204.75
-  }
-];
-};
-
-export const getScanntechTimeline = () => {
-  return [
-  {
-    "periodo": "abr./25",
-    "shareTotal": 1.6553,
-    "priceIndexMedio": 668.31
-  },
-  {
-    "periodo": "ago./25",
-    "shareTotal": 1.7232,
-    "priceIndexMedio": 731.58
-  },
-  {
-    "periodo": "dez./24",
-    "shareTotal": 1.597,
-    "priceIndexMedio": 629.92
-  },
-  {
-    "periodo": "fev./25",
-    "shareTotal": 1.6216,
-    "priceIndexMedio": 699.09
-  },
-  {
-    "periodo": "jan./25",
-    "shareTotal": 1.6399,
-    "priceIndexMedio": 733.65
-  },
-  {
-    "periodo": "jul./25",
-    "shareTotal": 1.6827,
-    "priceIndexMedio": 685.54
-  },
-  {
-    "periodo": "jun./25",
-    "shareTotal": 1.6977,
-    "priceIndexMedio": 746.94
-  },
-  {
-    "periodo": "mai./25",
-    "shareTotal": 1.6515,
-    "priceIndexMedio": 717.9
-  },
-  {
-    "periodo": "mar./25",
-    "shareTotal": 1.6322,
-    "priceIndexMedio": 656.62
-  },
-  {
-    "periodo": "nov./24",
-    "shareTotal": 1.6224,
-    "priceIndexMedio": 687.6
-  },
-  {
-    "periodo": "nov./25",
-    "shareTotal": 1.7719,
-    "priceIndexMedio": 721.4
-  },
-  {
-    "periodo": "out./24",
-    "shareTotal": 1.6119,
-    "priceIndexMedio": 717.87
-  },
-  {
-    "periodo": "out./25",
-    "shareTotal": 1.73,
-    "priceIndexMedio": 762.67
-  },
-  {
-    "periodo": "set./25",
-    "shareTotal": 1.7123,
-    "priceIndexMedio": 711.78
-  }
-];
-};
-
-export const getScanntechSummary = () => {
-  return {
-  "totalRegistros": 7098,
-  "periodoInicio": "abr./25",
-  "periodoFim": "set./25",
-  "shareMedio": 1.6678,
-  "priceIndexMedio": 705.06,
-  "regioes": 5,
-  "skusUnicos": 51
-};
-};
-
-// Função para integração com MTRIX
-export const getIntegracaoMtrixScanntech = (regiao, periodo) => {
-  const scanntechData = getScanntechPorRegiao()[regiao];
   
-  if (!scanntechData) {
-    return null;
-  }
+  por_regiao: {
+    "SE": {
+        "Vendas $": 58912456.9,
+        "Volume (Kg)": 774090.18,
+        "Pre\u00e7o (Kg)": 130.26,
+        "Preco_Medio": 76.11
+    },
+    "SU": {
+        "Vendas $": 20657086.18,
+        "Volume (Kg)": 273935.86,
+        "Pre\u00e7o (Kg)": 107.87,
+        "Preco_Medio": 75.41
+    },
+    "NE": {
+        "Vendas $": 18968165.03,
+        "Volume (Kg)": 262917.98,
+        "Pre\u00e7o (Kg)": 111.12,
+        "Preco_Medio": 72.14
+    },
+    "CO": {
+        "Vendas $": 11443468.9,
+        "Volume (Kg)": 207268.27,
+        "Pre\u00e7o (Kg)": 119.77,
+        "Preco_Medio": 55.21
+    },
+    "NO": {
+        "Vendas $": 4950432.04,
+        "Volume (Kg)": 63139.45,
+        "Pre\u00e7o (Kg)": 118.46,
+        "Preco_Medio": 78.4
+    }
+},
   
-  return {
-    regiao,
-    periodo,
-    shareMercado: scanntechData.share,
-    priceIndex: scanntechData.priceIndex,
-    canais: scanntechData.canais
-  };
+  por_categoria: {
+    "BARRA DE CEREAL": {
+        "Vendas $": 103426218.88,
+        "Volume (Kg)": 1516538.87,
+        "Pre\u00e7o (Kg)": 106.01,
+        "Preco_Medio": 68.2
+    },
+    "BARRA DE PROTE\u00cdNA": {
+        "Vendas $": 11505390.18,
+        "Volume (Kg)": 64812.88,
+        "Pre\u00e7o (Kg)": 187.54,
+        "Preco_Medio": 177.52
+    }
+},
+  
+  por_marca: {
+    "NUTRY": {
+        "Vendas $": 114931609.05,
+        "Volume (Kg)": 1581351.75,
+        "Pre\u00e7o (Kg)": 117.49,
+        "Preco_Medio": 72.68
+    }
+},
+  
+  top_20_skus: {
+    "CEREAL BARRA NUTRY MORANGO CHOC 22G": {
+        "Vendas $": 9433955.59,
+        "Volume (Kg)": 116458.41,
+        "Pre\u00e7o (Kg)": 93.5,
+        "Preco_Medio": 81.01
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": {
+        "Vendas $": 9190063.78,
+        "Volume (Kg)": 116389.51,
+        "Pre\u00e7o (Kg)": 91.11,
+        "Preco_Medio": 78.96
+    },
+    "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": {
+        "Vendas $": 8186117.44,
+        "Volume (Kg)": 106137.58,
+        "Pre\u00e7o (Kg)": 85.22,
+        "Preco_Medio": 77.13
+    },
+    "CEREAL EM BARRA SAUD NUTRY AVELA/CHOCOLATE 22G": {
+        "Vendas $": 7811452.23,
+        "Volume (Kg)": 101382.44,
+        "Pre\u00e7o (Kg)": 90.93,
+        "Preco_Medio": 77.05
+    },
+    "CEREAL BARRA NUTRY MORANGO COM CHOCOLATE 24X22G": {
+        "Vendas $": 6376693.85,
+        "Volume (Kg)": 106554.12,
+        "Pre\u00e7o (Kg)": 66.44,
+        "Preco_Medio": 59.84
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 24X22G": {
+        "Vendas $": 6150026.83,
+        "Volume (Kg)": 103920.43,
+        "Pre\u00e7o (Kg)": 66.45,
+        "Preco_Medio": 59.18
+    },
+    "CEREAL BARRA NUTRY MORANGO CHOCOLATE 3X22G": {
+        "Vendas $": 6134175.79,
+        "Volume (Kg)": 71229.44,
+        "Pre\u00e7o (Kg)": 86.87,
+        "Preco_Medio": 86.12
+    },
+    "CEREAL BARRA NUTRY AVEIA BAN MEL 24X22G": {
+        "Vendas $": 6004963.55,
+        "Volume (Kg)": 164253.17,
+        "Pre\u00e7o (Kg)": 206.04,
+        "Preco_Medio": 36.56
+    },
+    "CEREAL BARRA NUTRY AVEIA BANANA MEL 3X22G": {
+        "Vendas $": 5845381.41,
+        "Volume (Kg)": 68481.4,
+        "Pre\u00e7o (Kg)": 86.96,
+        "Preco_Medio": 85.36
+    },
+    "CEREAL EM BARRA SAUD NUTRY AVELA CHOCOLATE 3X22G": {
+        "Vendas $": 5371352.69,
+        "Volume (Kg)": 64429.2,
+        "Pre\u00e7o (Kg)": 86.47,
+        "Preco_Medio": 83.37
+    },
+    "CEREAL BARRA NUTRY AVELA CHOCOLATE 24X22G": {
+        "Vendas $": 5328861.95,
+        "Volume (Kg)": 118296.31,
+        "Pre\u00e7o (Kg)": 206.35,
+        "Preco_Medio": 45.05
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 3X22G": {
+        "Vendas $": 5254308.55,
+        "Volume (Kg)": 64860.71,
+        "Pre\u00e7o (Kg)": 85.04,
+        "Preco_Medio": 81.01
+    },
+    "CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 22G": {
+        "Vendas $": 5159122.29,
+        "Volume (Kg)": 66650.64,
+        "Pre\u00e7o (Kg)": 91.42,
+        "Preco_Medio": 77.41
+    },
+    "CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN CHOC 30G": {
+        "Vendas $": 4521415.87,
+        "Volume (Kg)": 25492.21,
+        "Pre\u00e7o (Kg)": 188.19,
+        "Preco_Medio": 177.36
+    },
+    "CEREAL BARRA NUTRY CASTANHA CAJU CHOCOLATE 3X22G": {
+        "Vendas $": 3585117.59,
+        "Volume (Kg)": 43769.35,
+        "Pre\u00e7o (Kg)": 85.38,
+        "Preco_Medio": 81.91
+    },
+    "CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN COOKIES 30G": {
+        "Vendas $": 3529520.98,
+        "Volume (Kg)": 19707.63,
+        "Pre\u00e7o (Kg)": 188.26,
+        "Preco_Medio": 179.09
+    },
+    "CEREAL EM BARRA PROTEICO NUTRY CRISPY PROTEIN AMEND 30G": {
+        "Vendas $": 3454453.33,
+        "Volume (Kg)": 19613.04,
+        "Pre\u00e7o (Kg)": 186.16,
+        "Preco_Medio": 176.13
+    },
+    "CEREAL BARRA SAUD NUTRY FRUTAS VERMELHAS 3X22G": {
+        "Vendas $": 3234730.36,
+        "Volume (Kg)": 40489.48,
+        "Pre\u00e7o (Kg)": 87.94,
+        "Preco_Medio": 79.89
+    },
+    "CEREAL BARRA NUTRY FRUTAS VERM 24X22G": {
+        "Vendas $": 3038423.83,
+        "Volume (Kg)": 76017.22,
+        "Pre\u00e7o (Kg)": 240.03,
+        "Preco_Medio": 39.97
+    },
+    "CEREAL BARRA NUTRY CASTANHA CAJU 22G": {
+        "Vendas $": 2636538.37,
+        "Volume (Kg)": 30536.5,
+        "Pre\u00e7o (Kg)": 91.39,
+        "Preco_Medio": 86.34
+    }
+},
+  
+  share_por_regiao: {
+    "CO": {
+        "Share_Vendas_%": 38.38,
+        "Share_Volume_%": 59.09
+    },
+    "NE": {
+        "Share_Vendas_%": 31.05,
+        "Share_Volume_%": 47.71
+    },
+    "NO": {
+        "Share_Vendas_%": 57.38,
+        "Share_Volume_%": 71.19
+    },
+    "SE": {
+        "Share_Vendas_%": 36.68,
+        "Share_Volume_%": 57.53
+    },
+    "SU": {
+        "Share_Vendas_%": 22.22,
+        "Share_Volume_%": 27.82
+    }
+},
+  
+  matriz_preco_regiao_categoria: {
+    "CO": {
+        "BARRA DE CEREAL": 106.75,
+        "BARRA DE PROTE\u00cdNA": 198.29
+    },
+    "NE": {
+        "BARRA DE CEREAL": 100.73,
+        "BARRA DE PROTE\u00cdNA": 176.31
+    },
+    "NO": {
+        "BARRA DE CEREAL": 105.15,
+        "BARRA DE PROTE\u00cdNA": 193.28
+    },
+    "SE": {
+        "BARRA DE CEREAL": 122.03,
+        "BARRA DE PROTE\u00cdNA": 182.39
+    },
+    "SU": {
+        "BARRA DE CEREAL": 95.18,
+        "BARRA DE PROTE\u00cdNA": 187.42
+    }
+}
 };
+
+// Funções auxiliares
+export function getScanntechTotais() {
+  return scanntechData.totais;
+}
+
+export function getScanntechPorRegiao(regiao = null) {
+  if (regiao) {
+    return scanntechData.por_regiao[regiao] || null;
+  }
+  return scanntechData.por_regiao;
+}
+
+export function getScanntechPorCategoria(categoria = null) {
+  if (categoria) {
+    return scanntechData.por_categoria[categoria] || null;
+  }
+  return scanntechData.por_categoria;
+}
+
+export function getScanntechTopSkus(limit = 20) {
+  const skus = Object.entries(scanntechData.top_20_skus)
+    .map(([nome, dados]) => ({ nome, ...dados }))
+    .slice(0, limit);
+  return skus;
+}
+
+export function getScanntechSharePorRegiao(regiao = null) {
+  if (regiao) {
+    return scanntechData.share_por_regiao[regiao] || null;
+  }
+  return scanntechData.share_por_regiao;
+}
+
+export function getScanntechMatrizPreco() {
+  return scanntechData.matriz_preco_regiao_categoria;
+}
+
+export default scanntechData;

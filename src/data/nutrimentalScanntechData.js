@@ -1,158 +1,138 @@
-// Nutrimental Scanntech Data - Atualizado em 26/11/2025
-// Fonte: Scanntech 2024-2025 (7.098 registros Nutrimental)
-// Período: Out/2024 - Nov/2025 (14 meses)
-// Integrado com scanntechDataReal.js
-// BACKUP do arquivo original: nutrimentalScanntechData.js.backup
+// Dados Nutrimental Scanntech - Módulo Insights
+// Gerado automaticamente em: 2025-11-26 19:28:44
 
-import { 
-  getScanntechPorRegiao, 
-  getScanntechTopSkus, 
-  getScanntechTimeline,
-  getScanntechSummary 
-} from './scanntechDataReal';
-
-// Manter estrutura original para compatibilidade
-const nutrimentalData = {
-  // Dados gerais (todas as categorias) - Dados reais atualizados
-  total: {
-    mes_yoy_ago25: {
-      share_valor: 1.67,  // Share médio real
-      share_volume_kg: 1.67,
-      receita: 705.06,  // Price index médio
-      volume_kg: 1.0,
-      preco_kg: 705.06
-    },
-    mes_yoy_ago24: {
-      share_valor: 1.50,  // Estimativa baseada em tendência
-      share_volume_kg: 1.50,
-      receita: 685.30,
-      volume_kg: 1.0,
-      preco_kg: 685.30
-    }
+const nutrimentalScanntechData = {
+  resumo: {
+    vendas_total: 114931609.0515,
+    volume_total_kg: 1581351.7497659998,
+    preco_medio_kg: 117.48649195775543,
+    share_medio: 37.142
   },
   
-  // Dados por categoria (baseados em análise real)
-  categorias: {
-    cereais: {
-      share_valor: 2.10,  // Estimativa baseada em SKUs
-      share_volume_kg: 2.10,
-      receita: 720.00,
-      volume_kg: 1.0,
-      preco_kg: 720.00
+  performance_regional: {
+    "CO": {
+        "Share_Vendas_%": 38.38,
+        "Share_Volume_%": 59.09
     },
-    frutas: {
-      share_valor: 1.50,
-      share_volume_kg: 1.50,
-      receita: 695.00,
-      volume_kg: 1.0,
-      preco_kg: 695.00
+    "NE": {
+        "Share_Vendas_%": 31.05,
+        "Share_Volume_%": 47.71
     },
-    nuts: {
-      share_valor: 1.30,
-      share_volume_kg: 1.30,
-      receita: 710.00,
-      volume_kg: 1.0,
-      preco_kg: 710.00
+    "NO": {
+        "Share_Vendas_%": 57.38,
+        "Share_Volume_%": 71.19
     },
-    proteina: {
-      share_valor: 0.90,
-      share_volume_kg: 0.90,
-      receita: 750.00,
-      volume_kg: 1.0,
-      preco_kg: 750.00
+    "SE": {
+        "Share_Vendas_%": 36.68,
+        "Share_Volume_%": 57.53
+    },
+    "SU": {
+        "Share_Vendas_%": 22.22,
+        "Share_Volume_%": 27.82
     }
-  }
-};
-
-// Função principal - mantém compatibilidade com código existente
-export const getNutrimentalScanntechData = (categoria, periodo) => {
-  // Retornar dados gerais (total)
-  if (periodo === 'mes_yoy' || !periodo) {
-    return {
-      atual: nutrimentalData.total.mes_yoy_ago25,
-      anterior: nutrimentalData.total.mes_yoy_ago24
-    };
-  }
+},
   
-  // YTD ou outros períodos retornam dados atuais
-  return {
-    atual: nutrimentalData.total.mes_yoy_ago25,
-    anterior: nutrimentalData.total.mes_yoy_ago24
-  };
-};
-
-// Função de categorias - mantém compatibilidade
-export const getNutrimentalCategorias = () => {
-  return [
-    {
-      nome: 'Cereais',
-      icon: '🌾',
-      ...nutrimentalData.categorias.cereais
+  top_produtos: {
+    "CEREAL BARRA NUTRY MORANGO CHOC 22G": {
+        "Vendas $": 9433955.59,
+        "Volume (Kg)": 116458.41,
+        "Pre\u00e7o (Kg)": 93.5,
+        "Preco_Medio": 81.01
     },
-    {
-      nome: 'Frutas',
-      icon: '🍎',
-      ...nutrimentalData.categorias.frutas
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 22G": {
+        "Vendas $": 9190063.78,
+        "Volume (Kg)": 116389.51,
+        "Pre\u00e7o (Kg)": 91.11,
+        "Preco_Medio": 78.96
     },
-    {
-      nome: 'Nuts',
-      icon: '🥜',
-      ...nutrimentalData.categorias.nuts
+    "CEREAL BARRA NUTRY BANANA AVEIA MEL 22G": {
+        "Vendas $": 8186117.44,
+        "Volume (Kg)": 106137.58,
+        "Pre\u00e7o (Kg)": 85.22,
+        "Preco_Medio": 77.13
     },
-    {
-      nome: 'Proteína',
-      icon: '🥩',
-      ...nutrimentalData.categorias.proteina
+    "CEREAL EM BARRA SAUD NUTRY AVELA/CHOCOLATE 22G": {
+        "Vendas $": 7811452.23,
+        "Volume (Kg)": 101382.44,
+        "Pre\u00e7o (Kg)": 90.93,
+        "Preco_Medio": 77.05
+    },
+    "CEREAL BARRA NUTRY MORANGO COM CHOCOLATE 24X22G": {
+        "Vendas $": 6376693.85,
+        "Volume (Kg)": 106554.12,
+        "Pre\u00e7o (Kg)": 66.44,
+        "Preco_Medio": 59.84
+    },
+    "CEREAL BARRA NUTRY BOLO DE CHOCOLATE 24X22G": {
+        "Vendas $": 6150026.83,
+        "Volume (Kg)": 103920.43,
+        "Pre\u00e7o (Kg)": 66.45,
+        "Preco_Medio": 59.18
+    },
+    "CEREAL BARRA NUTRY MORANGO CHOCOLATE 3X22G": {
+        "Vendas $": 6134175.79,
+        "Volume (Kg)": 71229.44,
+        "Pre\u00e7o (Kg)": 86.87,
+        "Preco_Medio": 86.12
+    },
+    "CEREAL BARRA NUTRY AVEIA BAN MEL 24X22G": {
+        "Vendas $": 6004963.55,
+        "Volume (Kg)": 164253.17,
+        "Pre\u00e7o (Kg)": 206.04,
+        "Preco_Medio": 36.56
+    },
+    "CEREAL BARRA NUTRY AVEIA BANANA MEL 3X22G": {
+        "Vendas $": 5845381.41,
+        "Volume (Kg)": 68481.4,
+        "Pre\u00e7o (Kg)": 86.96,
+        "Preco_Medio": 85.36
+    },
+    "CEREAL EM BARRA SAUD NUTRY AVELA CHOCOLATE 3X22G": {
+        "Vendas $": 5371352.69,
+        "Volume (Kg)": 64429.2,
+        "Pre\u00e7o (Kg)": 86.47,
+        "Preco_Medio": 83.37
     }
-  ];
+},
+  
+  insights: [
+    {
+      titulo: "Norte Lidera com 57% de Share",
+      descricao: "Região Norte apresenta maior participação de mercado",
+      impacto: "alto",
+      regiao: "NO"
+    },
+    {
+      titulo: "Sul tem Maior Potencial de Crescimento",
+      descricao: "Apenas 22% de share, indicando grande oportunidade",
+      impacto: "alto",
+      regiao: "SU"
+    },
+    {
+      titulo: "Sudeste com Preços Premium",
+      descricao: "Preço médio 28% acima do Sul",
+      impacto: "medio",
+      regiao: "SE"
+    }
+  ]
 };
 
-// === NOVAS FUNÇÕES COM DADOS REAIS ===
+export function getNutrimentalResumo() {
+  return nutrimentalScanntechData.resumo;
+}
 
-// Função para obter dados por região
-export const getNutrimentalPorRegiao = (regiao) => {
-  const regioes = getScanntechPorRegiao();
-  return regioes[regiao] || null;
-};
+export function getNutrimentalPerformanceRegional() {
+  return nutrimentalScanntechData.performance_regional;
+}
 
-// Função para obter evolução temporal
-export const getNutrimentalEvolucao = () => {
-  const timeline = getScanntechTimeline();
-  return timeline.map(item => ({
-    periodo: item.periodo,
-    share: item.shareTotal,
-    priceIndex: item.priceIndexMedio
-  }));
-};
+export function getNutrimentalTopProdutos(limit = 10) {
+  return Object.entries(nutrimentalScanntechData.top_produtos)
+    .slice(0, limit)
+    .map(([nome, dados]) => ({ nome, ...dados }));
+}
 
-// Função para obter top SKUs
-export const getNutrimentalTopSkus = () => {
-  return getScanntechTopSkus();
-};
+export function getNutrimentalInsights() {
+  return nutrimentalScanntechData.insights;
+}
 
-// Função para comparar regiões
-export const getNutrimentalComparacaoRegioes = () => {
-  const regioes = getScanntechPorRegiao();
-  return Object.entries(regioes).map(([regiao, dados]) => ({
-    regiao: regiao.toUpperCase(),
-    share: dados.share,
-    priceIndex: dados.priceIndex,
-    canais: Object.keys(dados.canais).length
-  })).sort((a, b) => b.share - a.share);
-};
-
-// Estatísticas gerais atualizadas
-export const getNutrimentalStats = () => {
-  const summary = getScanntechSummary();
-  return {
-    totalRegistros: summary.totalRegistros,
-    periodoInicio: summary.periodoInicio,
-    periodoFim: summary.periodoFim,
-    shareMedio: summary.shareMedio,
-    priceIndexMedio: summary.priceIndexMedio,
-    regioes: summary.regioes,
-    skusUnicos: summary.skusUnicos
-  };
-};
-
-export default nutrimentalData;
+export default nutrimentalScanntechData;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const SimuladorElasticidade = () => {
+  const [selectedCategory, setSelectedCategory] = useState('TODAS');
   const [params, setParams] = useState({
     priceChange: 0,        // % mudança no preço
     investment: 2000000,   // Investimento em R$
@@ -11,21 +12,66 @@ const SimuladorElasticidade = () => {
 
   const [results, setResults] = useState(null);
 
-  // Dados base - NUTRIMENTAL (Dados Scanntech atualizados)
-  const baseData = {
-    revenue: 114931609,    // R$ 114.9M (Total Nutrimental YTD)
-    volume: 1581352,       // kg vendidos (Total Nutrimental)
-    marketShare: 28.9,     // 28.9% share de mercado
-    avgPrice: 105.64,      // R$ 105.64/kg (Preço médio ponderado)
-    elasticityCoeff: -1.2  // Elasticidade típica para produtos alimentícios premium
+  // Dados por categoria (YTD 2025 BARRAS)
+  const categoryData = {
+    'TODAS': {
+      name: 'Todas as Categorias',
+      revenue: 142509966,    // R$ 142.5M
+      volume: 2921408,       // kg vendidos
+      avgPrice: 48.79,       // R$ 48.79/kg
+      marketShare: 89.5,     // 89.5% share estimado
+      elasticityCoeff: -1.2
+    },
+    'BC': {
+      name: 'Barras Cereais',
+      revenue: 90900000,     // R$ 90.9M (63.8%)
+      volume: 2160000,       // kg estimado
+      avgPrice: 42.08,       // R$ 42.08/kg
+      marketShare: 57.2,     // proporcional
+      elasticityCoeff: -1.0  // menos elástica (produto mais básico)
+    },
+    'BP': {
+      name: 'Barras Proteína',
+      revenue: 19000000,     // R$ 19.0M (13.3%)
+      volume: 184600,        // kg estimado
+      avgPrice: 102.91,      // R$ 102.91/kg
+      marketShare: 11.9,     // proporcional
+      elasticityCoeff: -1.5  // mais elástica (produto premium)
+    },
+    'BA': {
+      name: 'Barras Aveia',
+      revenue: 16100000,     // R$ 16.1M (11.3%)
+      volume: 334700,        // kg estimado
+      avgPrice: 48.10,       // R$ 48.10/kg
+      marketShare: 10.1,     // proporcional
+      elasticityCoeff: -1.1
+    },
+    'BN': {
+      name: 'Barras Nuts',
+      revenue: 9600000,      // R$ 9.6M (6.7%)
+      volume: 134200,        // kg estimado
+      avgPrice: 71.51,       // R$ 71.51/kg
+      marketShare: 6.0,      // proporcional
+      elasticityCoeff: -1.4  // elástica (produto premium)
+    },
+    'BF': {
+      name: 'Barras Frutas',
+      revenue: 6900000,      // R$ 6.9M (4.9%)
+      volume: 107300,        // kg estimado
+      avgPrice: 64.32,       // R$ 64.32/kg
+      marketShare: 4.3,      // proporcional
+      elasticityCoeff: -1.3
+    }
   };
+
+  const baseData = categoryData[selectedCategory];
 
   const elasticityOptions = [
     { value: -0.5, label: 'Baixa (-0.5)', desc: 'Produto essencial/viciante' },
     { value: -1.0, label: 'Unitária (-1.0)', desc: 'Produto padrão' },
-    { value: -1.2, label: 'Moderada (-1.2)', desc: 'Alimento premium (atual)' },
-    { value: -1.8, label: 'Alta (-1.8)', desc: 'Produto de luxo' },
-    { value: -2.5, label: 'Muito Alta (-2.5)', desc: 'Produto supérfluo' }
+    { value: -1.2, label: 'Moderada (-1.2)', desc: 'Alimento premium' },
+    { value: -1.5, label: 'Alta (-1.5)', desc: 'Produto de luxo' },
+    { value: -2.0, label: 'Muito Alta (-2.0)', desc: 'Produto supérfluo' }
   ];
 
   const calculateResults = () => {
@@ -51,7 +97,7 @@ const SimuladorElasticidade = () => {
     // Market share ajustado
     const shareImpact = (investmentMultiplier * 0.05) + (marketingImpact * 0.03) + (expansionImpact * 0.02);
     const volumeShareImpact = Math.max(-0.1, volumeChangePercent * 0.3); // Volume afeta share
-    const finalShare = Math.min(75, baseData.marketShare * (1 + shareImpact + volumeShareImpact));
+    const finalShare = Math.min(100, baseData.marketShare * (1 + shareImpact + volumeShareImpact));
     
     // ROI e Payback
     const totalInvestment = params.investment + params.marketing;
@@ -98,12 +144,21 @@ const SimuladorElasticidade = () => {
 
   useEffect(() => {
     setResults(calculateResults());
-  }, [params]);
+  }, [params, selectedCategory]);
 
   const updateParam = (param, value) => {
     setParams(prev => ({
       ...prev,
       [param]: parseFloat(value) || 0
+    }));
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    // Ajustar elasticidade padrão da categoria
+    setParams(prev => ({
+      ...prev,
+      elasticity: categoryData[category].elasticityCoeff
     }));
   };
 
@@ -127,11 +182,56 @@ const SimuladorElasticidade = () => {
         {/* Header */}
         <div className="mb-8">
           <h2 className="text-4xl font-bold text-purple-900 mb-3">
-            🎯 Simulador
+            🎯 Simulador de Elasticidade
           </h2>
           <p className="text-base text-slate-600">
             Simule o impacto de mudanças de preço, investimentos e expansão no volume de vendas, receita e market share
           </p>
+        </div>
+
+        {/* Filtro de Categoria */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6 border-t-4 border-purple-500">
+          <label className="block text-lg font-semibold text-purple-900 mb-3">
+            📊 Categoria de Barras
+          </label>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {Object.keys(categoryData).map((key) => (
+              <button
+                key={key}
+                onClick={() => handleCategoryChange(key)}
+                className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                  selectedCategory === key
+                    ? 'bg-purple-600 text-white shadow-lg scale-105'
+                    : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
+                }`}
+              >
+                <div className="text-sm font-bold">{key}</div>
+                <div className="text-xs opacity-90">{categoryData[key].name}</div>
+              </button>
+            ))}
+          </div>
+          
+          {/* Dados da Categoria Selecionada */}
+          <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-purple-600 font-medium">Receita Base:</span>
+                <div className="text-purple-900 font-bold">R$ {(baseData.revenue / 1000000).toFixed(1)}M</div>
+              </div>
+              <div>
+                <span className="text-purple-600 font-medium">Volume Base:</span>
+                <div className="text-purple-900 font-bold">{(baseData.volume / 1000).toFixed(0)}k kg</div>
+              </div>
+              <div>
+                <span className="text-purple-600 font-medium">Preço Médio:</span>
+                <div className="text-purple-900 font-bold">R$ {baseData.avgPrice.toFixed(2)}/kg</div>
+              </div>
+              <div>
+                <span className="text-purple-600 font-medium">Market Share:</span>
+                <div className="text-purple-900 font-bold">{baseData.marketShare.toFixed(1)}%</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -189,7 +289,7 @@ const SimuladorElasticidade = () => {
                   ))}
                 </select>
                 <div className="text-sm text-slate-500 mt-2 italic">
-                  Elasticidade mede a sensibilidade da demanda às mudanças de preço
+                  Elasticidade padrão da categoria: {baseData.elasticityCoeff.toFixed(1)}
                 </div>
               </div>
 
@@ -269,102 +369,125 @@ const SimuladorElasticidade = () => {
                       <div>
                         <div className="text-sm text-cyan-600 mb-1">Volume Atual</div>
                         <div className="text-2xl font-bold text-cyan-800">
-                          {results.volume.old.toLocaleString()} un
+                          {(results.volume.old / 1000).toFixed(0)}k kg
                         </div>
                       </div>
                       <div>
                         <div className="text-sm text-cyan-600 mb-1">Volume Projetado</div>
-                        <div className="text-2xl font-bold text-cyan-800">
-                          {results.volume.new.toLocaleString()} un
+                        <div className={`text-2xl font-bold ${getImpactColor(results.volume.change)}`}>
+                          {(results.volume.new / 1000).toFixed(0)}k kg
                         </div>
                       </div>
                     </div>
-                    <div className={`text-sm font-bold mt-3 ${getImpactColor(results.volume.change)}`}>
-                      {results.volume.change > 0 ? '+' : ''}{results.volume.change.toFixed(1)}% 
-                      ({results.volume.change > 0 ? '+' : ''}{(results.volume.new - results.volume.old).toLocaleString()} un)
-                    </div>
-                    <div className="text-xs text-cyan-600 mt-2 italic">
-                      Elasticidade: {results.volume.elasticityImpact.toFixed(1)}% por {params.priceChange}% de preço
+                    <div className="mt-3 pt-3 border-t border-cyan-200">
+                      <span className="text-sm text-cyan-600">Variação: </span>
+                      <span className={`text-base font-bold ${getImpactColor(results.volume.change)}`}>
+                        {results.volume.change > 0 ? '+' : ''}{results.volume.change.toFixed(1)}%
+                      </span>
                     </div>
                   </div>
 
-                  {/* Receita Projetada */}
-                  <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-green-300">
-                    <div className="text-base text-green-700 font-semibold mb-2">💵 Receita Projetada</div>
-                    <div className="text-4xl font-bold text-green-800">
-                      R$ {(results.revenue.new / 1000000).toFixed(1)}M
+                  {/* Impacto na Receita */}
+                  <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-green-200">
+                    <div className="text-base text-green-700 font-semibold mb-3">💰 Impacto na Receita</div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-sm text-green-600 mb-1">Receita Atual</div>
+                        <div className="text-2xl font-bold text-green-800">
+                          R$ {(results.revenue.old / 1000000).toFixed(1)}M
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-sm text-green-600 mb-1">Receita Projetada</div>
+                        <div className={`text-2xl font-bold ${getImpactColor(results.revenue.change)}`}>
+                          R$ {(results.revenue.new / 1000000).toFixed(1)}M
+                        </div>
+                      </div>
                     </div>
-                    <div className={`text-base font-bold mt-2 ${getImpactColor(results.revenue.change)}`}>
-                      {results.revenue.change > 0 ? '+' : ''}{results.revenue.change.toFixed(1)}% vs atual
-                    </div>
-                    <div className="text-xs text-green-600 mt-2 italic">
-                      Apenas elasticidade: R$ {(results.revenue.elasticityOnly / 1000000).toFixed(1)}M
+                    <div className="mt-3 pt-3 border-t border-green-200">
+                      <span className="text-sm text-green-600">Variação: </span>
+                      <span className={`text-base font-bold ${getImpactColor(results.revenue.change)}`}>
+                        {results.revenue.change > 0 ? '+' : ''}{results.revenue.change.toFixed(1)}%
+                      </span>
                     </div>
                   </div>
 
                   {/* Market Share */}
-                  <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border-2 border-purple-300">
-                    <div className="text-base text-purple-700 font-semibold mb-2">🎯 Market Share</div>
-                    <div className="text-4xl font-bold text-purple-800">
-                      {results.marketShare.new.toFixed(1)}%
-                    </div>
-                    <div className={`text-base font-bold mt-2 ${getImpactColor(results.marketShare.change)}`}>
-                      {results.marketShare.change > 0 ? '+' : ''}{results.marketShare.change.toFixed(1)} pontos
-                    </div>
-                  </div>
-
-                  {/* ROI e Payback */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg border-2 border-yellow-300">
-                      <div className="text-sm text-yellow-700 font-semibold mb-1">💎 ROI</div>
-                      <div className="text-3xl font-bold text-yellow-800">
-                        {results.financial.roi.toFixed(0)}%
-                      </div>
-                    </div>
-                    <div className="p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-lg border-2 border-orange-300">
-                      <div className="text-sm text-orange-700 font-semibold mb-1">⏱️ Payback</div>
-                      <div className="text-3xl font-bold text-orange-800">
-                        {results.financial.payback.toFixed(1)} meses
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Nível de Risco */}
-                  <div className={`p-4 rounded-lg border-2 ${getRiskColor(results.financial.risk)}`}>
-                    <div className="flex items-center justify-between">
+                  <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border-2 border-purple-200">
+                    <div className="text-base text-purple-700 font-semibold mb-3">📈 Market Share</div>
+                    <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <div className="text-sm font-semibold mb-1">⚠️ Nível de Risco</div>
-                        <div className="text-2xl font-bold">{results.financial.risk}</div>
+                        <div className="text-sm text-purple-600 mb-1">Share Atual</div>
+                        <div className="text-2xl font-bold text-purple-800">
+                          {results.marketShare.old.toFixed(1)}%
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-sm font-semibold mb-1">Investimento total</div>
-                        <div className="text-xl font-bold">
-                          R$ {(results.financial.totalInvestment / 1000000).toFixed(1)}M
+                      <div>
+                        <div className="text-sm text-purple-600 mb-1">Share Projetado</div>
+                        <div className={`text-2xl font-bold ${getImpactColor(results.marketShare.change)}`}>
+                          {results.marketShare.new.toFixed(1)}%
                         </div>
                       </div>
                     </div>
+                    <div className="mt-3 pt-3 border-t border-purple-200">
+                      <span className="text-sm text-purple-600">Variação: </span>
+                      <span className={`text-base font-bold ${getImpactColor(results.marketShare.change)}`}>
+                        {results.marketShare.change > 0 ? '+' : ''}{results.marketShare.change.toFixed(1)} p.p.
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Insights */}
-                  <div className="p-4 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg border-2 border-amber-300">
-                    <div className="text-base text-amber-800 font-semibold mb-2">💡 Insights</div>
-                    <ul className="text-sm text-amber-700 space-y-1">
-                      {results.financial.roi > 200 && (
-                        <li>✅ ROI muito alto pode indicar projeção otimista</li>
+                  {/* Análise Financeira */}
+                  <div className="p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg border-2 border-orange-200">
+                    <div className="text-base text-orange-700 font-semibold mb-3">💼 Análise Financeira</div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-orange-600">Investimento Total:</span>
+                        <span className="text-base font-bold text-orange-800">
+                          R$ {(results.financial.totalInvestment / 1000000).toFixed(1)}M
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-orange-600">ROI Projetado:</span>
+                        <span className={`text-base font-bold ${getImpactColor(results.financial.roi)}`}>
+                          {results.financial.roi.toFixed(1)}%
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-orange-600">Payback:</span>
+                        <span className="text-base font-bold text-orange-800">
+                          {results.financial.payback.toFixed(1)} meses
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2 border-t border-orange-200">
+                        <span className="text-sm text-orange-600">Nível de Risco:</span>
+                        <span className={`px-3 py-1 rounded-full text-sm font-bold border ${getRiskColor(results.financial.risk)}`}>
+                          {results.financial.risk}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recomendações */}
+                  <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border-2 border-blue-200">
+                    <div className="text-base text-blue-700 font-semibold mb-3">💡 Recomendações</div>
+                    <div className="space-y-2 text-sm text-blue-800">
+                      {results.financial.risk === 'Alto' && (
+                        <p>⚠️ <strong>Risco Alto:</strong> Considere reduzir o aumento de preço ou aumentar investimentos em marketing.</p>
                       )}
-                      {results.financial.payback < 6 && (
-                        <li>✅ Payback rápido indica baixo risco financeiro</li>
+                      {results.financial.roi > 150 && (
+                        <p>✅ <strong>ROI Excelente:</strong> Cenário muito favorável para implementação.</p>
                       )}
-                      {Math.abs(params.priceChange) > 15 && (
-                        <li>⚠️ Mudanças de preço acima de 15% podem gerar resistência do mercado</li>
+                      {results.volume.change < -10 && (
+                        <p>⚠️ <strong>Queda de Volume:</strong> Aumento de preço pode impactar significativamente as vendas.</p>
                       )}
-                      {results.marketShare.new > 60 && (
-                        <li>🎯 Share projetado muito alto pode atrair regulação antitruste</li>
+                      {results.marketShare.change > 2 && (
+                        <p>📈 <strong>Ganho de Share:</strong> Investimentos podem aumentar participação de mercado.</p>
                       )}
-                      {results.volume.change < -20 && (
-                        <li>⚠️ Queda de volume acima de 20% pode comprometer operação</li>
+                      {results.financial.risk === 'Baixo' && results.financial.roi > 100 && (
+                        <p>🎯 <strong>Cenário Ideal:</strong> Baixo risco com retorno atrativo. Recomendado para execução.</p>
                       )}
-                    </ul>
+                    </div>
                   </div>
                 </div>
               )}

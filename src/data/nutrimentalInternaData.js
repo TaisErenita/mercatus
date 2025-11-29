@@ -259,7 +259,55 @@ export const nutrimentalInternaData = {
   }
 };
 
-// Função helper para obter dados internos
+// Função helper para obter dados internos no formato esperado pelo componente
 export function getNutrimentalInternaData() {
-  return nutrimentalInternaData;
+  return {
+    receita_por_canal: {
+      total: nutrimentalInternaData.totais.receita,
+      canais: nutrimentalInternaData.canais.map(c => ({
+        nome: c.canal,
+        valor: c.receita,
+        percentual: c.percentualReceita
+      }))
+    },
+    volume_por_canal: {
+      total: nutrimentalInternaData.totais.volume,
+      canais: nutrimentalInternaData.canais.map(c => ({
+        nome: c.canal,
+        volume: c.volume,
+        percentual: c.percentual
+      }))
+    },
+    receita_por_regiao: {
+      total: nutrimentalInternaData.totais.receita,
+      regioes: nutrimentalInternaData.regioes.map(r => ({
+        nome: r.regiao,
+        valor: r.receita,
+        percentual: r.percentualReceita
+      }))
+    },
+    volume_por_regiao: {
+      total: nutrimentalInternaData.totais.volume,
+      regioes: nutrimentalInternaData.regioes.map(r => ({
+        nome: r.regiao,
+        volume: r.volume,
+        percentual: r.percentual
+      }))
+    },
+    clientes: {
+      diretos: 450,
+      total: 1250
+    },
+    top10_mais_vendidos: nutrimentalInternaData.top10Skus.map((sku, index) => ({
+      rank: index + 1,
+      produto: sku.produto,
+      categoria: sku.sku.startsWith('BC') ? 'Cereais' : 
+                 sku.sku.startsWith('BP') ? 'Proteína' : 
+                 sku.sku.startsWith('BN') ? 'Nuts' : 
+                 sku.sku.startsWith('BF') ? 'Frutas' : 'Outros',
+      volume: sku.volume,
+      receita: sku.receita
+    })),
+    top10_menos_vendidos: []
+  };
 }

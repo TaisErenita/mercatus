@@ -84,25 +84,25 @@ const EstrategiaInovacao = () => {
       categoria: 'E-commerce',
       titulo: 'Aceleração Amazon e Marketplaces',
       descricao: 'Expansão em canais digitais de alto crescimento',
-      potencial: `R$ ${(dadosAmazon.totais.receita * 2 / 1000000).toFixed(1)}M (dobrar vendas)`,
+      potencial: `R$ ${(dadosAmazon.receitaTotal * 2 / 1000000).toFixed(1)}M (dobrar vendas)`,
       investimento: 'R$ 800k',
       prazo: '6 meses',
       mercado: 'E-commerce crescendo 30% a.a.',
       status: 'Planejamento',
       prioridade: 'Média',
-      fundamentacao: `Amazon atual: R$ ${(dadosAmazon.totais.receita / 1000000).toFixed(1)}M, ${dadosAmazon.totais.unidades.toLocaleString('pt-BR')} unidades`
+      fundamentacao: `Amazon atual: R$ ${(dadosAmazon.receitaTotal / 1000000).toFixed(1)}M, ${dadosAmazon.unidadesTotal.toLocaleString('pt-BR')} unidades`
     },
     {
       categoria: 'Distribuição',
       titulo: 'Expansão MTRIX (Atacado/Distribuição)',
       descricao: 'Ampliar presença em distribuidores regionais',
-      potencial: `R$ ${(dadosMTRIX.totais.receita * 0.25 / 1000000).toFixed(1)}M (crescimento 25%)`,
+      potencial: `R$ ${(dadosMTRIX.totalVendas * 0.25 / 1000000).toFixed(1)}M (crescimento 25%)`,
       investimento: 'R$ 500k',
       prazo: '5 meses',
-      mercado: `${dadosMTRIX.totais.distribuidores} distribuidores em ${dadosMTRIX.totais.ufs} UFs`,
+      mercado: `${dadosMTRIX.totalDistribuidores} distribuidores em ${dadosMTRIX.totalUFs} UFs`,
       status: 'Conceito',
       prioridade: 'Média',
-      fundamentacao: `MTRIX atual: R$ ${(dadosMTRIX.totais.receita / 1000000).toFixed(1)}M, ${(dadosMTRIX.totais.volume / 1000).toFixed(0)}k kg`
+      fundamentacao: `MTRIX atual: R$ ${(dadosMTRIX.totalVendas / 1000000).toFixed(1)}M, ${dadosMTRIX.totalDistribuidores} distribuidores`
     }
   ];
 
@@ -405,7 +405,7 @@ const EstrategiaInovacao = () => {
               <div>
                 <h5 className="font-medium text-slate-800 mb-2">Longo Prazo (18 meses):</h5>
                 <ul className="text-sm text-slate-600 space-y-1">
-                  <li>• Expandir MTRIX ({dadosMTRIX.totais.distribuidores} distribuidores, {dadosMTRIX.totais.ufs} UFs)</li>
+                  <li>• Expandir MTRIX ({dadosMTRIX.totalDistribuidores} distribuidores, {dadosMTRIX.totalUFs} UFs)</li>
                   <li>• Desenvolver ecossistema nutricional</li>
                   <li>• Parcerias estratégicas tech e e-commerce</li>
                   <li>• Meta: {cenariosFuturos[1].receita} (cenário realista)</li>

@@ -1,99 +1,239 @@
-// Dados Internos Nutrimental - DADOS REAIS
-// Fonte: YTD2025_atualizada08_25_CRUA.xlsb (BASE ATUALIZADA)
-// Processado em: 29/10/2025
-// Período: YTD 2025 (primeiras 10k linhas processadas)
+// Dados Internos da Nutrimental - YTD 2025 (Apenas BARRAS)
+// Fonte: Sistema Comercial Interno
+// Última atualização: Novembro 2025
+// IMPORTANTE: Contém apenas produtos de BARRAS (BC, BN, BF, BP)
 
-const nutrimentalInternaData = {
-  // Receita por Canal
-  receita_por_canal: {
-    total: 10738556.02,
-    canais: [
-      { nome: 'Distribuidor', valor: 5040033.83, percentual: 46.9 },
-      { nome: 'Atacado', valor: 3172481.27, percentual: 29.5 },
-      { nome: 'AS', valor: 1056687.69, percentual: 9.8 },
-      { nome: 'Doceiro', valor: 936404.37, percentual: 8.7 },
-      { nome: 'KA', valor: 346646.78, percentual: 3.2 },
-      { nome: 'C&C', valor: 95722.93, percentual: 0.9 },
-      { nome: 'HSA', valor: 90579.15, percentual: 0.8 }
-    ]
-  },
+export const nutrimentalInternaData = {
+  // Totais gerais
+  totalVolume: 2921408.05, // kg
+  totalReceita: 142509965.58, // R$
   
-  // Receita por Região
-  receita_por_regiao: {
-    total: 10738556.02,
-    regioes: [
-      { nome: 'Norte', valor: 7230159.12, percentual: 67.3 },
-      { nome: 'SP Capital', valor: 3271090.74, percentual: 30.5 },
-      { nome: 'Nordeste', valor: 126353.52, percentual: 1.2 },
-      { nome: 'SP Interior', valor: 102213.16, percentual: 1.0 },
-      { nome: 'RJ', valor: 8739.48, percentual: 0.1 }
-    ]
-  },
-  
-  // Volume por Canal (em KG)
-  volume_por_canal: {
-    total: 532019.784,
-    canais: [
-      { nome: 'Distribuidor', volume: 271498.128, percentual: 51.0 },
-      { nome: 'Atacado', volume: 193664.544, percentual: 36.4 },
-      { nome: 'AS', volume: 32017.824, percentual: 6.0 },
-      { nome: 'Doceiro', volume: 22850.568, percentual: 4.3 },
-      { nome: 'KA', volume: 6274.368, percentual: 1.2 },
-      { nome: 'C&C', volume: 1837.152, percentual: 0.3 },
-      { nome: 'HSA', volume: 3877.200, percentual: 0.7 }
-    ]
-  },
-  
-  // Volume por Região (em KG)
-  volume_por_regiao: {
-    total: 532019.784,
-    regioes: [
-      { nome: 'Norte', volume: 435905.808, percentual: 81.9 },
-      { nome: 'SP Capital', volume: 84136.92, percentual: 15.8 },
-      { nome: 'Nordeste', volume: 7992.0, percentual: 1.5 },
-      { nome: 'SP Interior', volume: 3785.904, percentual: 0.7 },
-      { nome: 'RJ', volume: 199.152, percentual: 0.0 }
-    ]
-  },
-  
-  // Clientes
-  clientes: {
-    total: 28,
-    diretos: 0,
-    indiretos: 28
-  },
-  
-  // Top 10 Mais Vendidos (YTD 2025)
-  top10_mais_vendidos: [
-    { posicao: 1, produto: 'NUTRIBOM MULTICEREAIS 24X180G', categoria: 'Cereais', volume: 135691.2, receita: 2195645.66 },
-    { posicao: 2, produto: 'NUTRIBOM ARROZ 24X180G', categoria: 'Cereais', volume: 96789.6, receita: 1570468.01 },
-    { posicao: 3, produto: 'NUTRIBOM AVEIA E ARROZ 24X180G', categoria: 'Cereais', volume: 93350.88, receita: 1519009.44 },
-    { posicao: 4, produto: 'NUTRIBOM BANANA E MAÇÃ 24X180G', categoria: 'Frutas', volume: 43446.24, receita: 718014.12 },
-    { posicao: 5, produto: 'NUTRIBOM MILHO 24X180G', categoria: 'Cereais', volume: 40232.16, receita: 666531.47 },
-    { posicao: 6, produto: 'BC NUTRY MORANGO CHOC 12X24X22G', categoria: 'Cereais', volume: 9865.152, receita: 399708.34 },
-    { posicao: 7, produto: 'BC NUTRY AV BAN MEL 12X24X22G', categoria: 'Cereais', volume: 9237.888, receita: 360978.85 },
-    { posicao: 8, produto: 'BC NUTRY BOLO CHOC 12X24X22G', categoria: 'Cereais', volume: 8857.728, receita: 357427.96 },
-    { posicao: 9, produto: 'BC NUTRY FRUTAS VERM 12X24X22G', categoria: 'Frutas', volume: 7343.424, receita: 320719.71 },
-    { posicao: 10, produto: 'BC NUTRY CAJU CHOC 12X24X22G', categoria: 'Nuts', volume: 5639.040, receita: 211390.59 }
+  // Distribuição por Canal
+  porCanal: [
+    {
+      canal: "C&C",
+      volume: 1061105.81,
+      receita: 53951771.79,
+      percentual: 37.9
+    },
+    {
+      canal: "DISTRIBUIDOR",
+      volume: 1195205.72,
+      receita: 53014498.44,
+      percentual: 37.2
+    },
+    {
+      canal: "DOCEIRO",
+      volume: 235597.90,
+      receita: 9239020.54,
+      percentual: 6.5
+    },
+    {
+      canal: "KA",
+      volume: 115726.13,
+      receita: 8099593.51,
+      percentual: 5.7
+    },
+    {
+      canal: "ATACADO",
+      volume: 112741.37,
+      receita: 4987956.21,
+      percentual: 3.5
+    },
+    {
+      canal: "HSA",
+      volume: 67838.14,
+      receita: 4359562.11,
+      percentual: 3.1
+    },
+    {
+      canal: "FARMA",
+      volume: 39725.88,
+      receita: 3204915.05,
+      percentual: 2.2
+    },
+    {
+      canal: "AS",
+      volume: 43397.18,
+      receita: 2800689.39,
+      percentual: 2.0
+    },
+    {
+      canal: "DIGITAL",
+      volume: 31472.45,
+      receita: 1922646.68,
+      percentual: 1.3
+    },
+    {
+      canal: "DISTR FARMA",
+      volume: 15340.75,
+      receita: 726592.30,
+      percentual: 0.5
+    },
+    {
+      canal: "LOJA DE DEPARTAMENTO",
+      volume: 1597.39,
+      receita: 97263.12,
+      percentual: 0.1
+    },
+    {
+      canal: "PEQUENO VAREJO",
+      volume: 1157.47,
+      receita: 69633.54,
+      percentual: 0.0
+    },
+    {
+      canal: "MARKETPLACE",
+      volume: 489.82,
+      receita: 34974.79,
+      percentual: 0.0
+    },
+    {
+      canal: "0x2a",
+      volume: 12.05,
+      receita: 848.11,
+      percentual: 0.0
+    },
   ],
   
-  // Top 10 Menos Vendidos (YTD 2025)
-  top10_menos_vendidos: [
-    { posicao: 1, produto: 'BN NUTRY SEMENTES 6X12X30G', categoria: 'Nuts', volume: 4.32, receita: 251.20 },
-    { posicao: 2, produto: 'BN NUTRY DAMASCO 6X12X30G', categoria: 'Frutas', volume: 8.64, receita: 502.40 },
-    { posicao: 3, produto: 'BN NUTRY CRANBERRY 6X12X25G', categoria: 'Frutas', volume: 9.00, receita: 704.00 },
-    { posicao: 4, produto: 'BN NUTRY SEMENTES 6X12X25G', categoria: 'Nuts', volume: 9.00, receita: 704.00 },
-    { posicao: 5, produto: 'BN NUTRY DAMASCO 24X2X30G', categoria: 'Frutas', volume: 11.52, receita: 704.16 },
-    { posicao: 6, produto: 'BF NUTRY AMEIXA CHOC 6X24X20G', categoria: 'Frutas', volume: 14.40, receita: 735.99 },
-    { posicao: 7, produto: 'BN NUTRY MORANGO 6X12X30G', categoria: 'Frutas', volume: 12.96, receita: 753.60 },
-    { posicao: 8, produto: 'NUTRY CASTANHA 12X24X22G', categoria: 'Nuts', volume: 19.008, receita: 933.14 },
-    { posicao: 9, produto: 'BN NUTRY COCO 6X12X25G', categoria: 'Frutas', volume: 18.00, receita: 1408.00 },
-    { posicao: 10, produto: 'NUTRY BANANA 12X24X22G', categoria: 'Frutas', volume: 31.68, receita: 1536.00 }
-  ]
+  // Distribuição por Região
+  porRegiao: [
+    {
+      regiao: "SUL",
+      volume: 613288.13,
+      receita: 30078554.66,
+      percentual: 21.1
+    },
+    {
+      regiao: "SP CAPITAL",
+      volume: 542640.88,
+      receita: 26309379.58,
+      percentual: 18.5
+    },
+    {
+      regiao: "NORDESTE",
+      volume: 367226.71,
+      receita: 19848170.78,
+      percentual: 13.9
+    },
+    {
+      regiao: "MG (MG / ES)",
+      volume: 362004.24,
+      receita: 17671612.02,
+      percentual: 12.4
+    },
+    {
+      regiao: "SP INTERIOR",
+      volume: 368041.68,
+      receita: 16201021.07,
+      percentual: 11.4
+    },
+    {
+      regiao: "RJ",
+      volume: 323059.22,
+      receita: 14386274.46,
+      percentual: 10.1
+    },
+    {
+      regiao: "CENTRO-OESTE",
+      volume: 176640.94,
+      receita: 9099249.85,
+      percentual: 6.4
+    },
+    {
+      regiao: "NORTE",
+      volume: 129642.36,
+      receita: 6952961.33,
+      percentual: 4.9
+    },
+    {
+      regiao: "CENTRO OESTE",
+      volume: 38852.81,
+      receita: 1962122.73,
+      percentual: 1.4
+    },
+    {
+      regiao: "E-COMMERCE",
+      volume: 11.09,
+      receita: 619.10,
+      percentual: 0.0
+    },
+  ],
+  
+  // Top 10 SKUs mais vendidos (por volume)
+  top10Skus: [
+    {
+      sku: "BC NUTRY MORANGO CHOC12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 407675.14,
+      receita: 16851101.29
+    },
+    {
+      sku: "BC NUTRY BOLO CHOC 12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 379127.23,
+      receita: 15714659.99
+    },
+    {
+      sku: "BC NUTRY AV BAN MEL 12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 363501.60,
+      receita: 14931713.68
+    },
+    {
+      sku: "BC NUTRY AVELA CHOC 12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 295112.93,
+      receita: 12295159.89
+    },
+    {
+      sku: "BC NUTRY FRUTAS VERM 12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 182192.21,
+      receita: 7331899.36
+    },
+    {
+      sku: "BC NUTRY CAJU CHOC 12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 106483.87,
+      receita: 4158171.42
+    },
+    {
+      sku: "BC NUTRY MORANGO CHOC 24X3X22G",
+      produto: "BC REG 24X3x22G CXT",
+      volume: 96776.06,
+      receita: 4205687.59
+    },
+    {
+      sku: "BC NUTRY AVEIA BAN MEL24X3X22G",
+      produto: "BC REG 24X3x22G CXT",
+      volume: 90619.06,
+      receita: 3994537.06
+    },
+    {
+      sku: "BC NUTRY BOLO CHOC 24X3X22G",
+      produto: "BC REG 24X3x22G CXT",
+      volume: 82722.82,
+      receita: 3558045.76
+    },
+    {
+      sku: "BC NUTRY COCO CHOC 12X24X22G",
+      produto: "BC REG 12x24x22G DSP",
+      volume: 80955.60,
+      receita: 3147513.76
+    },
+  ],
+  
+  // Metadata
+  metadata: {
+    periodo: "YTD 2025",
+    dataAtualizacao: "2025-11-29",
+    fonte: "Sistema Comercial Interno",
+    observacao: "Dados filtrados apenas para produtos de BARRAS (BC, BN, BF, BP). Produtos NUTRIBOM (biscoitos) foram removidos."
+  }
 };
 
-export const getNutrimentalInternaData = () => {
+// Função helper para obter dados internos
+export function getNutrimentalInternaData() {
   return nutrimentalInternaData;
-};
-
-export default nutrimentalInternaData;
+}

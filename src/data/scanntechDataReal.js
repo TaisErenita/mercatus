@@ -41,11 +41,12 @@ export const getScanntechMercadoTotal = (categoria, periodo) => {
   const catKey = categoria.toLowerCase();
   const base = mercadoTotalBase[catKey] || mercadoTotalBase['total'];
   
-  // Simular variações temporais (dados Scanntech são consolidados de 14 meses)
+  // Dados consolidados de 14 meses (Ago/2024 - Set/2025)
+  // Exibir valores totais consolidados, não média mensal
   const variacoes = {
-    'mes_yoy': { fator: 1.0 / 14, anterior_fator: 0.844 / 14 },      // Média mensal, +18.5% YoY
-    'trimestre_yoy': { fator: 3.0 / 14, anterior_fator: 0.875 * 3 / 14 }, // Média trimestral, +14.2% YoY
-    'ytd_yoy': { fator: 8.0 / 14, anterior_fator: 0.824 * 8 / 14 }        // YTD (8 meses), +21.3% YoY
+    'mes_yoy': { fator: 1.0, anterior_fator: 0.933 },      // Total consolidado, +7.2% YoY
+    'trimestre_yoy': { fator: 1.0, anterior_fator: 0.933 }, // Total consolidado
+    'ytd_yoy': { fator: 1.0, anterior_fator: 0.933 }        // Total consolidado
   };
   
   const var_atual = variacoes[periodo] || variacoes['mes_yoy'];

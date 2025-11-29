@@ -5,158 +5,184 @@
 
 export const nutrimentalInternaData = {
   // Totais gerais
-  totalVolume: 2921408.05, // kg
-  totalReceita: 142509965.58, // R$
+  totais: {
+    volume: 2921408.05, // kg
+    receita: 142509965.58 // R$
+  },
   
   // Distribuição por Canal
-  porCanal: [
+  canais: [
     {
       canal: "C&C",
       volume: 1061105.81,
       receita: 53951771.79,
-      percentual: 37.9
+      percentual: 37.9,
+      percentualReceita: 37.9
     },
     {
       canal: "DISTRIBUIDOR",
       volume: 1195205.72,
       receita: 53014498.44,
-      percentual: 37.2
+      percentual: 37.2,
+      percentualReceita: 37.2
     },
     {
       canal: "DOCEIRO",
       volume: 235597.90,
       receita: 9239020.54,
-      percentual: 6.5
+      percentual: 6.5,
+      percentualReceita: 6.5
     },
     {
       canal: "KA",
       volume: 115726.13,
       receita: 8099593.51,
-      percentual: 5.7
+      percentual: 5.7,
+      percentualReceita: 5.7
     },
     {
       canal: "ATACADO",
       volume: 112741.37,
       receita: 4987956.21,
-      percentual: 3.5
+      percentual: 3.5,
+      percentualReceita: 3.5
     },
     {
       canal: "HSA",
       volume: 67838.14,
       receita: 4359562.11,
-      percentual: 3.1
+      percentual: 3.1,
+      percentualReceita: 3.1
     },
     {
       canal: "FARMA",
       volume: 39725.88,
       receita: 3204915.05,
-      percentual: 2.2
+      percentual: 2.2,
+      percentualReceita: 2.2
     },
     {
       canal: "AS",
       volume: 43397.18,
       receita: 2800689.39,
-      percentual: 2.0
+      percentual: 2.0,
+      percentualReceita: 2.0
     },
     {
       canal: "DIGITAL",
       volume: 31472.45,
       receita: 1922646.68,
-      percentual: 1.3
+      percentual: 1.3,
+      percentualReceita: 1.3
     },
     {
       canal: "DISTR FARMA",
       volume: 15340.75,
       receita: 726592.30,
-      percentual: 0.5
+      percentual: 0.5,
+      percentualReceita: 0.5
     },
     {
       canal: "LOJA DE DEPARTAMENTO",
       volume: 1597.39,
       receita: 97263.12,
-      percentual: 0.1
+      percentual: 0.1,
+      percentualReceita: 0.1
     },
     {
       canal: "PEQUENO VAREJO",
       volume: 1157.47,
       receita: 69633.54,
-      percentual: 0.0
+      percentual: 0.0,
+      percentualReceita: 0.0
     },
     {
       canal: "MARKETPLACE",
       volume: 489.82,
       receita: 34974.79,
-      percentual: 0.0
+      percentual: 0.0,
+      percentualReceita: 0.0
     },
     {
       canal: "0x2a",
       volume: 12.05,
       receita: 848.11,
-      percentual: 0.0
+      percentual: 0.0,
+      percentualReceita: 0.0
     },
   ],
   
   // Distribuição por Região
-  porRegiao: [
+  regioes: [
     {
       regiao: "SUL",
       volume: 613288.13,
       receita: 30078554.66,
-      percentual: 21.1
+      percentual: 21.1,
+      percentualReceita: 21.1
     },
     {
       regiao: "SP CAPITAL",
       volume: 542640.88,
       receita: 26309379.58,
-      percentual: 18.5
+      percentual: 18.5,
+      percentualReceita: 18.5
     },
     {
       regiao: "NORDESTE",
       volume: 367226.71,
       receita: 19848170.78,
-      percentual: 13.9
+      percentual: 13.9,
+      percentualReceita: 13.9
     },
     {
       regiao: "MG (MG / ES)",
       volume: 362004.24,
       receita: 17671612.02,
-      percentual: 12.4
+      percentual: 12.4,
+      percentualReceita: 12.4
     },
     {
       regiao: "SP INTERIOR",
       volume: 368041.68,
       receita: 16201021.07,
-      percentual: 11.4
+      percentual: 11.4,
+      percentualReceita: 11.4
     },
     {
       regiao: "RJ",
       volume: 323059.22,
       receita: 14386274.46,
-      percentual: 10.1
+      percentual: 10.1,
+      percentualReceita: 10.1
     },
     {
       regiao: "CENTRO-OESTE",
       volume: 176640.94,
       receita: 9099249.85,
-      percentual: 6.4
+      percentual: 6.4,
+      percentualReceita: 6.4
     },
     {
       regiao: "NORTE",
       volume: 129642.36,
       receita: 6952961.33,
-      percentual: 4.9
+      percentual: 4.9,
+      percentualReceita: 4.9
     },
     {
       regiao: "CENTRO OESTE",
       volume: 38852.81,
       receita: 1962122.73,
-      percentual: 1.4
+      percentual: 1.4,
+      percentualReceita: 1.4
     },
     {
       regiao: "E-COMMERCE",
       volume: 11.09,
       receita: 619.10,
-      percentual: 0.0
+      percentual: 0.0,
+      percentualReceita: 0.0
     },
   ],
   

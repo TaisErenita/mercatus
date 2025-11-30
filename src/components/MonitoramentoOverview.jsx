@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import { BarChart3, Building2, Globe2, ShoppingCart, ArrowRight } from 'lucide-react';
+import { BarChart3, Building2, Globe2, ShoppingCart, ArrowRight, TrendingUp } from 'lucide-react';
 
 const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
   const submodulos = [
@@ -10,147 +10,178 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
       icon: BarChart3,
       titulo: 'Scanntech',
       subtitulo: 'Mercado Total & Concorrência',
+      descricao: 'Análise completa do mercado de barras com dados Scanntech, share de mercado, análise competitiva e tendências por região.',
       badge: 'Mercado',
       badgeColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
       metricas: [
         { label: 'Mercado Total', valor: 'R$ 159.2M', variacao: '+7.2%', positivo: true },
         { label: 'Volume', valor: '2.67M kg', variacao: '+7.2%', positivo: true },
-        { label: 'Share Nutrimental', valor: '89.5%', variacao: '+2.3%', positivo: true }
+        { label: 'Share Nutrimental', valor: '89.5%', variacao: '+2.3pp', positivo: true }
       ],
-      gradient: 'from-cyan-50 to-blue-50',
-      borderColor: 'border-cyan-300'
+      gradient: 'from-cyan-500 to-blue-600',
+      bgGradient: 'from-cyan-50 via-blue-50 to-indigo-50',
+      borderColor: 'border-cyan-400'
     },
     {
       id: 'internos',
       icon: Building2,
       titulo: 'Dados Internos',
       subtitulo: 'Performance Nutrimental',
+      descricao: 'Visão detalhada das vendas internas por canal, região, produtos e clientes com análise de performance YTD completa.',
       badge: 'Interno',
       badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
       metricas: [
-        { label: 'Receita Total', valor: 'R$ 142.5M', variacao: '+18.5%', positivo: true },
+        { label: 'Receita Total', valor: 'R$ 142.5M', variacao: '+18.9%', positivo: true },
         { label: 'Volume', valor: '2.92M kg', variacao: '+15.2%', positivo: true },
-        { label: 'Top Canal', valor: 'C&C 37.9%', variacao: null, positivo: null }
+        { label: 'Top Canal', valor: 'C&C 37.9%', variacao: 'Líder', positivo: true }
       ],
-      gradient: 'from-purple-50 to-pink-50',
-      borderColor: 'border-purple-300'
+      gradient: 'from-purple-500 to-pink-600',
+      bgGradient: 'from-purple-50 via-pink-50 to-rose-50',
+      borderColor: 'border-purple-400'
     },
     {
       id: 'mtrix',
       icon: Globe2,
       titulo: 'MTRIX',
       subtitulo: 'Distribuição & Cobertura',
+      descricao: 'Mapeamento completo da rede de distribuição nacional, cobertura geográfica e performance por distribuidor.',
       badge: 'Distribuição',
       badgeColor: 'bg-green-100 text-green-800 border-green-300',
       metricas: [
-        { label: 'Receita', valor: 'R$ 14.0M', variacao: null, positivo: null },
-        { label: 'Distribuidores', valor: '35', variacao: null, positivo: null },
-        { label: 'Cobertura', valor: '25 UFs', variacao: null, positivo: null }
+        { label: 'Receita', valor: 'R$ 14.0M', variacao: '35 Distrib.', positivo: true },
+        { label: 'Cobertura', valor: '25 UFs', variacao: '92.6%', positivo: true },
+        { label: 'Categorias', valor: '7 linhas', variacao: 'Ativo', positivo: true }
       ],
-      gradient: 'from-green-50 to-emerald-50',
-      borderColor: 'border-green-300'
+      gradient: 'from-green-500 to-emerald-600',
+      bgGradient: 'from-green-50 via-emerald-50 to-teal-50',
+      borderColor: 'border-green-400'
     },
     {
       id: 'amazon',
       icon: ShoppingCart,
       titulo: 'Amazon',
       subtitulo: 'E-commerce & Digital',
+      descricao: 'Análise de vendas no marketplace Amazon, performance de produtos, avaliações e oportunidades no canal digital.',
       badge: 'Digital',
       badgeColor: 'bg-orange-100 text-orange-800 border-orange-300',
       metricas: [
-        { label: 'Receita', valor: 'R$ 3.67M', variacao: null, positivo: null },
-        { label: 'Unidades', valor: '351.8k', variacao: null, positivo: null },
-        { label: 'Produtos', valor: '88 SKUs', variacao: null, positivo: null }
+        { label: 'Receita', valor: 'R$ 3.67M', variacao: '351.8k un', positivo: true },
+        { label: 'Produtos', valor: '88 SKUs', variacao: 'Ativos', positivo: true },
+        { label: 'Canal', valor: 'Digital', variacao: '100%', positivo: true }
       ],
-      gradient: 'from-orange-50 to-amber-50',
-      borderColor: 'border-orange-300'
+      gradient: 'from-orange-500 to-amber-600',
+      bgGradient: 'from-orange-50 via-amber-50 to-yellow-50',
+      borderColor: 'border-orange-400'
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-0 shadow-lg bg-gradient-to-r from-slate-50 to-slate-100">
-        <CardHeader>
+    <div className="space-y-8">
+      {/* Header Premium */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-8 shadow-2xl">
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]"></div>
+        <div className="relative z-10">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl">Monitoramento - Visão Geral</CardTitle>
-              <CardDescription className="text-base mt-2">
-                Selecione uma fonte de dados para análise detalhada
-              </CardDescription>
+              <h2 className="text-3xl font-bold text-white mb-2">
+                Monitoramento de Performance
+              </h2>
+              <p className="text-lg text-slate-300">
+                Selecione uma fonte de dados para análises detalhadas e insights estratégicos
+              </p>
             </div>
-            <Badge className="bg-blue-100 text-blue-800 border-blue-300 text-sm px-3 py-1">
+            <Badge className="bg-blue-500 text-white border-blue-400 text-sm px-4 py-2">
               {periodoLegenda.curto}
             </Badge>
           </div>
-        </CardHeader>
-      </Card>
+        </div>
+      </div>
 
-      {/* Grid de Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Grid de Cards Premium */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {submodulos.map((submod) => {
           const Icon = submod.icon;
           return (
             <Card
               key={submod.id}
-              className={`border-2 ${submod.borderColor} shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 bg-gradient-to-br ${submod.gradient}`}
+              className={`group relative overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 border-2 ${submod.borderColor} bg-gradient-to-br ${submod.bgGradient}`}
               onClick={() => onSelectSubmodulo(submod.id)}
             >
-              <CardHeader>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-3 rounded-lg ${submod.badgeColor.replace('text-', 'bg-').replace('border-', 'bg-').split(' ')[0]}`}>
-                      <Icon className="w-6 h-6" />
+              {/* Header com Gradiente */}
+              <div className={`relative bg-gradient-to-r ${submod.gradient} p-6 text-white overflow-hidden`}>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
+                
+                <div className="relative z-10 flex items-start justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
+                      <Icon className="w-8 h-8" />
                     </div>
                     <div>
-                      <CardTitle className="text-xl">{submod.titulo}</CardTitle>
-                      <CardDescription className="text-sm">{submod.subtitulo}</CardDescription>
+                      <h3 className="text-2xl font-bold mb-1">{submod.titulo}</h3>
+                      <p className="text-white/90 text-sm">{submod.subtitulo}</p>
                     </div>
                   </div>
-                  <Badge className={`${submod.badgeColor} text-xs`}>
+                  <ArrowRight className="w-6 h-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+                </div>
+              </div>
+
+              {/* Conteúdo */}
+              <CardContent className="p-6 space-y-5">
+                {/* Descrição */}
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {submod.descricao}
+                </p>
+
+                {/* Badge */}
+                <div>
+                  <Badge className={`${submod.badgeColor} text-xs font-semibold px-3 py-1`}>
                     {submod.badge}
                   </Badge>
                 </div>
-              </CardHeader>
-              <CardContent>
+
+                {/* Métricas */}
                 <div className="space-y-3">
                   {submod.metricas.map((metrica, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-white/70 rounded-lg">
-                      <span className="text-sm font-medium text-slate-700">{metrica.label}</span>
+                    <div key={idx} className="flex items-center justify-between p-3 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+                      <span className="text-sm font-medium text-gray-700">{metrica.label}</span>
                       <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold text-slate-900">{metrica.valor}</span>
+                        <span className="text-base font-bold text-gray-900">{metrica.valor}</span>
                         {metrica.variacao && (
-                          <span className={`text-xs font-semibold ${metrica.positivo ? 'text-green-600' : 'text-red-600'}`}>
-                            {metrica.variacao}
-                          </span>
+                          <div className="flex items-center space-x-1">
+                            {metrica.positivo && <TrendingUp className="w-3 h-3 text-green-600" />}
+                            <span className={`text-xs font-semibold ${metrica.positivo ? 'text-green-600' : 'text-gray-600'}`}>
+                              {metrica.variacao}
+                            </span>
+                          </div>
                         )}
                       </div>
                     </div>
                   ))}
                 </div>
-                
-                {/* Botão Ver Detalhes */}
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <button className="w-full flex items-center justify-center space-x-2 text-sm font-semibold text-slate-700 hover:text-slate-900 transition-colors">
-                    <span>Ver Análise Completa</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
+
+                {/* Botão de Ação */}
+                <button
+                  className={`w-full mt-4 py-3.5 px-4 rounded-xl font-semibold text-white bg-gradient-to-r ${submod.gradient} hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:scale-[1.02]`}
+                >
+                  <span>Ver Análise Completa</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
               </CardContent>
             </Card>
           );
         })}
       </div>
 
-      {/* Info Footer */}
-      <Card className="border-0 shadow-md bg-blue-50">
-        <CardContent className="py-4">
-          <div className="flex items-start space-x-3">
-            <div className="text-2xl">💡</div>
+      {/* Rodapé com Dica */}
+      <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50 to-indigo-50">
+        <CardContent className="py-5">
+          <div className="flex items-start space-x-4">
+            <div className="text-3xl">💡</div>
             <div>
-              <h5 className="font-semibold text-blue-900 mb-1">Dica de Navegação</h5>
-              <p className="text-sm text-blue-800">
-                Clique em qualquer card acima para acessar análises detalhadas, gráficos interativos e insights específicos de cada fonte de dados.
+              <h5 className="font-bold text-blue-900 mb-1.5 text-lg">Dica de Navegação</h5>
+              <p className="text-sm text-blue-800 leading-relaxed">
+                Clique em qualquer card acima para acessar análises detalhadas, gráficos interativos, filtros personalizados e insights específicos de cada fonte de dados.
               </p>
             </div>
           </div>

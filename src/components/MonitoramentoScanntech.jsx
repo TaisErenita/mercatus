@@ -11,7 +11,6 @@ export default function MonitoramentoScanntech({ onVoltar }) {
   const [selectedCategoria, setSelectedCategoria] = useState('total');
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes_mom');
   const [selectedMes, setSelectedMes] = useState(8); // Agosto = 8
-  const [selectedRegiao, setSelectedRegiao] = useState('brasil');
 
   const dadosMercado = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
   const dadosShare = getScanntechShareNutrimental(selectedCategoria, selectedPeriodo);
@@ -64,14 +63,7 @@ export default function MonitoramentoScanntech({ onVoltar }) {
     }
   ];
 
-  const regioes = {
-    brasil: 'Brasil',
-    sp_rj_mg_es: 'SP/RJ/MG/ES',
-    sul: 'Sul',
-    nordeste: 'Nordeste',
-    centro_oeste: 'Centro-Oeste',
-    norte: 'Norte'
-  };
+
 
   return (
     <div className="space-y-6">
@@ -108,29 +100,6 @@ export default function MonitoramentoScanntech({ onVoltar }) {
         setSelectedMes={setSelectedMes}
       />
 
-      {/* Filtro Região */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Filtrar por Região</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(regioes).map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setSelectedRegiao(key)}
-                className={`px-4 py-2 rounded-lg transition-colors font-medium ${
-                  selectedRegiao === key
-                    ? 'bg-cyan-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Métricas Principais */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -255,10 +224,7 @@ export default function MonitoramentoScanntech({ onVoltar }) {
               <p className="text-sm text-gray-600">Período</p>
               <p className="text-lg font-semibold">{selectedPeriodo === 'mes_mom' ? 'MoM' : selectedPeriodo === 'trimestre_qoq' ? 'QoQ' : 'YTD'}</p>
             </div>
-            <div>
-              <p className="text-sm text-gray-600">Região</p>
-              <p className="text-lg font-semibold">{regioes[selectedRegiao]}</p>
-            </div>
+
             <div>
               <p className="text-sm text-gray-600">Mês de Referência</p>
               <p className="text-lg font-semibold">

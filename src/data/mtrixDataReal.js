@@ -1,4 +1,4 @@
-// Dados MTRIX - Atualizado em 26/11/2025 15:00
+// Dados MTRIX - Atualizado em 30/11/2025
 // Total de registros processados: 328,984
 
 export const getMtrixDistribuidores = () => {
@@ -202,11 +202,30 @@ export const getMtrixVendasPorCategoria = () => {
 };
 
 export const getMtrixSummary = () => {
+  const distribuidores = getMtrixDistribuidores();
+  const categorias = getMtrixVendasPorCategoria();
+  const totalVendas = 14019139;
+  
   return {
-    totalVendas: 14019139,
+    totalVendas: totalVendas,
     totalDistribuidores: 35,
     totalUFs: 25,
     totalCategorias: 7,
-    precoMedio: 2.24
+    precoMedio: 2.24,
+    topDistribuidores: distribuidores.map((d, idx) => {
+      const nome = d["Agente de Distribuição"];
+      const ufMatch = nome.match(/\b([A-Z]{2})\s*$/);
+      return {
+        nome: nome.replace(/\s+-\s+[A-Z\s]+\s+[A-Z]{2}$/, ''),
+        receita: d.Vendas,
+        percentual: (d.Vendas / totalVendas * 100),
+        uf: ufMatch ? ufMatch[1] : 'SP'
+      };
+    }),
+    porCategoria: categorias.map(c => ({
+      categoria: c.Categoria,
+      receita: c.Vendas,
+      percentual: (c.Vendas / totalVendas * 100)
+    }))
   };
 };

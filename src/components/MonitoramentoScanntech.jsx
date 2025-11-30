@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
+import SharePorSegmento from './SharePorSegmento';
 import { getScanntechMercadoTotal, getScanntechShareNutrimental } from '../data/scanntechDataReal';
+import { getScanntechMarcasRegiaoComparativo } from '../data/scanntechDataReal_v2';
 import { getPeriodoLegenda } from '../utils/periodHelpers';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const MonitoramentoScanntech = ({
   onVoltar,
@@ -22,6 +25,7 @@ const MonitoramentoScanntech = ({
   // Dados Scanntech
   const mercadoTotal = getScanntechMercadoTotal();
   const shareNutrimental = getScanntechShareNutrimental();
+  const marcasRegiao = getScanntechMarcasRegiaoComparativo();
 
   return (
     <div className="space-y-6">
@@ -152,6 +156,31 @@ const MonitoramentoScanntech = ({
           </CardContent>
         </Card>
       </div>
+
+      {/* Análise Competitiva por Região */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Análise Competitiva por Região</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={marcasRegiao}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="regiao" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="nutrimental" name="Nutrimental" fill="#8b5cf6" />
+              <Bar dataKey="trio" name="Trio" fill="#ef4444" />
+              <Bar dataKey="kobber" name="Kobber" fill="#f59e0b" />
+              <Bar dataKey="integralMedica" name="Integral Médica" fill="#10b981" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* Share por Segmento */}
+      <SharePorSegmento />
 
       {/* Informações Adicionais */}
       <Card>

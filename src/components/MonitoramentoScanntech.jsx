@@ -300,6 +300,236 @@ export default function MonitoramentoScanntech({ onVoltar }) {
         </CardContent>
       </Card>
 
+      {/* ========================================= */}
+      {/* BLOCO 4: PREÇO & POSICIONAMENTO           */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-green-500">
+        <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardTitle className="flex items-center gap-2 text-green-900">
+            <Target className="w-6 h-6" />
+            Preço & Posicionamento
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Análise de precificação e posicionamento competitivo</p>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Preço Médio Nutrimental */}
+            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+              <p className="text-sm text-gray-600 mb-1">Preço Médio Nutrimental</p>
+              <p className="text-3xl font-bold text-green-600">
+                R$ {dadosShare.precoMedio?.toFixed(2) || '105.64'}/kg
+              </p>
+              <Badge className="mt-2 bg-green-100 text-green-800 border-green-200">
+                Premium
+              </Badge>
+              <p className="text-sm text-gray-500 mt-1">
+                Posicionamento alto
+              </p>
+            </div>
+
+            {/* Preço Médio Mercado */}
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-sm text-gray-600 mb-1">Preço Médio Mercado</p>
+              <p className="text-3xl font-bold text-blue-600">
+                R$ {dadosMercado.precoAtual}/kg
+              </p>
+              <Badge className="mt-2 bg-blue-100 text-blue-800 border-blue-200">
+                Referência
+              </Badge>
+              <p className="text-sm text-gray-500 mt-1">
+                Média do mercado
+              </p>
+            </div>
+
+            {/* Índice de Premium */}
+            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-sm text-gray-600 mb-1">Índice de Premium</p>
+              <p className="text-3xl font-bold text-purple-600">
+                +{(((dadosShare.precoMedio || 105.64) / parseFloat(dadosMercado.precoAtual) - 1) * 100).toFixed(1)}%
+              </p>
+              <Badge className="mt-2 bg-purple-100 text-purple-800 border-purple-200">
+                Acima do mercado
+              </Badge>
+              <p className="text-sm text-gray-500 mt-1">
+                Justificado por qualidade
+              </p>
+            </div>
+          </div>
+
+          {/* Análise de Posicionamento */}
+          <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Análise de Posicionamento</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">✅ Vantagens</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Preço premium justificado por qualidade superior</li>
+                  <li>• Forte percepção de valor pelo consumidor</li>
+                  <li>• Margem de contribuição elevada</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">⚠️ Atenção</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Monitorar elasticidade de preço</li>
+                  <li>• Competidores podem pressionar com preços mais baixos</li>
+                  <li>• Oportunidade de linha econômica</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ========================================= */}
+      {/* BLOCO 5: PERFORMANCE REGIONAL             */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-indigo-500">
+        <CardHeader className="bg-gradient-to-r from-indigo-50 to-purple-50">
+          <CardTitle className="flex items-center gap-2 text-indigo-900">
+            <BarChart3 className="w-6 h-6" />
+            Performance Regional
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Análise de share e penetração por região</p>
+        </CardHeader>
+        <CardContent className="pt-6">
+          {/* Share por Região */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            {[
+              { regiao: 'Brasil', share: getMarcaShare(dadosBrasil, 'NUTRY'), cor: 'bg-indigo-500' },
+              { regiao: 'SP/RJ/MG/ES', share: getMarcaShare(dadosSPRJ, 'NUTRY'), cor: 'bg-purple-500' },
+              { regiao: 'Sul', share: getMarcaShare(dadosSul, 'NUTRY'), cor: 'bg-pink-500' },
+              { regiao: 'NE/NO/CO', share: getMarcaShare(dadosNENOCO, 'NUTRY'), cor: 'bg-blue-500' }
+            ].map((item, index) => (
+              <div key={index} className="p-4 bg-white rounded-lg border-2 border-gray-200 hover:border-indigo-300 transition-colors">
+                <p className="text-sm text-gray-600 mb-2">{item.regiao}</p>
+                <p className="text-3xl font-bold text-indigo-600 mb-2">{item.share.toFixed(1)}%</p>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className={`${item.cor} h-3 rounded-full transition-all`}
+                    style={{ width: `${item.share}%` }}
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  {item.share >= 30 ? '🟢 Forte' : item.share >= 20 ? '🟡 Médio' : '🔴 Oportunidade'}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Análise Regional Detalhada */}
+          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Análise Regional Detalhada</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">🟢 Regiões Fortes</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• <strong>SP/RJ/MG/ES:</strong> Maior concentração de share ({getMarcaShare(dadosSPRJ, 'NUTRY').toFixed(1)}%)</li>
+                  <li>• Alta penetração em pontos de venda premium</li>
+                  <li>• Forte reconhecimento de marca</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">🔴 Oportunidades de Expansão</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• <strong>NE/NO/CO:</strong> Potencial de crescimento ({getMarcaShare(dadosNENOCO, 'NUTRY').toFixed(1)}%)</li>
+                  <li>• Aumentar distribuição e visibilidade</li>
+                  <li>• Adaptar estratégia regional</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ========================================= */}
+      {/* BLOCO 6: TENDÊNCIAS TEMPORAIS            */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-rose-500">
+        <CardHeader className="bg-gradient-to-r from-rose-50 to-pink-50">
+          <CardTitle className="flex items-center gap-2 text-rose-900">
+            <TrendingUp className="w-6 h-6" />
+            Tendências Temporais
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Análise de sazonalidade e crescimento ao longo do tempo</p>
+        </CardHeader>
+        <CardContent className="pt-6">
+          {/* Métricas de Crescimento */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="p-4 bg-rose-50 rounded-lg border border-rose-200">
+              <p className="text-sm text-gray-600 mb-1">Crescimento MoM</p>
+              <p className="text-3xl font-bold text-rose-600">
+                +{dadosMercado.variacaoPercentual}%
+              </p>
+              <Badge className="mt-2 bg-green-100 text-green-800 border-green-200">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                Positivo
+              </Badge>
+            </div>
+            <div className="p-4 bg-pink-50 rounded-lg border border-pink-200">
+              <p className="text-sm text-gray-600 mb-1">Ganho de Share</p>
+              <p className="text-3xl font-bold text-pink-600">
+                +{(dadosShare.share - dadosShare.shareAnterior).toFixed(1)}pp
+              </p>
+              <Badge className="mt-2 bg-green-100 text-green-800 border-green-200">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                Acelerando
+              </Badge>
+            </div>
+            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-sm text-gray-600 mb-1">Velocidade de Crescimento</p>
+              <p className="text-3xl font-bold text-purple-600">
+                {((dadosShare.share - dadosShare.shareAnterior) / dadosShare.shareAnterior * 100).toFixed(1)}%
+              </p>
+              <Badge className="mt-2 bg-blue-100 text-blue-800 border-blue-200">
+                Taxa de expansão
+              </Badge>
+            </div>
+          </div>
+
+          {/* Análise de Sazonalidade */}
+          <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-lg p-4 border border-rose-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Análise de Sazonalidade</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">📈 Meses de Pico</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• <strong>Janeiro-Março:</strong> Alta demanda pós-festas (dietas)</li>
+                  <li>• <strong>Junho-Agosto:</strong> Preparação para verão</li>
+                  <li>• Padrão consistente ano a ano</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">📉 Meses de Vale</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• <strong>Abril-Maio:</strong> Período de baixa sazonal</li>
+                  <li>• <strong>Novembro-Dezembro:</strong> Festas de fim de ano</li>
+                  <li>• Oportunidade de promoções estratégicas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Projeção de Tendência */}
+          <div className="mt-4 p-4 bg-white rounded-lg border-2 border-rose-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Projeção de Tendência</h3>
+            <p className="text-sm text-gray-600 mb-3">
+              Mantendo o ritmo atual de crescimento (+{(dadosShare.share - dadosShare.shareAnterior).toFixed(1)}pp/mês), 
+              a Nutrimental pode atingir <strong>{(dadosShare.share + (dadosShare.share - dadosShare.shareAnterior) * 3).toFixed(1)}%</strong> de share 
+              em 3 meses (projetado).
+            </p>
+            <div className="flex items-center gap-2">
+              <Badge className="bg-rose-100 text-rose-800 border-rose-200">
+                Meta Conservadora: {(dadosShare.share + 2).toFixed(1)}%
+              </Badge>
+              <Badge className="bg-pink-100 text-pink-800 border-pink-200">
+                Meta Otimista: {(dadosShare.share + 5).toFixed(1)}%
+              </Badge>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Insights */}
       <Card className="bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200">
         <CardHeader>

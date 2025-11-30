@@ -8,9 +8,9 @@ import { getAmazonSummary } from '../data/amazonDataReal';
 export default function MonitoramentoAmazon({ onVoltar }) {
   const [selectedCategoria, setSelectedCategoria] = useState('total');
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes');
-  const [selectedMes, setSelectedMes] = useState('agosto');
+  const [selectedMes, setSelectedMes] = useState(8); // Setembro = 8 (0-indexed)
 
-  const dadosAmazon = getAmazonSummary();
+  const dadosAmazon = getAmazonSummary(selectedMes);
 
   return (
     <div className="space-y-6">

@@ -133,27 +133,53 @@ export const getAmazonVendasPorMes = () => {
 ];
 };
 
-export const getAmazonSummary = () => {
+export const getAmazonSummary = (mesId = null) => {
   const topProdutos = getAmazonTopProdutos();
+  const vendasPorMes = getAmazonVendasPorMes();
+  
+  // Se mesId for fornecido, filtrar para aquele mês específico
+  let receitaTotal, unidadesTotal;
+  
+  if (mesId !== null && mesId >= 0 && mesId < 12) {
+    // Mapear mesId (0-11) para formato "2025-XX"
+    const meses = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    const anoMes = `2025-${meses[mesId]}`;
+    
+    const dadosMes = vendasPorMes.find(v => v.Ano_Mes === anoMes);
+    
+    if (dadosMes) {
+      receitaTotal = dadosMes["Receita de enviados"];
+      unidadesTotal = dadosMes["Unidades enviadas"];
+    } else {
+      receitaTotal = 0;
+      unidadesTotal = 0;
+    }
+  } else {
+    // Total de todos os meses
+    receitaTotal = vendasPorMes.reduce((sum, v) => sum + v["Receita de enviados"], 0);
+    unidadesTotal = vendasPorMes.reduce((sum, v) => sum + v["Unidades enviadas"], 0);
+  }
+  
+  const ticketMedio = unidadesTotal > 0 ? receitaTotal / unidadesTotal : 0;
   
   return {
-    receitaTotal: 3673379.43,
-    unidadesTotal: 351804,
+    receitaTotal,
+    unidadesTotal,
     produtosUnicos: 88,
-    ticketMedio: 10.44,
-    avaliacaoMedia: 4.5, // Média de avaliações Amazon
+    ticketMedio,
+    avaliacaoMedia: 4.5,
     topProdutos: topProdutos.map((p, idx) => ({
       nome: p["Nome do produto"],
       categoria: detectarCategoria(p["Nome do produto"]),
       receita: p["Receita de enviados"],
       unidades: p["Unidades enviadas"],
-      avaliacao: 4.3 + (Math.random() * 0.6) // Avaliações entre 4.3 e 4.9
+      avaliacao: 4.3 + (Math.random() * 0.6)
     })),
     porCategoria: [
-      { categoria: 'Barras de Cereais', receita: 1834689.72, percentual: 49.9 },
-      { categoria: 'Barras de Proteína', receita: 1101493.65, percentual: 30.0 },
-      { categoria: 'Barras de Frutas', receita: 550507.19, percentual: 15.0 },
-      { categoria: 'Barras de Nuts', receita: 186688.87, percentual: 5.1 }
+      { categoria: 'Barras de Cereais', receita: receitaTotal * 0.499, percentual: 49.9 },
+      { categoria: 'Barras de Proteína', receita: receitaTotal * 0.300, percentual: 30.0 },
+      { categoria: 'Barras de Frutas', receita: receitaTotal * 0.150, percentual: 15.0 },
+      { categoria: 'Barras de Nuts', receita: receitaTotal * 0.051, percentual: 5.1 }
     ]
   };
 };

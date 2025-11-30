@@ -4,6 +4,13 @@
 // Período: YTD 2025 (primeiras 10k linhas processadas)
 
 const nutrimentalInternaData = {
+  // Totais consolidados
+  totais: {
+    receita: 10738556.02,
+    volume: 532019.784,
+    registros: 10000
+  },
+  
   // Receita por Canal
   receita_por_canal: {
     total: 10738556.02,

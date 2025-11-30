@@ -11,7 +11,18 @@ export default function MonitoramentoScanntech({ onVoltar }) {
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes_mom');
   const [selectedMes, setSelectedMes] = useState(8); // Agosto = 8
 
-  const dadosMercado = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
+  const dadosMercadoRaw = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
+  
+  // Calcular valores formatados e variações
+  const dadosMercado = {
+    valorAtual: (dadosMercadoRaw.valor.atual / 1000000).toFixed(1),
+    valorAnterior: (dadosMercadoRaw.valor.anterior / 1000000).toFixed(1),
+    volumeAtual: (dadosMercadoRaw.volume.atual / 1000000).toFixed(2),
+    volumeAnterior: (dadosMercadoRaw.volume.anterior / 1000000).toFixed(2),
+    precoAtual: dadosMercadoRaw.preco.atual.toFixed(2),
+    precoAnterior: dadosMercadoRaw.preco.anterior.toFixed(2),
+    variacaoPercentual: (((dadosMercadoRaw.valor.atual - dadosMercadoRaw.valor.anterior) / dadosMercadoRaw.valor.anterior) * 100).toFixed(1)
+  };
   const shareData = getScanntechShareNutrimental(selectedCategoria, selectedPeriodo);
   const dadosShare = shareData.consolidado;
   const categoriasShare = shareData.categorias;

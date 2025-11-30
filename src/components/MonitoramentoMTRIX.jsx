@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
 import { mesesMTRIX } from '../utils/periodHelpers';
-import { getMtrixSummary } from '../data/mtrixDataReal';
+import { getMtrixSummary } from '../data/mtrixDataAggregated';
 import { filterNullish } from '../utils/safeString';
 
 export default function MonitoramentoMTRIX({ onVoltar }) {
@@ -217,6 +217,7 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">Distribuidor</th>
                   <th className="text-right py-3 px-4 font-semibold text-green-600">Receita</th>
                   <th className="text-right py-3 px-4 font-semibold text-gray-600">% Total</th>
+                  <th className="text-right py-3 px-4 font-semibold text-blue-600">Clientes</th>
                   <th className="text-center py-3 px-4 font-semibold text-gray-600">UF</th>
                 </tr>
               </thead>
@@ -231,11 +232,32 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
                       </span>
                     </td>
                     <td className="text-right py-3 px-4 text-gray-700">{dist.percentual.toFixed(1)}%</td>
+                    <td className="text-right py-3 px-4">
+                      <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-50 text-blue-700 font-medium text-sm">
+                        {dist.clientes?.toLocaleString('pt-BR') || 0}
+                      </span>
+                    </td>
                     <td className="text-center py-3 px-4">
                       <Badge className="bg-blue-100 text-blue-800">{dist.uf}</Badge>
                     </td>
                   </tr>
                 ))}
+                {/* Linha de TOTAL */}
+                <tr className="border-t-2 border-gray-300 bg-gray-50 font-bold">
+                  <td className="py-3 px-4 text-gray-700" colSpan="2">TOTAL</td>
+                  <td className="text-right py-3 px-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-200 text-green-900 font-bold">
+                      R$ {(dadosMTRIX.totalVendas / 1000).toFixed(1)}k
+                    </span>
+                  </td>
+                  <td className="text-right py-3 px-4 text-gray-700">100.0%</td>
+                  <td className="text-right py-3 px-4">
+                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-900 font-bold text-sm">
+                      {dadosMTRIX.totalClientes?.toLocaleString('pt-BR') || 0}
+                    </span>
+                  </td>
+                  <td className="text-center py-3 px-4 text-gray-600">{dadosMTRIX.totalUFs} UFs</td>
+                </tr>
               </tbody>
             </table>
           </div>

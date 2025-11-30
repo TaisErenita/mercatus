@@ -38,14 +38,7 @@ const SimuladorElasticidade = () => {
       marketShare: 11.9,     // proporcional
       elasticityCoeff: -1.5  // mais elástica (produto premium)
     },
-    'BA': {
-      name: 'Barras Aveia',
-      revenue: 16100000,     // R$ 16.1M (11.3%)
-      volume: 334700,        // kg estimado
-      avgPrice: 48.10,       // R$ 48.10/kg
-      marketShare: 10.1,     // proporcional
-      elasticityCoeff: -1.1
-    },
+
     'BN': {
       name: 'Barras Nuts',
       revenue: 9600000,      // R$ 9.6M (6.7%)

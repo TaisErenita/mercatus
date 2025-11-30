@@ -2,6 +2,7 @@
 // Período: Julho 2023 a Setembro 2025 (27 meses)
 // Total de registros processados: 328,984
 // APENAS BARRAS (Cereais, Nuts, Proteica, Frutas)
+// NOTA: Campo "Vendas" corresponde à coluna "Sellout" (faturamento) da base MTRIX
 
 // Categorias de barras válidas
 const CATEGORIAS_BARRAS = [

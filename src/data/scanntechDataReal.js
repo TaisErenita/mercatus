@@ -204,7 +204,7 @@ const marcasPorRegiao = {
       ]
     }
   },
-  proteína: {
+  proteina: {
     mes_yoy: {
       brasil: [
         { marca: 'NUTRY', shareValor: 5.6, shareVolume: 6.5, preco: 177.52 },
@@ -293,7 +293,7 @@ export const getScanntechShareNutrimental = (categoria, periodo) => {
       precoMedio: 83.73,
       precoMedioAnterior: 83.20
     },
-    proteína: {
+    proteina: {
       share: 5.6,
       shareAnterior: 5.4,
       receita: 11505390,
@@ -378,13 +378,13 @@ export const getScanntechShareNutrimental = (categoria, periodo) => {
       cereais: 'Cereais',
       frutas: 'Frutas',
       nuts: 'Nuts',
-      proteína: 'Proteína'
+      proteina: 'Proteína'
     };
     const iconesCategorias = {
       cereais: '🌾',
       frutas: '🍎',
       nuts: '🥜',
-      proteína: '🥩'
+      proteina: '🥩'
     };
     
     categorias = [{

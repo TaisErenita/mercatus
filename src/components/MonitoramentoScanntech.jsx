@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
+import { ArrowLeft, TrendingUp, TrendingDown, BarChart3, Target, Award } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
-import SharePorSegmento from './SharePorSegmento';
 import { getScanntechMercadoTotal, getScanntechShareNutrimental, getScanntechMarcasPorRegiao } from '../data/scanntechDataReal';
 
 export default function MonitoramentoScanntech({ onVoltar }) {
@@ -15,7 +14,7 @@ export default function MonitoramentoScanntech({ onVoltar }) {
   const dadosMercado = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
   const dadosShare = getScanntechShareNutrimental(selectedCategoria, selectedPeriodo);
   
-  // Buscar dados reais por região
+  // Buscar dados reais por região para análise de marcas
   const dadosBrasil = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'brasil');
   const dadosSPRJ = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'sp_rj_mg_es');
   const dadosSul = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'sul');
@@ -27,8 +26,8 @@ export default function MonitoramentoScanntech({ onVoltar }) {
     return item ? item.shareValor : 0;
   };
   
-  // Dados comparativos para o gráfico com dados REAIS
-  const dadosComparativo = [
+  // Dados comparativos de marcas por região
+  const dadosMarcasPorRegiao = [
     { 
       regiao: 'Brasil', 
       NUTRY: getMarcaShare(dadosBrasil, 'NUTRY'),
@@ -63,7 +62,49 @@ export default function MonitoramentoScanntech({ onVoltar }) {
     }
   ];
 
+  // Dados de evolução do share por categoria (mockado - TODO: integrar com dados reais históricos)
+  const evolucaoSharePorCategoria = [
+    { mes: 'Jan', cereais: 40.5, frutas: 29.8, nuts: 18.2, proteina: 25.3 },
+    { mes: 'Fev', cereais: 40.8, frutas: 30.1, nuts: 18.5, proteina: 25.8 },
+    { mes: 'Mar', cereais: 41.0, frutas: 30.5, nuts: 18.9, proteina: 26.2 },
+    { mes: 'Abr', cereais: 41.3, frutas: 30.8, nuts: 19.2, proteina: 26.7 },
+    { mes: 'Mai', cereais: 41.5, frutas: 31.0, nuts: 19.5, proteina: 27.1 },
+    { mes: 'Jun', cereais: 41.7, frutas: 31.2, nuts: 19.8, proteina: 27.5 },
+    { mes: 'Jul', cereais: 41.9, frutas: 31.4, nuts: 20.0, proteina: 27.9 },
+    { mes: 'Ago', cereais: 42.0, frutas: 31.6, nuts: 20.2, proteina: 28.2 }
+  ];
 
+  // Categorias para o bloco Nutrimental
+  const categorias = [
+    { 
+      nome: 'Cereais', 
+      share: 42.0,
+      trend: '+2.0%', 
+      icon: '🌾',
+      cor: 'bg-amber-100 border-amber-300 text-amber-800'
+    },
+    { 
+      nome: 'Frutas', 
+      share: 31.6,
+      trend: '+1.7%', 
+      icon: '🍎',
+      cor: 'bg-red-100 border-red-300 text-red-800'
+    },
+    { 
+      nome: 'Nuts', 
+      share: 20.2,
+      trend: '+1.1%', 
+      icon: '🥜',
+      cor: 'bg-orange-100 border-orange-300 text-orange-800'
+    },
+    { 
+      nome: 'Proteína', 
+      share: 28.2,
+      trend: '+1.1%', 
+      icon: '💪',
+      cor: 'bg-purple-100 border-purple-300 text-purple-800'
+    }
+  ];
 
   return (
     <div className="space-y-6">
@@ -100,19 +141,26 @@ export default function MonitoramentoScanntech({ onVoltar }) {
         setSelectedMes={setSelectedMes}
       />
 
-
-      {/* Métricas Principais */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-l-4 border-l-cyan-500">
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-gray-600">Mercado Total</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
+      {/* ========================================= */}
+      {/* BLOCO 1: MERCADO TOTAL DE BARRAS         */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-cyan-500">
+        <CardHeader className="bg-gradient-to-r from-cyan-50 to-blue-50">
+          <CardTitle className="flex items-center gap-2 text-cyan-900">
+            <BarChart3 className="w-6 h-6" />
+            Mercado Total de Barras
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Visão consolidada do mercado brasileiro de barras</p>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Valor Total */}
+            <div className="p-4 bg-cyan-50 rounded-lg border border-cyan-200">
+              <p className="text-sm text-gray-600 mb-1">Valor Total</p>
               <p className="text-3xl font-bold text-cyan-600">
                 R$ {dadosMercado.valorAtual}M
               </p>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 mt-2">
                 {dadosMercado.variacaoPercentual >= 0 ? (
                   <TrendingUp className="w-4 h-4 text-green-500" />
                 ) : (
@@ -122,23 +170,18 @@ export default function MonitoramentoScanntech({ onVoltar }) {
                   {dadosMercado.variacaoPercentual >= 0 ? '+' : ''}{dadosMercado.variacaoPercentual}%
                 </Badge>
               </div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 mt-1">
                 Anterior: R$ {dadosMercado.valorAnterior}M
               </p>
             </div>
-          </CardContent>
-        </Card>
 
-        <Card className="border-l-4 border-l-blue-500">
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-gray-600">Volume Total</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
+            {/* Volume Total */}
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-sm text-gray-600 mb-1">Volume Total</p>
               <p className="text-3xl font-bold text-blue-600">
                 {dadosMercado.volumeAtual}M kg
               </p>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 mt-2">
                 {dadosMercado.variacaoPercentual >= 0 ? (
                   <TrendingUp className="w-4 h-4 text-green-500" />
                 ) : (
@@ -148,49 +191,118 @@ export default function MonitoramentoScanntech({ onVoltar }) {
                   {dadosMercado.variacaoPercentual >= 0 ? '+' : ''}{dadosMercado.variacaoPercentual}%
                 </Badge>
               </div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 mt-1">
                 Anterior: {dadosMercado.volumeAnterior}M kg
               </p>
             </div>
-          </CardContent>
-        </Card>
 
-        <Card className="border-l-4 border-l-purple-500">
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-gray-600">Share Nutrimental</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
+            {/* Preço Médio */}
+            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-sm text-gray-600 mb-1">Preço Médio</p>
               <p className="text-3xl font-bold text-purple-600">
-                {dadosShare.shareAtual}%
+                R$ {dadosMercado.precoAtual}/kg
               </p>
-              <div className="flex items-center space-x-2">
-                {dadosShare.variacaoPontos >= 0 ? (
-                  <TrendingUp className="w-4 h-4 text-green-500" />
-                ) : (
-                  <TrendingDown className="w-4 h-4 text-red-500" />
-                )}
-                <Badge className={dadosShare.variacaoPontos >= 0 ? "bg-green-100 text-green-800 border-green-200" : "bg-red-100 text-red-800 border-red-200"}>
-                  {dadosShare.variacaoPontos >= 0 ? '+' : ''}{dadosShare.variacaoPontos}pp
+              <div className="flex items-center space-x-2 mt-2">
+                <Badge className="bg-gray-100 text-gray-800 border-gray-200">
+                  Estável
                 </Badge>
               </div>
-              <p className="text-sm text-gray-500">
-                Anterior: {dadosShare.shareAnterior}%
+              <p className="text-sm text-gray-500 mt-1">
+                Mercado consolidado
               </p>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Gráfico de Análise Competitiva por Região */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Análise Competitiva por Região</CardTitle>
-          <p className="text-sm text-gray-500 mt-1">Comparação de market share entre principais marcas</p>
+      {/* ========================================= */}
+      {/* BLOCO 2: NUTRIMENTAL                      */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-purple-500">
+        <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50">
+          <CardTitle className="flex items-center gap-2 text-purple-900">
+            <Target className="w-6 h-6" />
+            Performance Nutrimental
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Share de mercado por categoria de barras</p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6 space-y-6">
+          {/* Share Consolidado */}
+          <div className="p-6 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg border-2 border-purple-300">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-purple-700 font-medium mb-1">Share Total Nutrimental</p>
+                <p className="text-5xl font-bold text-purple-900">{dadosShare.shareAtual}%</p>
+              </div>
+              <div className="text-right">
+                <Badge className="bg-green-100 text-green-800 border-green-200 mb-2">
+                  <TrendingUp className="w-4 h-4 mr-1" />
+                  +{dadosShare.variacaoPontos}pp
+                </Badge>
+                <p className="text-sm text-gray-600">Anterior: {dadosShare.shareAnterior}%</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Share por Categoria */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Share por Categoria</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {categorias.map((cat, index) => (
+                <div key={index} className={`p-4 rounded-lg border-2 ${cat.cor}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-3xl">{cat.icon}</span>
+                    <Badge className="bg-white/80">
+                      {cat.trend}
+                    </Badge>
+                  </div>
+                  <p className="text-sm font-medium mb-1">{cat.nome}</p>
+                  <p className="text-3xl font-bold">{cat.share}%</p>
+                  <div className="mt-2 bg-white/50 rounded-full h-2">
+                    <div 
+                      className="bg-current rounded-full h-2 transition-all"
+                      style={{ width: `${cat.share}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Gráfico de Evolução do Share */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolução do Share por Categoria</h3>
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={evolucaoSharePorCategoria}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="mes" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="cereais" name="Cereais" stroke="#f59e0b" strokeWidth={2} />
+                <Line type="monotone" dataKey="frutas" name="Frutas" stroke="#ef4444" strokeWidth={2} />
+                <Line type="monotone" dataKey="nuts" name="Nuts" stroke="#f97316" strokeWidth={2} />
+                <Line type="monotone" dataKey="proteina" name="Proteína" stroke="#8b5cf6" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ========================================= */}
+      {/* BLOCO 3: ANÁLISE DE MARCAS                */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-orange-500">
+        <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50">
+          <CardTitle className="flex items-center gap-2 text-orange-900">
+            <Award className="w-6 h-6" />
+            Análise Competitiva de Marcas
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Comparação de market share entre principais marcas por região</p>
+        </CardHeader>
+        <CardContent className="pt-6">
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={dadosComparativo}>
+            <BarChart data={dadosMarcasPorRegiao}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="regiao" />
               <YAxis />
@@ -203,35 +315,6 @@ export default function MonitoramentoScanntech({ onVoltar }) {
               <Bar dataKey="INTEGRALMEDICA" name="INTEGRAL MÉDICA" fill="#06b6d4" />
             </BarChart>
           </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      {/* Share por Segmento */}
-      <SharePorSegmento selectedCategory={selectedCategoria} selectedPeriod={selectedPeriodo} />
-
-      {/* Detalhes da Análise */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Detalhes da Análise</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <p className="text-sm text-gray-600">Categoria Selecionada</p>
-              <p className="text-lg font-semibold capitalize">{selectedCategoria}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Período</p>
-              <p className="text-lg font-semibold">{selectedPeriodo === 'mes_mom' ? 'MoM' : selectedPeriodo === 'trimestre_qoq' ? 'QoQ' : 'YTD'}</p>
-            </div>
-
-            <div>
-              <p className="text-sm text-gray-600">Mês de Referência</p>
-              <p className="text-lg font-semibold">
-                {['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'][selectedMes - 1]}/25
-              </p>
-            </div>
-          </div>
         </CardContent>
       </Card>
 

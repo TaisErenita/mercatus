@@ -34,9 +34,8 @@ import { getFilteredData, getMercadoTotalData } from './data/filteredData'
 import { getScanntechMercadoTotal, getScanntechShareNutrimental } from './data/scanntechDataReal';
 import { getScanntechMarcasRegiaoComparativo } from './data/scanntechDataReal_v2';import { getMarcasData } from './data/marcasData'
 import { getMtrixData } from './data/mtrixData'
-import { getPerformanceInternaData } from './data/performanceInternaData'
 import { getNutrimentalScanntechData, getNutrimentalCategorias } from './data/nutrimentalScanntechData'
-import { getNutrimentalInternaData } from './data/nutrimentalInternaData'
+import { getFilteredInternaData } from './data/nutrimentalInternaData'
 import { getPeriodoLegenda, meses } from './utils/periodHelpers'
 
 function App() {

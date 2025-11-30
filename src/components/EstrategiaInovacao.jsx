@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getNutrimentalInternaData } from '../data/nutrimentalInternaData';
+import { getNutrimentalInternaData } from '../data/nutrimentalInternaData'; // Função legada para compatibilidade
 import { getScanntechMercadoTotal } from '../data/scanntechDataReal';
 import { getMtrixSummary } from '../data/mtrixDataReal';
 import { getAmazonSummary } from '../data/amazonDataReal';

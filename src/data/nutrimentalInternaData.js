@@ -145,13 +145,22 @@ export function getFilteredInternaData(categoria = 'total', periodo = 'ytd', mes
     }).filter(p => p.receita > 0);
   }
   
-  // Aplicar fator de período
-  const fatoresPeriodo = {
-    'mes': 1,
-    'trimestre': 3,
-    'ytd': 9
-  };
-  const fatorPeriodo = fatoresPeriodo[periodo] || 9;
+  // Aplicar fator de período e mês
+  let fatorPeriodo;
+  
+  // Se um mês específico foi selecionado (não "Todos os Meses 2025")
+  if (mes !== 'setembro' && mes !== 'todos') {
+    // Mês específico sempre usa fator 1 (um mês)
+    fatorPeriodo = 1;
+  } else {
+    // "Todos os Meses 2025" usa o fator do período selecionado
+    const fatoresPeriodo = {
+      'mes': 1,      // MoM: 1 mês
+      'trimestre': 3, // QoQ: 3 meses
+      'ytd': 9       // YTD: 9 meses (Jan-Set)
+    };
+    fatorPeriodo = fatoresPeriodo[periodo] || 9;
+  }
   
   produtosFiltrados = produtosFiltrados.map(p => ({
     ...p,

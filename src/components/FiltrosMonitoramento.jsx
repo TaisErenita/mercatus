@@ -30,22 +30,22 @@ const FiltrosMonitoramento = ({
 
   const periodos = [
     { 
-      id: 'mes_yoy', 
-      label: 'Mês Atual vs Ano Anterior', 
-      desc: getPeriodoLegenda('mes_yoy', selectedMes, 2025).curto,
-      detail: getPeriodoLegenda('mes_yoy', selectedMes, 2025).descricao
+      id: 'mes_mom', 
+      label: 'Mês Atual x Mês Anterior', 
+      desc: 'MoM',
+      detail: 'Comparação do mês selecionado com o mês anterior'
     },
     { 
-      id: 'trimestre_yoy', 
-      label: 'Trimestre Atual vs Ano Anterior', 
-      desc: getPeriodoLegenda('trimestre_yoy', selectedMes, 2025).curto,
-      detail: getPeriodoLegenda('trimestre_yoy', selectedMes, 2025).descricao
+      id: 'trimestre_qoq', 
+      label: 'Trimestre Atual x Trimestre Anterior', 
+      desc: 'QoQ',
+      detail: 'Comparação do trimestre atual com o trimestre anterior'
     },
     { 
-      id: 'ytd_yoy', 
-      label: 'YTD vs Mesmo Período Ano Anterior', 
-      desc: getPeriodoLegenda('ytd_yoy', selectedMes, 2025).curto,
-      detail: getPeriodoLegenda('ytd_yoy', selectedMes, 2025).descricao
+      id: 'ytd', 
+      label: 'YTD (Acumulado do Ano)', 
+      desc: 'YTD',
+      detail: 'Acumulado de janeiro até o mês selecionado'
     }
   ];
 

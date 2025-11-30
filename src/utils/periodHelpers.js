@@ -47,11 +47,32 @@ export function getPeriodoLegenda(tipoPeriodo, mesAtual = 8, anoAtual = 2025) {
       };
       
     case 'mes_anterior':
+    case 'mes_mom':
       const mesAnt = meses[(mesAtual - 2 + 12) % 12] || meses[6];
       return {
         curto: `${mesAbrev}/${anoAtual.toString().slice(-2)} vs ${mesAnt.abrev}/${anoAtual.toString().slice(-2)}`,
         longo: `${mesNome} ${anoAtual} vs ${mesAnt.nome} ${anoAtual}`,
-        descricao: 'Comparação mês a mês'
+        descricao: 'Mês Atual x Mês Anterior (MoM)'
+      };
+      
+    case 'trimestre_qoq':
+      const mesAtualAbrev = meses[mesAtual - 1]?.abrev || 'Ago';
+      const mes2Atras = meses[(mesAtual - 3 + 12) % 12]?.abrev || 'Jun';
+      const mes1Atras = meses[(mesAtual - 2 + 12) % 12]?.abrev || 'Jul';
+      const mes5Atras = meses[(mesAtual - 6 + 12) % 12]?.abrev || 'Mar';
+      const mes4Atras = meses[(mesAtual - 5 + 12) % 12]?.abrev || 'Abr';
+      const mes3Atras = meses[(mesAtual - 4 + 12) % 12]?.abrev || 'Mai';
+      return {
+        curto: `${mes2Atras}-${mes1Atras}-${mesAtualAbrev}/${anoAtual.toString().slice(-2)} vs ${mes5Atras}-${mes4Atras}-${mes3Atras}/${anoAtual.toString().slice(-2)}`,
+        longo: `Trimestre atual vs trimestre anterior ${anoAtual}`,
+        descricao: 'Trimestre Atual x Trimestre Anterior (QoQ)'
+      };
+      
+    case 'ytd':
+      return {
+        curto: `YTD Jan-${mesAbrev}/${anoAtual.toString().slice(-2)}`,
+        longo: `Acumulado de Janeiro a ${mesNome} ${anoAtual}`,
+        descricao: 'Acumulado do Ano (YTD)'
       };
       
     default:

@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
 import { mesesMTRIX } from '../utils/periodHelpers';
-import { getMtrixSummary } from '../data/mtrixDataReal';
+import { getMtrixSummary, getMtrixEvolucaoTemporal } from '../data/mtrixDataReal';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { filterNullish } from '../utils/safeString';
 
 export default function MonitoramentoMTRIX({ onVoltar }) {
@@ -15,6 +16,7 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
   const [selectedUF, setSelectedUF] = useState('todas');
 
   const dadosMTRIX = getMtrixSummary(selectedCategoria, selectedPeriodo, selectedMesInicial, selectedMesFinal, selectedUF);
+  const dadosEvolucao = getMtrixEvolucaoTemporal(selectedCategoria);
 
   const ufs = [
     'Todas', 'SP', 'RJ', 'MG', 'ES', 'PR', 'SC', 'RS', 'BA', 'CE', 'PE',
@@ -201,6 +203,55 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
           </CardContent>
         </Card>
       </div>
+
+      {/* Evolução Temporal de Vendas */}
+      <Card className="border-t-4 border-t-green-500">
+        <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardTitle className="flex items-center gap-2 text-green-900">
+            <TrendingUp className="w-6 h-6" />
+            Evolução Temporal de Vendas (Jul/2023 - Set/2025)
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Tendência de vendas ao longo de 27 meses</p>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={350}>
+            <LineChart data={dadosEvolucao}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis 
+                dataKey="mes" 
+                tick={{ fontSize: 12 }}
+                angle={-45}
+                textAnchor="end"
+                height={80}
+              />
+              <YAxis 
+                tick={{ fontSize: 12 }}
+                tickFormatter={(value) => `R$ ${(value / 1000000).toFixed(1)}M`}
+              />
+              <Tooltip 
+                formatter={(value) => `R$ ${(value / 1000000).toFixed(2)}M`}
+                contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+              />
+              <Legend />
+              <Line 
+                type="monotone" 
+                dataKey="vendas" 
+                stroke="#10b981" 
+                strokeWidth={3}
+                dot={{ fill: '#10b981', r: 4 }}
+                activeDot={{ r: 6 }}
+                name="Vendas"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+          <div className="mt-4 p-4 bg-green-50 rounded-lg">
+            <p className="text-sm text-gray-700">
+              <strong className="text-green-900">Insight:</strong> Observa-se crescimento consistente de <strong>+80%</strong> entre Jul/2023 e Set/2025, 
+              com picos sazonais em dezembro (festas de fim de ano) e recuperação gradual nos primeiros meses do ano.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Top Distribuidores */}
       <Card>

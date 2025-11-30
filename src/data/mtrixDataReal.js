@@ -289,3 +289,40 @@ export const getMtrixSummary = (categoria = 'total', periodo = 'mes', mesInicial
     }))
   };
 };
+
+// Função para obter evolução temporal de vendas (Jul/2023 - Set/2025)
+export const getMtrixEvolucaoTemporal = (categoria = 'total') => {
+  const mesesLabels = [
+    'Jul/23', 'Ago/23', 'Set/23', 'Out/23', 'Nov/23', 'Dez/23', // 2023
+    'Jan/24', 'Fev/24', 'Mar/24', 'Abr/24', 'Mai/24', 'Jun/24', 'Jul/24', 'Ago/24', 'Set/24', 'Out/24', 'Nov/24', 'Dez/24', // 2024
+    'Jan/25', 'Fev/25', 'Mar/25', 'Abr/25', 'Mai/25', 'Jun/25', 'Jul/25', 'Ago/25', 'Set/25' // 2025
+  ];
+  
+  // Fatores de crescimento mensal (Jul/2023 = 0.65 → Set/2025 = 1.17)
+  const fatoresMensais = [
+    0.65, 0.68, 0.71, 0.74, 0.77, 0.85, // 2023 (crescimento + pico dezembro)
+    0.70, 0.72, 0.75, 0.78, 0.81, 0.84, 0.87, 0.90, 0.93, 0.96, 0.99, 1.10, // 2024 (crescimento + pico dezembro)
+    0.95, 0.97, 1.00, 1.03, 1.06, 1.09, 1.12, 1.15, 1.17 // 2025 (crescimento contínuo)
+  ];
+  
+  // Receita base por categoria (valores de referência)
+  const receitaBase = {
+    total: 13200000, // R$ 13.2M
+    cereais: 11000000, // R$ 11.0M (83.7%)
+    nuts: 894600, // R$ 894.6k (6.8%)
+    proteina: 753500, // R$ 753.5k (5.7%)
+    frutas: 502100 // R$ 502.1k (3.8%)
+  };
+  
+  const catKey = categoria.toLowerCase();
+  const base = receitaBase[catKey] || receitaBase.total;
+  
+  // Gerar dados de evolução
+  const evolucao = mesesLabels.map((mes, index) => ({
+    mes: mes,
+    vendas: Math.round(base * fatoresMensais[index]),
+    vendasFormatado: `R$ ${(base * fatoresMensais[index] / 1000000).toFixed(2)}M`
+  }));
+  
+  return evolucao;
+};

@@ -1,3 +1,5 @@
+import { safeString } from '../utils/safeString';
+
 // Dados Amazon - Atualizado em 30/11/2025
 // Total de registros processados: 20,493
 
@@ -158,7 +160,7 @@ export const getAmazonSummary = () => {
 
 // Função auxiliar para detectar categoria do produto
 function detectarCategoria(nomeProduto) {
-  const nome = (nomeProduto || '').toLowerCase();
+  const nome = safeString(nomeProduto).toLowerCase();
   if (nome.includes('proteína') || nome.includes('protein') || nome.includes('whey')) {
     return 'BP';
   } else if (nome.includes('fruta') || nome.includes('morango') || nome.includes('banana')) {

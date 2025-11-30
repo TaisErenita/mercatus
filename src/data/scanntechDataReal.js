@@ -1,3 +1,5 @@
+import { safeToLowerCase } from '../utils/safeString';
+
 // Dados reais extraídos da base Scanntech (BaseScanntech-VOLUMETRIA.xlsx)
 // Metodologia: Share calculado por GIRO (volume de vendas)
 // Período: Dados consolidados 14 meses (Ago/2024 - Set/2025)
@@ -38,7 +40,7 @@ const mercadoTotalBase = {
 };
 
 export const getScanntechMercadoTotal = (categoria, periodo) => {
-  const catKey = (categoria || 'total').toLowerCase();
+  const catKey = safeToLowerCase(categoria);
   const base = mercadoTotalBase[catKey] || mercadoTotalBase['total'];
   
   // Dados consolidados de 14 meses (Ago/2024 - Set/2025)
@@ -232,7 +234,7 @@ const marcasPorRegiao = {
 };
 
 export const getScanntechMarcasPorRegiao = (categoria, periodo, regiao) => {
-  const catKey = (categoria || 'total').toLowerCase();
+  const catKey = safeToLowerCase(categoria);
   const periodoKey = periodo || 'mes_yoy';
   const regiaoKey = regiao || 'brasil';
   

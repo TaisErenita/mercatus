@@ -1,4 +1,6 @@
-// Dados MTRIX - Distribuidores e Performance
+import { safeToLowerCase } from '../utils/safeString';
+
+// Dados MTRIX por categoria, período e região
 // Estrutura: mtrixData[categoria][periodo][regiao]
 
 export const mtrixData = {
@@ -193,7 +195,7 @@ export const mtrixData = {
 
 // Função helper para obter dados MTRIX baseado em categoria e período
 export function getMtrixData(category, period) {
-  const key = (category || 'total').toLowerCase();
+  const key = safeToLowerCase(category);
   
   // Retorna dados da categoria específica ou TOTAL como fallback
   if (mtrixData[key] && mtrixData[key][period]) {

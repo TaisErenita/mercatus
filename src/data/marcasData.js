@@ -1,3 +1,5 @@
+import { safeToLowerCase } from '../utils/safeString';
+
 // Dados de marcas por região e categoria
 // Estrutura: marcasData[categoria][periodo][regiao]
 // Top 3 marcas variam por região e categoria
@@ -476,7 +478,7 @@ export const marcasData = {
 
 // Função helper para obter dados de marcas baseado em categoria e período
 export function getMarcasData(category, period) {
-  const key = (category || 'total').toLowerCase();
+  const key = safeToLowerCase(category);
   
   // Retorna dados da categoria específica ou TOTAL como fallback
   if (marcasData[key] && marcasData[key][period]) {

@@ -42,7 +42,7 @@ const FiltrosMonitoramento = ({
       detail: 'Comparação do trimestre atual com o trimestre anterior'
     },
     { 
-      id: 'ytd', 
+      id: 'ytd_yoy', 
       label: 'YTD (Acumulado do Ano)', 
       desc: 'YTD',
       detail: 'Acumulado de janeiro até o mês selecionado'

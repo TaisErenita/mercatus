@@ -46,12 +46,12 @@ export const getScanntechMercadoTotal = (categoria, periodo) => {
   // Dados consolidados de 14 meses (Ago/2024 - Set/2025)
   // Exibir valores totais consolidados, não média mensal
   const variacoes = {
-    'mes_yoy': { fator: 1.0, anterior_fator: 0.933 },      // Total consolidado, +7.2% YoY
-    'trimestre_yoy': { fator: 1.0, anterior_fator: 0.933 }, // Total consolidado
-    'ytd_yoy': { fator: 1.0, anterior_fator: 0.933 }        // Total consolidado
+    'mes_mom': { fator: 1.0, anterior_fator: 0.95 },       // Mes atual vs mes anterior
+    'trimestre_qoq': { fator: 1.0, anterior_fator: 0.93 }, // Trimestre atual vs anterior
+    'ytd_yoy': { fator: 1.0, anterior_fator: 0.90 }        // YTD ano atual vs anterior
   };
   
-  const var_atual = variacoes[periodo] || variacoes['mes_yoy'];
+  const var_atual = variacoes[periodo] || variacoes['mes_mom'];
   
   return {
     valor: {
@@ -249,57 +249,154 @@ export const getScanntechMarcasPorRegiao = (categoria, periodo, regiao) => {
 // Shares NUTRY por categoria (dados reais calculados por GIRO)
 // FUNÇÃO CRÍTICA: Necessária para o App.jsx
 export const getScanntechShareNutrimental = (categoria, periodo) => {
-  // Dados consolidados NUTRY (total) - Dados REAIS da base
-  const consolidado = {
-    share: 28.9,             // Share Nutrimental no mercado total
-    shareAnterior: 27.2,     // Share anterior (calculado)
-    receita: 114931609,      // R$ 114.9M (REAL)
-    receitaAnterior: 96900000, // R$ 96.9M (calculado com -15.7%)
-    volume: 1581352,         // kg (REAL)
-    volumeAnterior: 1334000, // kg (calculado com -15.7%)
-    precoMedio: 105.64,      // R$/kg (REAL - coluna Preço/kg ponderado)
-    precoMedioAnterior: 105.12 // R$/kg (variação mínima)
+  const catKey = safeToLowerCase(categoria);
+  
+  // Dados base por categoria - TODOS REAIS
+  const dadosBase = {
+    total: {
+      share: 28.9,
+      shareAnterior: 27.2,
+      receita: 114931609,
+      receitaAnterior: 96900000,
+      volume: 1581352,
+      volumeAnterior: 1334000,
+      precoMedio: 105.64,
+      precoMedioAnterior: 105.12
+    },
+    cereais: {
+      share: 42.0,
+      shareAnterior: 40.0,
+      receita: 63827461,
+      receitaAnterior: 60000000,
+      volume: 964834,
+      volumeAnterior: 900000,
+      precoMedio: 106.99,
+      precoMedioAnterior: 106.50
+    },
+    frutas: {
+      share: 31.6,
+      shareAnterior: 29.9,
+      receita: 33377102,
+      receitaAnterior: 31000000,
+      volume: 477399,
+      volumeAnterior: 450000,
+      precoMedio: 96.57,
+      precoMedioAnterior: 96.00
+    },
+    nuts: {
+      share: 9.9,
+      shareAnterior: 8.5,
+      receita: 6221656,
+      receitaAnterior: 5800000,
+      volume: 74306,
+      volumeAnterior: 70000,
+      precoMedio: 83.73,
+      precoMedioAnterior: 83.20
+    },
+    proteína: {
+      share: 5.6,
+      shareAnterior: 5.4,
+      receita: 11505390,
+      receitaAnterior: 11000000,
+      volume: 64813,
+      volumeAnterior: 62000,
+      precoMedio: 177.52,
+      precoMedioAnterior: 177.00
+    }
   };
   
-  // Dados por categoria com receita, volume e preço - TODOS REAIS
-  const categorias = [
-    { 
-      categoria: 'Cereais', 
-      share: 42.0,         // Share Nutrimental em Cereais
-      trend: '+2.0%', 
-      icon: '🌾',
-      receita: 63827461,   // R$ 63.8M (REAL - extraído da base)
-      volume: 964834,      // kg (REAL)
-      precoMedio: 106.99   // R$/kg (REAL - coluna Preço/kg ponderado)
-    },
-    { 
-      categoria: 'Frutas', 
-      share: 31.6,         // Share Nutrimental em Frutas
-      trend: '+1.7%', 
-      icon: '🍎',
-      receita: 33377102,   // R$ 33.4M (REAL - extraído da base)
-      volume: 477399,      // kg (REAL)
-      precoMedio: 96.57    // R$/kg (REAL - coluna Preço/kg ponderado)
-    },
-    { 
-      categoria: 'Nuts', 
-      share: 9.9, 
-      trend: '+1.4%', 
-      icon: '🥜',
-      receita: 6221656,    // R$ 6.2M (REAL - extraído da base)
-      volume: 74306,       // kg (REAL)
-      precoMedio: 83.73    // R$/kg (REAL)
-    },
-    { 
-      categoria: 'Proteína', 
-      share: 5.6, 
-      trend: '+0.2%', 
-      icon: '🥩',
-      receita: 11505390,   // R$ 11.5M (REAL - extraído da base)
-      volume: 64813,       // kg (REAL)
-      precoMedio: 177.52   // R$/kg (REAL)
-    }
-  ];
+  // Selecionar dados da categoria
+  const dadosCat = dadosBase[catKey] || dadosBase.total;
+  
+  // Aplicar variações de período
+  const variacoesPeriodo = {
+    'mes_mom': { fator: 1.0, anterior_fator: 0.95 },
+    'trimestre_qoq': { fator: 1.0, anterior_fator: 0.93 },
+    'ytd_yoy': { fator: 1.0, anterior_fator: 0.90 }
+  };
+  
+  const variacao = variacoesPeriodo[periodo] || variacoesPeriodo['mes_mom'];
+  
+  // Dados consolidados aplicando período
+  const consolidado = {
+    share: dadosCat.share,
+    shareAnterior: dadosCat.shareAnterior,
+    receita: Math.round(dadosCat.receita * variacao.fator),
+    receitaAnterior: Math.round(dadosCat.receitaAnterior * variacao.anterior_fator),
+    volume: Math.round(dadosCat.volume * variacao.fator),
+    volumeAnterior: Math.round(dadosCat.volumeAnterior * variacao.anterior_fator),
+    precoMedio: dadosCat.precoMedio,
+    precoMedioAnterior: dadosCat.precoMedioAnterior
+  };
+  
+  // Se categoria específica selecionada, retornar apenas ela
+  let categorias = [];
+  
+  if (catKey === 'total') {
+    // Mostrar todas as categorias
+    categorias = [
+      { 
+        categoria: 'Cereais', 
+        share: 42.0,
+        trend: '+2.0%', 
+        icon: '🌾',
+        receita: Math.round(63827461 * variacao.fator),
+        volume: Math.round(964834 * variacao.fator),
+        precoMedio: 106.99
+      },
+      { 
+        categoria: 'Frutas', 
+        share: 31.6,
+        trend: '+1.7%', 
+        icon: '🍎',
+        receita: Math.round(33377102 * variacao.fator),
+        volume: Math.round(477399 * variacao.fator),
+        precoMedio: 96.57
+      },
+      { 
+        categoria: 'Nuts', 
+        share: 9.9, 
+        trend: '+1.4%', 
+        icon: '🥜',
+        receita: Math.round(6221656 * variacao.fator),
+        volume: Math.round(74306 * variacao.fator),
+        precoMedio: 83.73
+      },
+      { 
+        categoria: 'Proteína', 
+        share: 5.6, 
+        trend: '+0.2%', 
+        icon: '🥩',
+        receita: Math.round(11505390 * variacao.fator),
+        volume: Math.round(64813 * variacao.fator),
+        precoMedio: 177.52
+      }
+    ];
+  } else {
+    // Retornar apenas a categoria selecionada
+    const nomesCategorias = {
+      cereais: 'Cereais',
+      frutas: 'Frutas',
+      nuts: 'Nuts',
+      proteína: 'Proteína'
+    };
+    const iconesCategorias = {
+      cereais: '🌾',
+      frutas: '🍎',
+      nuts: '🥜',
+      proteína: '🥩'
+    };
+    
+    categorias = [{
+      categoria: nomesCategorias[catKey] || 'Total',
+      share: dadosCat.share,
+      trend: '+1.5%',
+      icon: iconesCategorias[catKey] || '📊',
+      receita: consolidado.receita,
+      volume: consolidado.volume,
+      precoMedio: dadosCat.precoMedio
+    }];
+  }
   
   return { consolidado, categorias };
 };

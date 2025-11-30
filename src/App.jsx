@@ -7,7 +7,6 @@ import { ResponsiveContainer, LineChart, Line, BarChart, Bar, XAxis, YAxis, Cart
 import { TrendingUp, TrendingDown, Target, ShoppingCart, Brain, Award, Zap, Users, DollarSign, Package, BarChart3, PieChart as PieChartIcon, MessageCircle, Send, X, Minimize2, Map } from 'lucide-react'
 import MapaBrasilInterativo from './components/MapaBrasilInterativo'
 import AnaliseAmazon from './components/AnaliseAmazon'
-import NutrimentalInterna from './components/NutrimentalInterna'
 import MonitoramentoOverview from './components/MonitoramentoOverview'
 import MonitoramentoScanntech from './components/MonitoramentoScanntech'
 import MonitoramentoInternos from './components/MonitoramentoInternos'

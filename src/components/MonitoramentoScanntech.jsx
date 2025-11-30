@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { ArrowLeft, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
+import SharePorSegmento from './SharePorSegmento';
 import { getScanntechMercadoTotal, getScanntechShareNutrimental, getScanntechMarcasPorRegiao } from '../data/scanntechDataReal';
 
 export default function MonitoramentoScanntech({ onVoltar }) {
@@ -11,16 +13,55 @@ export default function MonitoramentoScanntech({ onVoltar }) {
   const [selectedMes, setSelectedMes] = useState(8); // Agosto = 8
   const [selectedRegiao, setSelectedRegiao] = useState('brasil');
 
-  const dadosMercado = getScanntechMercadoTotal();
-  const dadosShare = getScanntechShareNutrimental();
-  // Dados comparativos mockados - TODO: integrar com dados reais
+  const dadosMercado = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
+  const dadosShare = getScanntechShareNutrimental(selectedCategoria, selectedPeriodo);
+  
+  // Buscar dados reais por região
+  const dadosBrasil = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'brasil');
+  const dadosSPRJ = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'sp_rj_mg_es');
+  const dadosSul = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'sul');
+  const dadosNENOCO = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'ne_no_co');
+  
+  // Extrair shares das principais marcas por região
+  const getMarcaShare = (dados, marca) => {
+    const item = dados.find(d => d.marca?.toUpperCase() === marca.toUpperCase());
+    return item ? item.shareValor : 0;
+  };
+  
+  // Dados comparativos para o gráfico com dados REAIS
   const dadosComparativo = [
-    { regiao: 'Brasil', nutrimental: 89.5, trio: 18.2, kobber: 15.1, integralMedica: 8.3 },
-    { regiao: 'SP/RJ/MG/ES', nutrimental: 91.2, trio: 19.5, kobber: 16.2, integralMedica: 9.1 },
-    { regiao: 'Sul', nutrimental: 88.3, trio: 17.8, kobber: 14.5, integralMedica: 7.9 },
-    { regiao: 'Nordeste', nutrimental: 87.1, trio: 16.9, kobber: 13.8, integralMedica: 7.2 },
-    { regiao: 'Centro-Oeste', nutrimental: 90.4, trio: 18.7, kobber: 15.6, integralMedica: 8.5 },
-    { regiao: 'Norte', nutrimental: 86.2, trio: 16.2, kobber: 13.1, integralMedica: 6.8 }
+    { 
+      regiao: 'Brasil', 
+      NUTRY: getMarcaShare(dadosBrasil, 'NUTRY'),
+      NUTRATA: getMarcaShare(dadosBrasil, 'NUTRATA'),
+      BOLD: getMarcaShare(dadosBrasil, 'BOLD'),
+      RITTER: getMarcaShare(dadosBrasil, 'RITTER'),
+      INTEGRALMEDICA: getMarcaShare(dadosBrasil, 'INTEGRALMEDICA')
+    },
+    { 
+      regiao: 'SP/RJ/MG/ES', 
+      NUTRY: getMarcaShare(dadosSPRJ, 'NUTRY'),
+      NUTRATA: getMarcaShare(dadosSPRJ, 'NUTRATA'),
+      BOLD: getMarcaShare(dadosSPRJ, 'BOLD'),
+      RITTER: getMarcaShare(dadosSPRJ, 'RITTER'),
+      INTEGRALMEDICA: getMarcaShare(dadosSPRJ, 'INTEGRALMEDICA')
+    },
+    { 
+      regiao: 'Sul', 
+      NUTRY: getMarcaShare(dadosSul, 'NUTRY'),
+      NUTRATA: getMarcaShare(dadosSul, 'NUTRATA'),
+      BOLD: getMarcaShare(dadosSul, 'BOLD'),
+      RITTER: getMarcaShare(dadosSul, 'RITTER'),
+      INTEGRALMEDICA: getMarcaShare(dadosSul, 'INTEGRALMEDICA')
+    },
+    { 
+      regiao: 'NE/NO/CO', 
+      NUTRY: getMarcaShare(dadosNENOCO, 'NUTRY'),
+      NUTRATA: getMarcaShare(dadosNENOCO, 'NUTRATA'),
+      BOLD: getMarcaShare(dadosNENOCO, 'BOLD'),
+      RITTER: getMarcaShare(dadosNENOCO, 'RITTER'),
+      INTEGRALMEDICA: getMarcaShare(dadosNENOCO, 'INTEGRALMEDICA')
+    }
   ];
 
   const regioes = {
@@ -98,14 +139,24 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <CardTitle className="text-sm font-medium text-gray-600">Mercado Total</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-gray-900">R$ {dadosMercado.valorAtual}M</span>
-              <Badge className="bg-green-100 text-green-800 border-green-200">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +{dadosMercado.variacaoPercentual}%
-              </Badge>
+            <div className="space-y-2">
+              <p className="text-3xl font-bold text-cyan-600">
+                R$ {dadosMercado.valorAtual}M
+              </p>
+              <div className="flex items-center space-x-2">
+                {dadosMercado.variacaoPercentual >= 0 ? (
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 text-red-500" />
+                )}
+                <Badge className={dadosMercado.variacaoPercentual >= 0 ? "bg-green-100 text-green-800 border-green-200" : "bg-red-100 text-red-800 border-red-200"}>
+                  {dadosMercado.variacaoPercentual >= 0 ? '+' : ''}{dadosMercado.variacaoPercentual}%
+                </Badge>
+              </div>
+              <p className="text-sm text-gray-500">
+                Anterior: R$ {dadosMercado.valorAnterior}M
+              </p>
             </div>
-            <p className="text-sm text-gray-500 mt-2">Anterior: R$ {dadosMercado.valorAnterior}M</p>
           </CardContent>
         </Card>
 
@@ -114,14 +165,24 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <CardTitle className="text-sm font-medium text-gray-600">Volume Total</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-gray-900">{dadosMercado.volumeAtual}M kg</span>
-              <Badge className="bg-green-100 text-green-800 border-green-200">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +{dadosMercado.variacaoPercentual}%
-              </Badge>
+            <div className="space-y-2">
+              <p className="text-3xl font-bold text-blue-600">
+                {dadosMercado.volumeAtual}M kg
+              </p>
+              <div className="flex items-center space-x-2">
+                {dadosMercado.variacaoPercentual >= 0 ? (
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 text-red-500" />
+                )}
+                <Badge className={dadosMercado.variacaoPercentual >= 0 ? "bg-green-100 text-green-800 border-green-200" : "bg-red-100 text-red-800 border-red-200"}>
+                  {dadosMercado.variacaoPercentual >= 0 ? '+' : ''}{dadosMercado.variacaoPercentual}%
+                </Badge>
+              </div>
+              <p className="text-sm text-gray-500">
+                Anterior: {dadosMercado.volumeAnterior}M kg
+              </p>
             </div>
-            <p className="text-sm text-gray-500 mt-2">Anterior: {dadosMercado.volumeAnterior}M kg</p>
           </CardContent>
         </Card>
 
@@ -130,52 +191,80 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <CardTitle className="text-sm font-medium text-gray-600">Share Nutrimental</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-gray-900">{dadosShare.shareAtual}%</span>
-              <Badge className="bg-green-100 text-green-800 border-green-200">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +{dadosShare.variacaoPontos}pp
-              </Badge>
+            <div className="space-y-2">
+              <p className="text-3xl font-bold text-purple-600">
+                {dadosShare.shareAtual}%
+              </p>
+              <div className="flex items-center space-x-2">
+                {dadosShare.variacaoPontos >= 0 ? (
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 text-red-500" />
+                )}
+                <Badge className={dadosShare.variacaoPontos >= 0 ? "bg-green-100 text-green-800 border-green-200" : "bg-red-100 text-red-800 border-red-200"}>
+                  {dadosShare.variacaoPontos >= 0 ? '+' : ''}{dadosShare.variacaoPontos}pp
+                </Badge>
+              </div>
+              <p className="text-sm text-gray-500">
+                Anterior: {dadosShare.shareAnterior}%
+              </p>
             </div>
-            <p className="text-sm text-gray-500 mt-2">Anterior: {dadosShare.shareAnterior}%</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Análise Competitiva por Região */}
+      {/* Gráfico de Análise Competitiva por Região */}
       <Card>
         <CardHeader>
           <CardTitle>Análise Competitiva por Região</CardTitle>
           <p className="text-sm text-gray-500 mt-1">Comparação de market share entre principais marcas</p>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Região</th>
-                  <th className="text-right py-3 px-4 font-semibold text-cyan-600">Nutrimental</th>
-                  <th className="text-right py-3 px-4 font-semibold text-gray-600">Trio</th>
-                  <th className="text-right py-3 px-4 font-semibold text-gray-600">Kobber</th>
-                  <th className="text-right py-3 px-4 font-semibold text-gray-600">Integral Médica</th>
-                </tr>
-              </thead>
-              <tbody>
-                {dadosComparativo.map((item, index) => (
-                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium text-gray-900">{item.regiao}</td>
-                    <td className="text-right py-3 px-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-semibold">
-                        {item.nutrimental}%
-                      </span>
-                    </td>
-                    <td className="text-right py-3 px-4 text-gray-700">{item.trio}%</td>
-                    <td className="text-right py-3 px-4 text-gray-700">{item.kobber}%</td>
-                    <td className="text-right py-3 px-4 text-gray-700">{item.integralMedica}%</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={dadosComparativo}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="regiao" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="NUTRY" name="NUTRY" fill="#8b5cf6" />
+              <Bar dataKey="NUTRATA" name="NUTRATA" fill="#ef4444" />
+              <Bar dataKey="BOLD" name="BOLD" fill="#f59e0b" />
+              <Bar dataKey="RITTER" name="RITTER" fill="#10b981" />
+              <Bar dataKey="INTEGRALMEDICA" name="INTEGRAL MÉDICA" fill="#06b6d4" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* Share por Segmento */}
+      <SharePorSegmento selectedCategory={selectedCategoria} selectedPeriod={selectedPeriodo} />
+
+      {/* Detalhes da Análise */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Detalhes da Análise</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <p className="text-sm text-gray-600">Categoria Selecionada</p>
+              <p className="text-lg font-semibold capitalize">{selectedCategoria}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Período</p>
+              <p className="text-lg font-semibold">{selectedPeriodo === 'mes_mom' ? 'MoM' : selectedPeriodo === 'trimestre_qoq' ? 'QoQ' : 'YTD'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Região</p>
+              <p className="text-lg font-semibold">{regioes[selectedRegiao]}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Mês de Referência</p>
+              <p className="text-lg font-semibold">
+                {['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'][selectedMes - 1]}/25
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>

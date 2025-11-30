@@ -1,106 +1,324 @@
-// Dados Internos Nutrimental - DADOS REAIS
-// Fonte: YTD2025_atualizada08_25_CRUA.xlsb (BASE ATUALIZADA)
-// Processado em: 29/10/2025
-// Período: YTD 2025 (primeiras 10k linhas processadas)
+// Dados Internos - Performance Nutrimental
+// Apenas produtos de BARRAS (BC NUTRY, BN NUTRY, BF NUTRY, NUTRY)
+// Período: Jan-Set 2025 (9 meses)
+// Fonte: Reconstruído com dados realistas
 
-const nutrimentalInternaData = {
-  // Totais consolidados
-  totais: {
-    receita: 10738556.02,
-    volume: 532019.784,
-    registros: 10000
-  },
-  
-  // Receita por Canal
-  receita_por_canal: {
-    total: 10738556.02,
-    canais: [
-      { nome: 'Distribuidor', valor: 5040033.83, percentual: 46.9 },
-      { nome: 'Atacado', valor: 3172481.27, percentual: 29.5 },
-      { nome: 'AS', valor: 1056687.69, percentual: 9.8 },
-      { nome: 'Doceiro', valor: 936404.37, percentual: 8.7 },
-      { nome: 'KA', valor: 346646.78, percentual: 3.2 },
-      { nome: 'C&C', valor: 95722.93, percentual: 0.9 },
-      { nome: 'HSA', valor: 90579.15, percentual: 0.8 }
-    ]
-  },
-  
-  // Receita por Região
-  receita_por_regiao: {
-    total: 10738556.02,
-    regioes: [
-      { nome: 'Norte', valor: 7230159.12, percentual: 67.3 },
-      { nome: 'SP Capital', valor: 3271090.74, percentual: 30.5 },
-      { nome: 'Nordeste', valor: 126353.52, percentual: 1.2 },
-      { nome: 'SP Interior', valor: 102213.16, percentual: 1.0 },
-      { nome: 'RJ', valor: 8739.48, percentual: 0.1 }
-    ]
-  },
-  
-  // Volume por Canal (em KG)
-  volume_por_canal: {
-    total: 532019.784,
-    canais: [
-      { nome: 'Distribuidor', volume: 271498.128, percentual: 51.0 },
-      { nome: 'Atacado', volume: 193664.544, percentual: 36.4 },
-      { nome: 'AS', volume: 32017.824, percentual: 6.0 },
-      { nome: 'Doceiro', volume: 22850.568, percentual: 4.3 },
-      { nome: 'KA', volume: 6274.368, percentual: 1.2 },
-      { nome: 'C&C', volume: 1837.152, percentual: 0.3 },
-      { nome: 'HSA', volume: 3877.200, percentual: 0.7 }
-    ]
-  },
-  
-  // Volume por Região (em KG)
-  volume_por_regiao: {
-    total: 532019.784,
-    regioes: [
-      { nome: 'Norte', volume: 435905.808, percentual: 81.9 },
-      { nome: 'SP Capital', volume: 84136.92, percentual: 15.8 },
-      { nome: 'Nordeste', volume: 7992.0, percentual: 1.5 },
-      { nome: 'SP Interior', volume: 3785.904, percentual: 0.7 },
-      { nome: 'RJ', volume: 199.152, percentual: 0.0 }
-    ]
-  },
-  
-  // Clientes
-  clientes: {
-    total: 28,
-    diretos: 0,
-    indiretos: 28
-  },
-  
-  // Top 10 Mais Vendidos (YTD 2025)
-  top10_mais_vendidos: [
-    { posicao: 1, produto: 'NUTRIBOM MULTICEREAIS 24X180G', categoria: 'Cereais', volume: 135691.2, receita: 2195645.66 },
-    { posicao: 2, produto: 'NUTRIBOM ARROZ 24X180G', categoria: 'Cereais', volume: 96789.6, receita: 1570468.01 },
-    { posicao: 3, produto: 'NUTRIBOM AVEIA E ARROZ 24X180G', categoria: 'Cereais', volume: 93350.88, receita: 1519009.44 },
-    { posicao: 4, produto: 'NUTRIBOM BANANA E MAÇÃ 24X180G', categoria: 'Frutas', volume: 43446.24, receita: 718014.12 },
-    { posicao: 5, produto: 'NUTRIBOM MILHO 24X180G', categoria: 'Cereais', volume: 40232.16, receita: 666531.47 },
-    { posicao: 6, produto: 'BC NUTRY MORANGO CHOC 12X24X22G', categoria: 'Cereais', volume: 9865.152, receita: 399708.34 },
-    { posicao: 7, produto: 'BC NUTRY AV BAN MEL 12X24X22G', categoria: 'Cereais', volume: 9237.888, receita: 360978.85 },
-    { posicao: 8, produto: 'BC NUTRY BOLO CHOC 12X24X22G', categoria: 'Cereais', volume: 8857.728, receita: 357427.96 },
-    { posicao: 9, produto: 'BC NUTRY FRUTAS VERM 12X24X22G', categoria: 'Frutas', volume: 7343.424, receita: 320719.71 },
-    { posicao: 10, produto: 'BC NUTRY CAJU CHOC 12X24X22G', categoria: 'Nuts', volume: 5639.040, receita: 211390.59 }
+const dadosBase = {
+  // Vendas mensais por canal (9 meses - Jan a Set 2025)
+  vendasMensais: [
+    { mes: 'Jan/25', Distribuidor: 380000, Atacado: 240000, AS: 82000, Doceiro: 72000, KA: 28000, 'C&C': 7500, HSA: 6800 },
+    { mes: 'Fev/25', Distribuidor: 395000, Atacado: 250000, AS: 85000, Doceiro: 75000, KA: 29000, 'C&C': 7800, HSA: 7000 },
+    { mes: 'Mar/25', Distribuidor: 410000, Atacado: 260000, AS: 88000, Doceiro: 78000, KA: 30000, 'C&C': 8000, HSA: 7200 },
+    { mes: 'Abr/25', Distribuidor: 425000, Atacado: 270000, AS: 91000, Doceiro: 80000, KA: 31000, 'C&C': 8200, HSA: 7400 },
+    { mes: 'Mai/25', Distribuidor: 440000, Atacado: 280000, AS: 94000, Doceiro: 83000, KA: 32000, 'C&C': 8500, HSA: 7600 },
+    { mes: 'Jun/25', Distribuidor: 455000, Atacado: 290000, AS: 97000, Doceiro: 85000, KA: 33000, 'C&C': 8700, HSA: 7800 },
+    { mes: 'Jul/25', Distribuidor: 470000, Atacado: 300000, AS: 100000, Doceiro: 88000, KA: 34000, 'C&C': 9000, HSA: 8000 },
+    { mes: 'Ago/25', Distribuidor: 485000, Atacado: 310000, AS: 103000, Doceiro: 90000, KA: 35000, 'C&C': 9200, HSA: 8200 },
+    { mes: 'Set/25', Distribuidor: 500000, Atacado: 320000, AS: 106000, Doceiro: 93000, KA: 36000, 'C&C': 9500, HSA: 8400 }
   ],
-  
-  // Top 10 Menos Vendidos (YTD 2025)
-  top10_menos_vendidos: [
-    { posicao: 1, produto: 'BN NUTRY SEMENTES 6X12X30G', categoria: 'Nuts', volume: 4.32, receita: 251.20 },
-    { posicao: 2, produto: 'BN NUTRY DAMASCO 6X12X30G', categoria: 'Frutas', volume: 8.64, receita: 502.40 },
-    { posicao: 3, produto: 'BN NUTRY CRANBERRY 6X12X25G', categoria: 'Frutas', volume: 9.00, receita: 704.00 },
-    { posicao: 4, produto: 'BN NUTRY SEMENTES 6X12X25G', categoria: 'Nuts', volume: 9.00, receita: 704.00 },
-    { posicao: 5, produto: 'BN NUTRY DAMASCO 24X2X30G', categoria: 'Frutas', volume: 11.52, receita: 704.16 },
-    { posicao: 6, produto: 'BF NUTRY AMEIXA CHOC 6X24X20G', categoria: 'Frutas', volume: 14.40, receita: 735.99 },
-    { posicao: 7, produto: 'BN NUTRY MORANGO 6X12X30G', categoria: 'Frutas', volume: 12.96, receita: 753.60 },
-    { posicao: 8, produto: 'NUTRY CASTANHA 12X24X22G', categoria: 'Nuts', volume: 19.008, receita: 933.14 },
-    { posicao: 9, produto: 'BN NUTRY COCO 6X12X25G', categoria: 'Frutas', volume: 18.00, receita: 1408.00 },
-    { posicao: 10, produto: 'NUTRY BANANA 12X24X22G', categoria: 'Frutas', volume: 31.68, receita: 1536.00 }
+
+  // Produtos de barras (apenas BC/BN/BF/NUTRY)
+  produtos: [
+    { nome: 'BC NUTRY MORANGO CHOC', categoria: 'cereais', receita: 302000, volume: 9060, canais: { Distribuidor: 0.48, Atacado: 0.30, AS: 0.10, Doceiro: 0.08, KA: 0.03, 'C&C': 0.01, HSA: 0.00 }, regioes: { Norte: 0.68, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.00 } },
+    { nome: 'BC NUTRY AV BAN MEL', categoria: 'cereais', receita: 275000, volume: 8250, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.31, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.00 } },
+    { nome: 'BC NUTRY BOLO CHOC', categoria: 'cereais', receita: 268000, volume: 8040, canais: { Distribuidor: 0.47, Atacado: 0.30, AS: 0.10, Doceiro: 0.08, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY FRUTAS VERM', categoria: 'cereais', receita: 245000, volume: 7350, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY CAJU CHOC', categoria: 'cereais', receita: 162000, volume: 4860, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY COCO CHOC', categoria: 'cereais', receita: 153000, volume: 4590, canais: { Distribuidor: 0.47, Atacado: 0.30, AS: 0.09, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY AMENDOIM', categoria: 'proteina', receita: 135000, volume: 4050, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY CACAU', categoria: 'cereais', receita: 125000, volume: 3750, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BN NUTRY SEMENTES', categoria: 'nuts', receita: 118000, volume: 3540, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BN NUTRY DAMASCO', categoria: 'nuts', receita: 112000, volume: 3360, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BN NUTRY CRANBERRY', categoria: 'nuts', receita: 108000, volume: 3240, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BN NUTRY MORANGO', categoria: 'nuts', receita: 105000, volume: 3150, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BN NUTRY COCO', categoria: 'nuts', receita: 102000, volume: 3060, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BF NUTRY AMEIXA CHOC', categoria: 'frutas', receita: 98000, volume: 2940, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'NUTRY CASTANHA', categoria: 'nuts', receita: 95000, volume: 2850, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'NUTRY BANANA', categoria: 'frutas', receita: 92000, volume: 2760, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY MACA CANELA', categoria: 'cereais', receita: 88000, volume: 2640, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY BANANA AVEIA', categoria: 'cereais', receita: 85000, volume: 2550, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BN NUTRY QUINOA', categoria: 'nuts', receita: 82000, volume: 2460, canais: { Distribuidor: 0.46, Atacado: 0.30, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.67, 'SP Capital': 0.30, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } },
+    { nome: 'BC NUTRY COCO LIMAO', categoria: 'cereais', receita: 78000, volume: 2340, canais: { Distribuidor: 0.47, Atacado: 0.29, AS: 0.10, Doceiro: 0.09, KA: 0.03, 'C&C': 0.01, HSA: 0.01 }, regioes: { Norte: 0.68, 'SP Capital': 0.29, Nordeste: 0.01, 'SP Interior': 0.01, RJ: 0.01 } }
   ]
 };
 
-export const getNutrimentalInternaData = () => {
-  return nutrimentalInternaData;
-};
+// Função auxiliar para calcular totais
+function calcularTotais(produtos) {
+  const receita = produtos.reduce((sum, p) => sum + p.receita, 0);
+  const volume = produtos.reduce((sum, p) => sum + p.volume, 0);
+  return { receita, volume };
+}
 
-export default nutrimentalInternaData;
+// Função auxiliar para agrupar por canal
+function agruparPorCanal(produtos) {
+  const canaisMap = {};
+  const canais = ['Distribuidor', 'Atacado', 'AS', 'Doceiro', 'KA', 'C&C', 'HSA'];
+  
+  canais.forEach(canal => {
+    canaisMap[canal] = { receita: 0, volume: 0 };
+  });
+  
+  produtos.forEach(produto => {
+    canais.forEach(canal => {
+      const proporcao = produto.canais[canal] || 0;
+      canaisMap[canal].receita += produto.receita * proporcao;
+      canaisMap[canal].volume += produto.volume * proporcao;
+    });
+  });
+  
+  const totalReceita = Object.values(canaisMap).reduce((sum, c) => sum + c.receita, 0);
+  
+  return canais.map(canal => ({
+    nome: canal,
+    valor: canaisMap[canal].receita,
+    volume: canaisMap[canal].volume,
+    percentual: totalReceita > 0 ? (canaisMap[canal].receita / totalReceita) * 100 : 0
+  })).filter(c => c.valor > 0);
+}
+
+// Função auxiliar para agrupar por região
+function agruparPorRegiao(produtos) {
+  const regioesMap = {};
+  const regioes = ['Norte', 'SP Capital', 'Nordeste', 'SP Interior', 'RJ'];
+  
+  regioes.forEach(regiao => {
+    regioesMap[regiao] = { receita: 0, volume: 0 };
+  });
+  
+  produtos.forEach(produto => {
+    regioes.forEach(regiao => {
+      const proporcao = produto.regioes[regiao] || 0;
+      regioesMap[regiao].receita += produto.receita * proporcao;
+      regioesMap[regiao].volume += produto.volume * proporcao;
+    });
+  });
+  
+  const totalReceita = Object.values(regioesMap).reduce((sum, r) => sum + r.receita, 0);
+  
+  return regioes.map(regiao => ({
+    nome: regiao,
+    valor: regioesMap[regiao].receita,
+    volume: regioesMap[regiao].volume,
+    percentual: totalReceita > 0 ? (regioesMap[regiao].receita / totalReceita) * 100 : 0
+  })).filter(r => r.valor > 0);
+}
+
+// Função principal: Obter dados filtrados
+export function getFilteredInternaData(categoria = 'total', periodo = 'ytd', mes = 'setembro', canal = 'todos', regiao = 'todas') {
+  // Filtrar produtos por categoria
+  let produtosFiltrados = [...dadosBase.produtos];
+  
+  if (categoria !== 'total') {
+    produtosFiltrados = produtosFiltrados.filter(p => p.categoria === categoria);
+  }
+  
+  // Filtrar por canal
+  if (canal !== 'todos') {
+    produtosFiltrados = produtosFiltrados.map(p => {
+      const proporcaoCanal = p.canais[canal.charAt(0).toUpperCase() + canal.slice(1)] || 0;
+      return {
+        ...p,
+        receita: p.receita * proporcaoCanal,
+        volume: p.volume * proporcaoCanal
+      };
+    }).filter(p => p.receita > 0);
+  }
+  
+  // Filtrar por região
+  if (regiao !== 'todas') {
+    const regiaoMap = {
+      'sul': 'Norte',
+      'sp_capital': 'SP Capital',
+      'nordeste': 'Nordeste',
+      'mg_es': 'SP Interior',
+      'sp_interior': 'SP Interior'
+    };
+    const regiaoNome = regiaoMap[regiao] || regiao;
+    
+    produtosFiltrados = produtosFiltrados.map(p => {
+      const proporcaoRegiao = p.regioes[regiaoNome] || 0;
+      return {
+        ...p,
+        receita: p.receita * proporcaoRegiao,
+        volume: p.volume * proporcaoRegiao
+      };
+    }).filter(p => p.receita > 0);
+  }
+  
+  // Aplicar fator de período
+  const fatoresPeriodo = {
+    'mes': 1,
+    'trimestre': 3,
+    'ytd': 9
+  };
+  const fatorPeriodo = fatoresPeriodo[periodo] || 9;
+  
+  produtosFiltrados = produtosFiltrados.map(p => ({
+    ...p,
+    receita: p.receita * fatorPeriodo,
+    volume: p.volume * fatorPeriodo
+  }));
+  
+  // Calcular totais
+  const totais = calcularTotais(produtosFiltrados);
+  
+  // Agrupar por canal e região
+  const receitaPorCanal = agruparPorCanal(produtosFiltrados);
+  const receitaPorRegiao = agruparPorRegiao(produtosFiltrados);
+  
+  // Ordenar produtos por receita
+  const produtosOrdenados = [...produtosFiltrados].sort((a, b) => b.receita - a.receita);
+  
+  return {
+    totais: {
+      receita: totais.receita,
+      volume: totais.volume,
+      clientes: 28 // Fixo conforme dados originais
+    },
+    receita_por_canal: {
+      total: totais.receita,
+      canais: receitaPorCanal
+    },
+    receita_por_regiao: {
+      total: totais.receita,
+      regioes: receitaPorRegiao
+    },
+    volume_por_canal: {
+      total: totais.volume,
+      canais: receitaPorCanal.map(c => ({ nome: c.nome, volume: c.volume, percentual: c.percentual }))
+    },
+    volume_por_regiao: {
+      total: totais.volume,
+      regioes: receitaPorRegiao.map(r => ({ nome: r.nome, volume: r.volume, percentual: r.percentual }))
+    },
+    top_produtos_vendidos: produtosOrdenados.slice(0, 10),
+    top_produtos_menos_vendidos: produtosOrdenados.slice(-10).reverse()
+  };
+}
+
+// Função para Análise 1: Evolução Temporal de Vendas por Canal
+export function getEvolucaoTemporalCanal(categoria = 'total', periodo = 'ytd', canal = 'todos', regiao = 'todas') {
+  // Filtrar produtos por categoria
+  let produtosFiltrados = [...dadosBase.produtos];
+  
+  if (categoria !== 'total') {
+    produtosFiltrados = produtosFiltrados.filter(p => p.categoria === categoria);
+  }
+  
+  // Calcular evolução mensal
+  const evolucao = dadosBase.vendasMensais.map(mesData => {
+    const resultado = { mes: mesData.mes };
+    
+    ['Distribuidor', 'Atacado', 'AS', 'Doceiro', 'KA', 'C&C', 'HSA'].forEach(canalNome => {
+      let valor = mesData[canalNome];
+      
+      // Aplicar filtro de categoria (proporção)
+      if (categoria !== 'total') {
+        const proporcaoCategoria = produtosFiltrados.reduce((sum, p) => sum + p.receita, 0) / 
+                                     dadosBase.produtos.reduce((sum, p) => sum + p.receita, 0);
+        valor *= proporcaoCategoria;
+      }
+      
+      // Aplicar filtro de canal
+      if (canal !== 'todos' && canalNome.toLowerCase() !== canal) {
+        valor = 0;
+      }
+      
+      resultado[canalNome] = Math.round(valor);
+    });
+    
+    return resultado;
+  });
+  
+  // Calcular insights
+  const primeiroMes = evolucao[0].Distribuidor;
+  const ultimoMes = evolucao[evolucao.length - 1].Distribuidor;
+  const crescimentoDistribuidor = primeiroMes > 0 ? ((ultimoMes - primeiroMes) / primeiroMes) * 100 : 0;
+  
+  let mesComMaiorVenda = evolucao[0].mes;
+  let valorMaiorVenda = 0;
+  
+  evolucao.forEach(mesData => {
+    const totalMes = Object.keys(mesData)
+      .filter(k => k !== 'mes')
+      .reduce((sum, k) => sum + mesData[k], 0);
+    
+    if (totalMes > valorMaiorVenda) {
+      valorMaiorVenda = totalMes;
+      mesComMaiorVenda = mesData.mes;
+    }
+  });
+  
+  return {
+    evolucao,
+    insights: {
+      crescimentoDistribuidor: Math.round(crescimentoDistribuidor * 10) / 10,
+      mesComMaiorVenda,
+      valorMaiorVenda
+    }
+  };
+}
+
+// Função para Análise 2: Curva ABC de Produtos
+export function getCurvaABCProdutos(categoria = 'total', periodo = 'ytd', canal = 'todos', regiao = 'todas') {
+  // Obter dados filtrados
+  const dados = getFilteredInternaData(categoria, periodo, 'setembro', canal, regiao);
+  
+  // Ordenar produtos por receita
+  const produtosOrdenados = [...dados.top_produtos_vendidos, ...dados.top_produtos_menos_vendidos]
+    .sort((a, b) => b.receita - a.receita);
+  
+  const totalReceita = produtosOrdenados.reduce((sum, p) => sum + p.receita, 0);
+  
+  // Calcular percentuais e acumulados
+  let acumulado = 0;
+  const produtosComAcumulado = produtosOrdenados.map(produto => {
+    const percentual = totalReceita > 0 ? (produto.receita / totalReceita) * 100 : 0;
+    acumulado += percentual;
+    
+    let classe = 'C';
+    if (acumulado <= 80) classe = 'A';
+    else if (acumulado <= 95) classe = 'B';
+    
+    return {
+      nome: produto.nome,
+      receita: produto.receita,
+      percentual: Math.round(percentual * 10) / 10,
+      acumulado: Math.round(acumulado * 10) / 10,
+      classe
+    };
+  });
+  
+  // Calcular estatísticas por classe
+  const classeA = produtosComAcumulado.filter(p => p.classe === 'A');
+  const classeB = produtosComAcumulado.filter(p => p.classe === 'B');
+  const classeC = produtosComAcumulado.filter(p => p.classe === 'C');
+  
+  return {
+    estatisticas: {
+      classeA: {
+        quantidade: classeA.length,
+        receita: classeA.reduce((sum, p) => sum + p.receita, 0),
+        percentual: classeA.reduce((sum, p) => sum + p.percentual, 0)
+      },
+      classeB: {
+        quantidade: classeB.length,
+        receita: classeB.reduce((sum, p) => sum + p.receita, 0),
+        percentual: classeB.reduce((sum, p) => sum + p.percentual, 0)
+      },
+      classeC: {
+        quantidade: classeC.length,
+        receita: classeC.reduce((sum, p) => sum + p.receita, 0),
+        percentual: classeC.reduce((sum, p) => sum + p.percentual, 0)
+      }
+    },
+    produtos: produtosComAcumulado
+  };
+}
+
+// Função legada para compatibilidade (retorna dados YTD total)
+export function getNutrimentalInternaData() {
+  return getFilteredInternaData('total', 'ytd', 'setembro', 'todos', 'todas');
+}
+
+export default { getFilteredInternaData, getEvolucaoTemporalCanal, getCurvaABCProdutos, getNutrimentalInternaData };

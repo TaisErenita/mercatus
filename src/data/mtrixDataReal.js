@@ -412,3 +412,72 @@ export const getMtrixCurvaABC = (categoria = 'total', periodo = 'mes', mesInicia
     }
   };
 };
+
+// Função para obter métricas de crescimento
+export const getMtrixCrescimento = (categoria = 'total') => {
+  // Receita base por categoria (Set/2025)
+  const receitaBase = {
+    total: 13200000, // R$ 13.2M
+    cereais: 11000000,
+    nuts: 894600,
+    proteina: 753500,
+    frutas: 502100
+  };
+  
+  const catKey = categoria.toLowerCase();
+  const receitaAtual = receitaBase[catKey] || receitaBase.total;
+  
+  // Calcular receitas anteriores baseado nos fatores de crescimento
+  // Set/2025: fator 1.17
+  // Ago/2025 (MoM): fator 1.15 → crescimento = (1.17 - 1.15) / 1.15 = +1.7%
+  // Jun/2025 (QoQ, 3 meses atrás): fator 1.09 → crescimento = (1.17 - 1.09) / 1.09 = +7.3%
+  // Set/2024 (YoY, 12 meses atrás): fator 0.93 → crescimento = (1.17 - 0.93) / 0.93 = +25.8%
+  // Jul/2023 (início, 27 meses atrás): fator 0.65 → crescimento = (1.17 - 0.65) / 0.65 = +80.0%
+  
+  const fatorAtual = 1.17;
+  const fatorMesAnterior = 1.15; // Ago/2025
+  const fatorTrimestreAnterior = 1.09; // Jun/2025
+  const fatorAnoAnterior = 0.93; // Set/2024
+  const fatorInicio = 0.65; // Jul/2023
+  
+  const receitaMesAnterior = receitaAtual * (fatorMesAnterior / fatorAtual);
+  const receitaTrimestreAnterior = receitaAtual * (fatorTrimestreAnterior / fatorAtual);
+  const receitaAnoAnterior = receitaAtual * (fatorAnoAnterior / fatorAtual);
+  const receitaInicio = receitaAtual * (fatorInicio / fatorAtual);
+  
+  // Calcular crescimentos percentuais
+  const crescimentoMoM = ((receitaAtual - receitaMesAnterior) / receitaMesAnterior * 100);
+  const crescimentoQoQ = ((receitaAtual - receitaTrimestreAnterior) / receitaTrimestreAnterior * 100);
+  const crescimentoYoY = ((receitaAtual - receitaAnoAnterior) / receitaAnoAnterior * 100);
+  
+  // CAGR (Compound Annual Growth Rate) de Jul/2023 a Set/2025 (27 meses = 2.25 anos)
+  const anos = 27 / 12; // 2.25 anos
+  const cagr = (Math.pow(receitaAtual / receitaInicio, 1 / anos) - 1) * 100;
+  
+  return {
+    receitaAtual: receitaAtual,
+    crescimentoMoM: {
+      valor: crescimentoMoM,
+      valorFormatado: `${crescimentoMoM >= 0 ? '+' : ''}${crescimentoMoM.toFixed(1)}%`,
+      receitaAnterior: receitaMesAnterior,
+      periodo: 'vs Ago/2025'
+    },
+    crescimentoQoQ: {
+      valor: crescimentoQoQ,
+      valorFormatado: `${crescimentoQoQ >= 0 ? '+' : ''}${crescimentoQoQ.toFixed(1)}%`,
+      receitaAnterior: receitaTrimestreAnterior,
+      periodo: 'vs Jun/2025'
+    },
+    crescimentoYoY: {
+      valor: crescimentoYoY,
+      valorFormatado: `${crescimentoYoY >= 0 ? '+' : ''}${crescimentoYoY.toFixed(1)}%`,
+      receitaAnterior: receitaAnoAnterior,
+      periodo: 'vs Set/2024'
+    },
+    cagr: {
+      valor: cagr,
+      valorFormatado: `${cagr >= 0 ? '+' : ''}${cagr.toFixed(1)}%`,
+      periodo: 'Jul/2023 - Set/2025'
+    }
+  };
+};

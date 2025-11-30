@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
 import { mesesMTRIX } from '../utils/periodHelpers';
-import { getMtrixSummary, getMtrixEvolucaoTemporal, getMtrixCurvaABC } from '../data/mtrixDataReal';
+import { getMtrixSummary, getMtrixEvolucaoTemporal, getMtrixCurvaABC, getMtrixCrescimento } from '../data/mtrixDataReal';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { filterNullish } from '../utils/safeString';
 
@@ -18,6 +18,7 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
   const dadosMTRIX = getMtrixSummary(selectedCategoria, selectedPeriodo, selectedMesInicial, selectedMesFinal, selectedUF);
   const dadosEvolucao = getMtrixEvolucaoTemporal(selectedCategoria);
   const curvaABC = getMtrixCurvaABC(selectedCategoria, selectedPeriodo, selectedMesInicial, selectedMesFinal, selectedUF);
+  const dadosCrescimento = getMtrixCrescimento(selectedCategoria);
 
   const ufs = [
     'Todas', 'SP', 'RJ', 'MG', 'ES', 'PR', 'SC', 'RS', 'BA', 'CE', 'PE',
@@ -204,6 +205,103 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
           </CardContent>
         </Card>
       </div>
+
+      {/* Métricas de Crescimento */}
+      <Card className="border-t-4 border-t-purple-500">
+        <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50">
+          <CardTitle className="flex items-center gap-2 text-purple-900">
+            <TrendingUp className="w-6 h-6" />
+            Métricas de Crescimento
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Indicadores de desempenho ao longo do tempo</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* MoM */}
+            <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-blue-800 uppercase">Crescimento MoM</span>
+                <Badge className={`${
+                  dadosCrescimento.crescimentoMoM.valor >= 0 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-red-600 text-white'
+                }`}>
+                  {dadosCrescimento.crescimentoMoM.valor >= 0 ? '↑' : '↓'}
+                </Badge>
+              </div>
+              <p className="text-3xl font-bold text-blue-900 mb-1">
+                {dadosCrescimento.crescimentoMoM.valorFormatado}
+              </p>
+              <p className="text-xs text-blue-700">{dadosCrescimento.crescimentoMoM.periodo}</p>
+              <p className="text-xs text-blue-600 mt-2">Mês sobre Mês</p>
+            </div>
+
+            {/* QoQ */}
+            <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-green-800 uppercase">Crescimento QoQ</span>
+                <Badge className={`${
+                  dadosCrescimento.crescimentoQoQ.valor >= 0 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-red-600 text-white'
+                }`}>
+                  {dadosCrescimento.crescimentoQoQ.valor >= 0 ? '↑' : '↓'}
+                </Badge>
+              </div>
+              <p className="text-3xl font-bold text-green-900 mb-1">
+                {dadosCrescimento.crescimentoQoQ.valorFormatado}
+              </p>
+              <p className="text-xs text-green-700">{dadosCrescimento.crescimentoQoQ.periodo}</p>
+              <p className="text-xs text-green-600 mt-2">Trimestre sobre Trimestre</p>
+            </div>
+
+            {/* YoY */}
+            <div className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-orange-800 uppercase">Crescimento YoY</span>
+                <Badge className={`${
+                  dadosCrescimento.crescimentoYoY.valor >= 0 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-red-600 text-white'
+                }`}>
+                  {dadosCrescimento.crescimentoYoY.valor >= 0 ? '↑' : '↓'}
+                </Badge>
+              </div>
+              <p className="text-3xl font-bold text-orange-900 mb-1">
+                {dadosCrescimento.crescimentoYoY.valorFormatado}
+              </p>
+              <p className="text-xs text-orange-700">{dadosCrescimento.crescimentoYoY.periodo}</p>
+              <p className="text-xs text-orange-600 mt-2">Ano sobre Ano</p>
+            </div>
+
+            {/* CAGR */}
+            <div className="p-4 bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-purple-800 uppercase">CAGR</span>
+                <Badge className={`${
+                  dadosCrescimento.cagr.valor >= 0 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-red-600 text-white'
+                }`}>
+                  {dadosCrescimento.cagr.valor >= 0 ? '↑' : '↓'}
+                </Badge>
+              </div>
+              <p className="text-3xl font-bold text-purple-900 mb-1">
+                {dadosCrescimento.cagr.valorFormatado}
+              </p>
+              <p className="text-xs text-purple-700">{dadosCrescimento.cagr.periodo}</p>
+              <p className="text-xs text-purple-600 mt-2">Taxa Composta Anual</p>
+            </div>
+          </div>
+
+          <div className="mt-4 p-4 bg-purple-50 rounded-lg">
+            <p className="text-sm text-gray-700">
+              <strong className="text-purple-900">Insight:</strong> O negócio apresenta <strong>crescimento consistente</strong> em todos os horizontes temporais. 
+              CAGR de <strong>{dadosCrescimento.cagr.valorFormatado}</strong> indica expansão sólida e sustentável ao longo de 27 meses.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Evolução Temporal de Vendas */}
       <Card className="border-t-4 border-t-green-500">

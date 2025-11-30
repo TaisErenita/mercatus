@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { ArrowLeft, TrendingUp, MapPin } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
-import MapaBrasilInterativo from './MapaBrasilInterativo';
-import { getMtrixData } from '../data/mtrixData';
+import { getMtrixSummary } from '../data/mtrixDataReal';
 
-const MonitoramentoMTRIX = ({
-  onVoltar,
-  selectedCategory,
-  setSelectedCategory,
-  selectedPeriod,
-  setSelectedPeriod,
-  selectedMes,
-  setSelectedMes,
-  periodoLegenda
-}) => {
+export default function MonitoramentoMTRIX({ onVoltar }) {
+  const [selectedCategoria, setSelectedCategoria] = useState('total');
+  const [selectedPeriodo, setSelectedPeriodo] = useState('mes');
+  const [selectedMes, setSelectedMes] = useState('agosto');
   const [selectedUF, setSelectedUF] = useState('todas');
-  const [selectedMtrixRegion, setSelectedMtrixRegion] = useState('brasil');
 
-  const mtrixData = getMtrixData();
+  const dadosMTRIX = getMtrixSummary();
 
   const ufs = [
     'Todas', 'SP', 'RJ', 'MG', 'ES', 'PR', 'SC', 'RS', 'BA', 'CE', 'PE',
@@ -28,28 +21,44 @@ const MonitoramentoMTRIX = ({
 
   return (
     <div className="space-y-6">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg p-6 text-white">
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={onVoltar}
+            className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Voltar para Visão Geral
+          </button>
+        </div>
+        <div className="flex items-center gap-3 mb-2">
+          <MapPin className="w-8 h-8" />
+          <h2 className="text-3xl font-bold">MTRIX - Distribuição & Cobertura</h2>
+        </div>
+        <p className="text-green-100">Análise de distribuidores e cobertura geográfica nacional</p>
+      </div>
+
       {/* Filtros */}
       <FiltrosMonitoramento
-        titulo="MTRIX - Distribuição & Cobertura"
-        subtitulo="Análise de distribuidores e cobertura geográfica"
-        badgeTexto="MTRIX"
-        badgeColor="bg-green-100 text-green-800 border-green-300"
-        onVoltar={onVoltar}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        selectedPeriod={selectedPeriod}
-        setSelectedPeriod={setSelectedPeriod}
+        selectedCategoria={selectedCategoria}
+        setSelectedCategoria={setSelectedCategoria}
+        selectedPeriodo={selectedPeriodo}
+        setSelectedPeriodo={setSelectedPeriodo}
         selectedMes={selectedMes}
         setSelectedMes={setSelectedMes}
-        periodoLegenda={periodoLegenda}
-      >
-        {/* Filtro de UF */}
-        <div>
-          <h4 className="text-sm font-semibold text-slate-700 mb-3">Unidade Federativa</h4>
+      />
+
+      {/* Filtro UF */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm">Filtrar por Unidade Federativa</CardTitle>
+        </CardHeader>
+        <CardContent>
           <select
             value={selectedUF}
             onChange={(e) => setSelectedUF(e.target.value)}
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-slate-700"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-700"
           >
             {ufs.map((uf) => (
               <option key={uf} value={uf.toLowerCase()}>
@@ -57,93 +66,94 @@ const MonitoramentoMTRIX = ({
               </option>
             ))}
           </select>
-        </div>
-      </FiltrosMonitoramento>
-
-      {/* KPIs MTRIX */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-green-50 to-emerald-50">
-          <CardHeader className="pb-3">
-            <CardDescription className="text-xs">Receita Total</CardDescription>
-            <CardTitle className="text-2xl text-green-600">
-              R$ {(mtrixData.totais.receita / 1000000).toFixed(1)}M
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-cyan-50">
-          <CardHeader className="pb-3">
-            <CardDescription className="text-xs">Distribuidores</CardDescription>
-            <CardTitle className="text-2xl text-blue-600">
-              {mtrixData.totais.distribuidores}
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-purple-50 to-pink-50">
-          <CardHeader className="pb-3">
-            <CardDescription className="text-xs">Cobertura UFs</CardDescription>
-            <CardTitle className="text-2xl text-purple-600">
-              {mtrixData.totais.ufs}
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-orange-50 to-amber-50">
-          <CardHeader className="pb-3">
-            <CardDescription className="text-xs">Categorias</CardDescription>
-            <CardTitle className="text-2xl text-orange-600">
-              {mtrixData.totais.categorias}
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      </div>
-
-      {/* Mapa do Brasil */}
-      <Card className="border-0 shadow-lg">
-        <CardHeader>
-          <CardTitle>Mapa de Cobertura Nacional</CardTitle>
-          <CardDescription>Distribuição geográfica por UF</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <MapaBrasilInterativo
-            selectedRegion={selectedMtrixRegion}
-            onRegionChange={setSelectedMtrixRegion}
-          />
         </CardContent>
       </Card>
 
+      {/* Métricas Principais */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card className="border-l-4 border-l-green-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-gray-600">Receita Total</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-baseline justify-between">
+              <span className="text-3xl font-bold text-gray-900">
+                R$ {(dadosMTRIX.totalVendas / 1000000).toFixed(1)}M
+              </span>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">Dados MTRIX consolidados</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-l-4 border-l-blue-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-gray-600">Distribuidores</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-baseline justify-between">
+              <span className="text-3xl font-bold text-gray-900">{dadosMTRIX.totalDistribuidores}</span>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">Parceiros ativos</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-l-4 border-l-purple-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-gray-600">Cobertura</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-baseline justify-between">
+              <span className="text-3xl font-bold text-gray-900">{dadosMTRIX.totalUFs}</span>
+              <Badge className="bg-green-100 text-green-800">UFs</Badge>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">Unidades federativas</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-l-4 border-l-orange-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-gray-600">Categorias</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-baseline justify-between">
+              <span className="text-3xl font-bold text-gray-900">{dadosMTRIX.totalCategorias}</span>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">Tipos de produtos</p>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Top Distribuidores */}
-      <Card className="border-0 shadow-lg">
+      <Card>
         <CardHeader>
           <CardTitle>Top 10 Distribuidores</CardTitle>
-          <CardDescription>Principais parceiros de distribuição</CardDescription>
+          <p className="text-sm text-gray-500 mt-1">Principais parceiros de distribuição por receita</p>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b-2 border-slate-200">
-                  <th className="text-left p-3 text-sm font-semibold text-slate-700">#</th>
-                  <th className="text-left p-3 text-sm font-semibold text-slate-700">Distribuidor</th>
-                  <th className="text-right p-3 text-sm font-semibold text-slate-700">Receita (R$)</th>
-                  <th className="text-right p-3 text-sm font-semibold text-slate-700">% Total</th>
-                  <th className="text-center p-3 text-sm font-semibold text-slate-700">UF</th>
+                <tr className="border-b-2 border-gray-200">
+                  <th className="text-left py-3 px-4 font-semibold text-gray-700">#</th>
+                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Distribuidor</th>
+                  <th className="text-right py-3 px-4 font-semibold text-green-600">Receita</th>
+                  <th className="text-right py-3 px-4 font-semibold text-gray-600">% Total</th>
+                  <th className="text-center py-3 px-4 font-semibold text-gray-600">UF</th>
                 </tr>
               </thead>
               <tbody>
-                {mtrixData.topDistribuidores.slice(0, 10).map((dist, index) => (
-                  <tr key={index} className="border-b border-slate-100 hover:bg-slate-50">
-                    <td className="p-3 text-sm font-semibold text-slate-500">{index + 1}</td>
-                    <td className="p-3 text-sm">{dist.nome}</td>
-                    <td className="p-3 text-sm text-right font-semibold">
-                      R$ {dist.receita.toLocaleString('pt-BR')}
+                {dadosMTRIX.topDistribuidores.slice(0, 10).map((dist, index) => (
+                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-3 px-4 font-bold text-gray-500">#{index + 1}</td>
+                    <td className="py-3 px-4 font-medium text-gray-900">{dist.nome}</td>
+                    <td className="text-right py-3 px-4">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-800 font-semibold">
+                        R$ {(dist.receita / 1000).toFixed(1)}k
+                      </span>
                     </td>
-                    <td className="p-3 text-sm text-right">{dist.percentual.toFixed(1)}%</td>
-                    <td className="p-3 text-sm text-center">
-                      <Badge className="bg-green-100 text-green-800 border-green-300 text-xs">
-                        {dist.uf}
-                      </Badge>
+                    <td className="text-right py-3 px-4 text-gray-700">{dist.percentual.toFixed(1)}%</td>
+                    <td className="text-center py-3 px-4">
+                      <Badge className="bg-blue-100 text-blue-800">{dist.uf}</Badge>
                     </td>
                   </tr>
                 ))}
@@ -154,32 +164,28 @@ const MonitoramentoMTRIX = ({
       </Card>
 
       {/* Distribuição por Categoria */}
-      <Card className="border-0 shadow-lg">
+      <Card>
         <CardHeader>
           <CardTitle>Distribuição por Categoria</CardTitle>
-          <CardDescription>Receita por tipo de produto</CardDescription>
+          <p className="text-sm text-gray-500 mt-1">Receita por tipo de produto</p>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {mtrixData.porCategoria.map((cat, index) => {
-              const percentual = (cat.receita / mtrixData.totais.receita * 100);
+          <div className="space-y-4">
+            {dadosMTRIX.porCategoria.map((cat, index) => {
+              const percentual = (cat.receita / dadosMTRIX.totalVendas * 100);
               return (
-                <div key={index} className="flex items-center space-x-3">
-                  <div className="w-32 text-sm font-medium text-slate-700">{cat.categoria}</div>
-                  <div className="flex-1">
-                    <div className="w-full bg-slate-200 rounded-full h-6 relative">
-                      <div
-                        className="bg-gradient-to-r from-green-400 to-emerald-500 h-6 rounded-full flex items-center justify-end pr-2"
-                        style={{ width: `${percentual}%` }}
-                      >
-                        <span className="text-xs font-semibold text-white">
-                          {percentual.toFixed(1)}%
-                        </span>
-                      </div>
-                    </div>
+                <div key={index} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">{cat.categoria}</span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      R$ {(cat.receita / 1000).toFixed(1)}k ({percentual.toFixed(1)}%)
+                    </span>
                   </div>
-                  <div className="w-32 text-right text-sm font-semibold text-slate-900">
-                    R$ {(cat.receita / 1000).toFixed(0)}k
+                  <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div
+                      className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all"
+                      style={{ width: `${percentual}%` }}
+                    />
                   </div>
                 </div>
               );
@@ -187,8 +193,38 @@ const MonitoramentoMTRIX = ({
           </div>
         </CardContent>
       </Card>
+
+      {/* Insights */}
+      <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-green-900">
+            <MapPin className="w-5 h-5" />
+            Insights Principais
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-2">
+            <li className="flex items-start gap-2">
+              <span className="text-green-600 font-bold">•</span>
+              <span className="text-gray-700">
+                Receita total de <strong>R$ {(dadosMTRIX.totalVendas / 1000000).toFixed(1)}M</strong> via MTRIX
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-600 font-bold">•</span>
+              <span className="text-gray-700">
+                Rede de <strong>{dadosMTRIX.totalDistribuidores} distribuidores</strong> em {dadosMTRIX.totalUFs} UFs
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-600 font-bold">•</span>
+              <span className="text-gray-700">
+                Top distribuidor: <strong>{dadosMTRIX.topDistribuidores[0].nome}</strong> ({dadosMTRIX.topDistribuidores[0].uf})
+              </span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
-};
-
-export default MonitoramentoMTRIX;
+}

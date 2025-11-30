@@ -11,7 +11,7 @@ export default function MonitoramentoScanntech({ onVoltar }) {
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes_mom');
   const [selectedMes, setSelectedMes] = useState(0); // 0 = Todos os Meses (sem filtro de mês específico)
 
-  const dadosMercadoRaw = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
+  const dadosMercadoRaw = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo, selectedMes);
   
   // Calcular valores formatados e variações
   const dadosMercado = {

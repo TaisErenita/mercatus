@@ -54,31 +54,31 @@ const EstrategiaInovacao = () => {
       mercado: 'Margem 60% vs 35% varejo',
       status: 'Planejamento',
       prioridade: 'Alta',
-      fundamentacao: `Canal Digital atual: R$ ${(dadosInternos.canais.find(c => c.canal === 'DIGITAL')?.receita / 1000000 || 1.9).toFixed(1)}M - potencial 4x`
+      fundamentacao: `Canal Digital atual: R$ 1.9M - potencial 4x`
     },
     {
       categoria: 'Expansão Regional',
-      titulo: `Intensificar presença em ${regioesTop[0].regiao}`,
+      titulo: `Intensificar presença em ${regioesTop[0]?.nome || regioesTop[0]?.regiao || 'Região Principal'}`,
       descricao: 'Região líder com maior participação no faturamento',
-      potencial: `+R$ ${(regioesTop[0].receita * 0.15 / 1000000).toFixed(1)}M (crescimento 15%)`,
+      potencial: `+R$ ${((regioesTop[0]?.valor || regioesTop[0]?.receita || 0) * 0.15 / 1000000).toFixed(1)}M (crescimento 15%)`,
       investimento: 'R$ 600k',
       prazo: '4 meses',
-      mercado: `Região representa ${regioesTop[0].percentualReceita}% da receita total`,
+      mercado: `Região representa ${regioesTop[0]?.percentual || regioesTop[0]?.percentualReceita || 0}% da receita total`,
       status: 'Planejamento',
       prioridade: 'Alta',
-      fundamentacao: `${regioesTop[0].regiao}: R$ ${(regioesTop[0].receita / 1000000).toFixed(1)}M atual`
+      fundamentacao: `${regioesTop[0]?.nome || regioesTop[0]?.regiao || 'Região'}: R$ ${((regioesTop[0]?.valor || regioesTop[0]?.receita || 0) / 1000000).toFixed(1)}M atual`
     },
     {
       categoria: 'Canais',
-      titulo: `Fortalecer canal ${canaisTop[0].canal}`,
+      titulo: `Fortalecer canal ${canaisTop[0]?.nome || canaisTop[0]?.canal || 'Principal'}`,
       descricao: 'Canal principal com maior volume e receita',
-      potencial: `+R$ ${(canaisTop[0].receita * 0.10 / 1000000).toFixed(1)}M (crescimento 10%)`,
+      potencial: `+R$ ${((canaisTop[0]?.valor || canaisTop[0]?.receita || 0) * 0.10 / 1000000).toFixed(1)}M (crescimento 10%)`,
       investimento: 'R$ 400k',
       prazo: '3 meses',
-      mercado: `Canal representa ${canaisTop[0].percentualReceita}% da receita`,
+      mercado: `Canal representa ${canaisTop[0]?.percentual || canaisTop[0]?.percentualReceita || 0}% da receita`,
       status: 'Execução',
       prioridade: 'Alta',
-      fundamentacao: `${canaisTop[0].canal}: R$ ${(canaisTop[0].receita / 1000000).toFixed(1)}M atual`
+      fundamentacao: `${canaisTop[0]?.nome || canaisTop[0]?.canal || 'Canal'}: R$ ${((canaisTop[0]?.valor || canaisTop[0]?.receita || 0) / 1000000).toFixed(1)}M atual`
     },
     {
       categoria: 'E-commerce',

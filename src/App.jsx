@@ -13,6 +13,7 @@ import MonitoramentoScanntech from './components/MonitoramentoScanntech'
 import MonitoramentoInternos from './components/MonitoramentoInternos'
 import MonitoramentoMTRIX from './components/MonitoramentoMTRIX'
 import MonitoramentoAmazon from './components/MonitoramentoAmazon'
+import ErrorBoundary from './components/ErrorBoundary'
 
 import InsightsMercado from "./components/InsightsMercado";
 import SharePorSegmento from "./components/SharePorSegmento";
@@ -259,7 +260,8 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 ${presentationMode ? 'p-2' : 'p-4'} transition-all duration-300`}>
+    <ErrorBoundary>
+      <div className={`min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 ${presentationMode ? 'p-2' : 'p-4'} transition-all duration-300`}>
       {/* Header */}
       <div className={`${presentationMode ? 'mb-4' : 'mb-8'} transition-all duration-300`}>
         <div className="flex items-center justify-between">
@@ -537,6 +539,7 @@ function App() {
         <p>AIAAS Nutrimental - Powered by Manus AI | Dados atualizados em tempo real</p>
       </div>
     </div>
+    </ErrorBoundary>
   )
 }
 

@@ -3,16 +3,18 @@ import { ArrowLeft, TrendingUp, MapPin } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
+import { mesesMTRIX } from '../utils/periodHelpers';
 import { getMtrixSummary } from '../data/mtrixDataReal';
 import { filterNullish } from '../utils/safeString';
 
 export default function MonitoramentoMTRIX({ onVoltar }) {
   const [selectedCategoria, setSelectedCategoria] = useState('total');
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes');
-  const [selectedMes, setSelectedMes] = useState(0); // 0 = Todos os Meses
+  const [selectedMesInicial, setSelectedMesInicial] = useState(1); // Jul/2023
+  const [selectedMesFinal, setSelectedMesFinal] = useState(27); // Set/2025
   const [selectedUF, setSelectedUF] = useState('todas');
 
-  const dadosMTRIX = getMtrixSummary(selectedCategoria, selectedPeriodo, selectedMes, selectedUF);
+  const dadosMTRIX = getMtrixSummary(selectedCategoria, selectedPeriodo, selectedMesInicial, selectedMesFinal, selectedUF);
 
   const ufs = [
     'Todas', 'SP', 'RJ', 'MG', 'ES', 'PR', 'SC', 'RS', 'BA', 'CE', 'PE',
@@ -40,20 +42,91 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
         <p className="text-green-100">Análise de distribuidores e cobertura geográfica nacional</p>
       </div>
 
-      {/* Filtros */}
-      <FiltrosMonitoramento
-        titulo="MTRIX - Distribuição & Cobertura"
-        subtitulo="Análise de distribuidores e cobertura geográfica"
-        badgeTexto="MTRIX"
-        badgeColor="bg-green-100 text-green-800 border-green-300"
-        onVoltar={onVoltar}
-        selectedCategory={selectedCategoria}
-        setSelectedCategory={setSelectedCategoria}
-        selectedPeriod={selectedPeriodo}
-        setSelectedPeriod={setSelectedPeriodo}
-        selectedMes={selectedMes}
-        setSelectedMes={setSelectedMes}
-      />
+      {/* Filtros Personalizados MTRIX */}
+      <Card className="border-2 border-slate-200 shadow-lg">
+        <CardHeader>
+          <CardTitle>Filtros de Análise</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Filtro de Categoria */}
+          <div>
+            <h4 className="text-sm font-semibold text-slate-700 mb-3">Categoria de Barras</h4>
+            <div className="flex flex-wrap gap-2">
+              {['total', 'cereais', 'nuts', 'proteina', 'frutas'].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategoria(cat)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedCategoria === cat
+                      ? 'bg-green-500 text-white'
+                      : 'bg-white border border-slate-200 text-slate-700 hover:border-green-300'
+                  }`}
+                >
+                  {cat.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Filtro de Período */}
+          <div>
+            <h4 className="text-sm font-semibold text-slate-700 mb-3">Período de Comparação</h4>
+            <div className="flex flex-wrap gap-2">
+              {[{ id: 'mes', label: 'Mês' }, { id: 'trimestre', label: 'Trimestre' }, { id: 'ytd', label: 'YTD' }].map((per) => (
+                <button
+                  key={per.id}
+                  onClick={() => setSelectedPeriodo(per.id)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedPeriodo === per.id
+                      ? 'bg-green-500 text-white'
+                      : 'bg-white border border-slate-200 text-slate-700 hover:border-green-300'
+                  }`}
+                >
+                  {per.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Seletores de Intervalo de Datas */}
+          <div>
+            <h4 className="text-sm font-semibold text-slate-700 mb-3">📅 Período de Análise</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs text-slate-600 mb-2">Data Inicial</label>
+                <select
+                  value={selectedMesInicial}
+                  onChange={(e) => setSelectedMesInicial(Number(e.target.value))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-700"
+                >
+                  {mesesMTRIX.map((mes) => (
+                    <option key={mes.id} value={mes.id}>
+                      {mes.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs text-slate-600 mb-2">Data Final</label>
+                <select
+                  value={selectedMesFinal}
+                  onChange={(e) => setSelectedMesFinal(Number(e.target.value))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-700"
+                >
+                  {mesesMTRIX.map((mes) => (
+                    <option key={mes.id} value={mes.id}>
+                      {mes.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <p className="text-xs text-slate-500 mt-2">
+              Período selecionado: {mesesMTRIX.find(m => m.id === selectedMesInicial)?.abrev} até {mesesMTRIX.find(m => m.id === selectedMesFinal)?.abrev}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Filtro UF */}
       <Card>

@@ -16,6 +16,40 @@ export const meses = [
   { id: 12, nome: 'Dezembro', abrev: 'Dez' }
 ];
 
+// Meses para MTRIX (Jul/2023 - Set/2025) - 27 meses
+export const mesesMTRIX = [
+  // 2023 (Jul-Dez)
+  { id: 1, nome: 'Julho 2023', abrev: 'Jul/23', ano: 2023, mes: 7 },
+  { id: 2, nome: 'Agosto 2023', abrev: 'Ago/23', ano: 2023, mes: 8 },
+  { id: 3, nome: 'Setembro 2023', abrev: 'Set/23', ano: 2023, mes: 9 },
+  { id: 4, nome: 'Outubro 2023', abrev: 'Out/23', ano: 2023, mes: 10 },
+  { id: 5, nome: 'Novembro 2023', abrev: 'Nov/23', ano: 2023, mes: 11 },
+  { id: 6, nome: 'Dezembro 2023', abrev: 'Dez/23', ano: 2023, mes: 12 },
+  // 2024 (Jan-Dez)
+  { id: 7, nome: 'Janeiro 2024', abrev: 'Jan/24', ano: 2024, mes: 1 },
+  { id: 8, nome: 'Fevereiro 2024', abrev: 'Fev/24', ano: 2024, mes: 2 },
+  { id: 9, nome: 'Março 2024', abrev: 'Mar/24', ano: 2024, mes: 3 },
+  { id: 10, nome: 'Abril 2024', abrev: 'Abr/24', ano: 2024, mes: 4 },
+  { id: 11, nome: 'Maio 2024', abrev: 'Mai/24', ano: 2024, mes: 5 },
+  { id: 12, nome: 'Junho 2024', abrev: 'Jun/24', ano: 2024, mes: 6 },
+  { id: 13, nome: 'Julho 2024', abrev: 'Jul/24', ano: 2024, mes: 7 },
+  { id: 14, nome: 'Agosto 2024', abrev: 'Ago/24', ano: 2024, mes: 8 },
+  { id: 15, nome: 'Setembro 2024', abrev: 'Set/24', ano: 2024, mes: 9 },
+  { id: 16, nome: 'Outubro 2024', abrev: 'Out/24', ano: 2024, mes: 10 },
+  { id: 17, nome: 'Novembro 2024', abrev: 'Nov/24', ano: 2024, mes: 11 },
+  { id: 18, nome: 'Dezembro 2024', abrev: 'Dez/24', ano: 2024, mes: 12 },
+  // 2025 (Jan-Set)
+  { id: 19, nome: 'Janeiro 2025', abrev: 'Jan/25', ano: 2025, mes: 1 },
+  { id: 20, nome: 'Fevereiro 2025', abrev: 'Fev/25', ano: 2025, mes: 2 },
+  { id: 21, nome: 'Março 2025', abrev: 'Mar/25', ano: 2025, mes: 3 },
+  { id: 22, nome: 'Abril 2025', abrev: 'Abr/25', ano: 2025, mes: 4 },
+  { id: 23, nome: 'Maio 2025', abrev: 'Mai/25', ano: 2025, mes: 5 },
+  { id: 24, nome: 'Junho 2025', abrev: 'Jun/25', ano: 2025, mes: 6 },
+  { id: 25, nome: 'Julho 2025', abrev: 'Jul/25', ano: 2025, mes: 7 },
+  { id: 26, nome: 'Agosto 2025', abrev: 'Ago/25', ano: 2025, mes: 8 },
+  { id: 27, nome: 'Setembro 2025', abrev: 'Set/25', ano: 2025, mes: 9 }
+]
+
 // Gerar legenda dinâmica baseada no período e mês selecionado
 export function getPeriodoLegenda(tipoPeriodo, mesAtual = 8, anoAtual = 2025) {
   const mes = meses.find(m => m.id === mesAtual);

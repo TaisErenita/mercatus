@@ -243,10 +243,14 @@ export const getMtrixVendasPorCategoria = (categoria = 'total', periodo = 'mes',
 };
 
 // Função principal para obter resumo MTRIX com filtros
-export const getMtrixSummary = (categoria = 'total', periodo = 'mes', mes = 0, uf = 'todas') => {
-  const distribuidores = getMtrixDistribuidores(categoria, periodo, mes, uf);
-  const categorias = getMtrixVendasPorCategoria(categoria, periodo, mes);
-  const ufs = getMtrixVendasPorUF(categoria, periodo, mes);
+// mesInicial e mesFinal: IDs de 1 (Jul/2023) a 27 (Set/2025)
+export const getMtrixSummary = (categoria = 'total', periodo = 'mes', mesInicial = 1, mesFinal = 27, uf = 'todas') => {
+  // Calcular fator médio do intervalo de meses
+  const fatorMedio = (mesInicial + mesFinal) / 2;
+  
+  const distribuidores = getMtrixDistribuidores(categoria, periodo, fatorMedio, uf);
+  const categorias = getMtrixVendasPorCategoria(categoria, periodo, fatorMedio);
+  const ufs = getMtrixVendasPorUF(categoria, periodo, fatorMedio);
   
   // Calcular totais
   const totalVendas = categorias.reduce((sum, c) => sum + c.Vendas, 0);

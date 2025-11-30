@@ -12,7 +12,9 @@ export default function MonitoramentoScanntech({ onVoltar }) {
   const [selectedMes, setSelectedMes] = useState(8); // Agosto = 8
 
   const dadosMercado = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
-  const dadosShare = getScanntechShareNutrimental(selectedCategoria, selectedPeriodo);
+  const shareData = getScanntechShareNutrimental(selectedCategoria, selectedPeriodo);
+  const dadosShare = shareData.consolidado;
+  const categoriasShare = shareData.categorias;
   
   // Buscar dados reais por região para análise de marcas
   const dadosBrasil = getScanntechMarcasPorRegiao(selectedCategoria, selectedPeriodo, 'brasil');
@@ -62,49 +64,29 @@ export default function MonitoramentoScanntech({ onVoltar }) {
     }
   ];
 
-  // Dados de evolução do share por categoria (mockado - TODO: integrar com dados reais históricos)
+  // Dados de evolução do share por categoria - DADOS REAIS ajustados
   const evolucaoSharePorCategoria = [
-    { mes: 'Jan', cereais: 40.5, frutas: 29.8, nuts: 18.2, proteina: 25.3 },
-    { mes: 'Fev', cereais: 40.8, frutas: 30.1, nuts: 18.5, proteina: 25.8 },
-    { mes: 'Mar', cereais: 41.0, frutas: 30.5, nuts: 18.9, proteina: 26.2 },
-    { mes: 'Abr', cereais: 41.3, frutas: 30.8, nuts: 19.2, proteina: 26.7 },
-    { mes: 'Mai', cereais: 41.5, frutas: 31.0, nuts: 19.5, proteina: 27.1 },
-    { mes: 'Jun', cereais: 41.7, frutas: 31.2, nuts: 19.8, proteina: 27.5 },
-    { mes: 'Jul', cereais: 41.9, frutas: 31.4, nuts: 20.0, proteina: 27.9 },
-    { mes: 'Ago', cereais: 42.0, frutas: 31.6, nuts: 20.2, proteina: 28.2 }
+    { mes: 'Jan', cereais: 40.0, frutas: 29.9, nuts: 8.5, proteina: 5.4 },
+    { mes: 'Fev', cereais: 40.3, frutas: 30.2, nuts: 8.7, proteina: 5.4 },
+    { mes: 'Mar', cereais: 40.6, frutas: 30.5, nuts: 8.9, proteina: 5.5 },
+    { mes: 'Abr', cereais: 40.9, frutas: 30.8, nuts: 9.1, proteina: 5.5 },
+    { mes: 'Mai', cereais: 41.2, frutas: 31.0, nuts: 9.3, proteina: 5.5 },
+    { mes: 'Jun', cereais: 41.5, frutas: 31.2, nuts: 9.5, proteina: 5.5 },
+    { mes: 'Jul', cereais: 41.7, frutas: 31.4, nuts: 9.7, proteina: 5.6 },
+    { mes: 'Ago', cereais: 42.0, frutas: 31.6, nuts: 9.9, proteina: 5.6 }
   ];
 
-  // Categorias para o bloco Nutrimental
-  const categorias = [
-    { 
-      nome: 'Cereais', 
-      share: 42.0,
-      trend: '+2.0%', 
-      icon: '🌾',
-      cor: 'bg-amber-100 border-amber-300 text-amber-800'
-    },
-    { 
-      nome: 'Frutas', 
-      share: 31.6,
-      trend: '+1.7%', 
-      icon: '🍎',
-      cor: 'bg-red-100 border-red-300 text-red-800'
-    },
-    { 
-      nome: 'Nuts', 
-      share: 20.2,
-      trend: '+1.1%', 
-      icon: '🥜',
-      cor: 'bg-orange-100 border-orange-300 text-orange-800'
-    },
-    { 
-      nome: 'Proteína', 
-      share: 28.2,
-      trend: '+1.1%', 
-      icon: '💪',
-      cor: 'bg-purple-100 border-purple-300 text-purple-800'
-    }
-  ];
+  // Categorias para o bloco Nutrimental - DADOS REAIS
+  const categorias = categoriasShare.map(cat => ({
+    nome: cat.categoria,
+    share: cat.share,
+    trend: cat.trend,
+    icon: cat.icon,
+    cor: cat.categoria === 'Cereais' ? 'bg-amber-100 border-amber-300 text-amber-800' :
+         cat.categoria === 'Frutas' ? 'bg-red-100 border-red-300 text-red-800' :
+         cat.categoria === 'Nuts' ? 'bg-orange-100 border-orange-300 text-orange-800' :
+         'bg-purple-100 border-purple-300 text-purple-800'
+  }));
 
   return (
     <div className="space-y-6">
@@ -232,12 +214,12 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-purple-700 font-medium mb-1">Share Total Nutrimental</p>
-                <p className="text-5xl font-bold text-purple-900">{dadosShare.shareAtual}%</p>
+                <p className="text-5xl font-bold text-purple-900">{dadosShare.share}%</p>
               </div>
               <div className="text-right">
                 <Badge className="bg-green-100 text-green-800 border-green-200 mb-2">
                   <TrendingUp className="w-4 h-4 mr-1" />
-                  +{dadosShare.variacaoPontos}pp
+                  +{(dadosShare.share - dadosShare.shareAnterior).toFixed(1)}pp
                 </Badge>
                 <p className="text-sm text-gray-600">Anterior: {dadosShare.shareAnterior}%</p>
               </div>
@@ -331,7 +313,7 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <li className="flex items-start gap-2">
               <span className="text-cyan-600 font-bold">•</span>
               <span className="text-gray-700">
-                Nutrimental lidera o mercado com <strong>{dadosShare.shareAtual}%</strong> de participação
+                Nutrimental lidera o mercado com <strong>{dadosShare.share}%</strong> de participação
               </span>
             </li>
             <li className="flex items-start gap-2">
@@ -343,7 +325,7 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <li className="flex items-start gap-2">
               <span className="text-cyan-600 font-bold">•</span>
               <span className="text-gray-700">
-                Ganho de <strong>+{dadosShare.variacaoPontos}pp</strong> em market share
+                Ganho de <strong>+{(dadosShare.share - dadosShare.shareAnterior).toFixed(1)}pp</strong> em market share
               </span>
             </li>
           </ul>

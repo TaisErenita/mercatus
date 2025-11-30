@@ -9,7 +9,7 @@ import { getScanntechMercadoTotal, getScanntechShareNutrimental, getScanntechMar
 export default function MonitoramentoScanntech({ onVoltar }) {
   const [selectedCategoria, setSelectedCategoria] = useState('total');
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes_mom');
-  const [selectedMes, setSelectedMes] = useState(8); // Agosto = 8
+  const [selectedMes, setSelectedMes] = useState(0); // 0 = Todos os Meses (sem filtro de mês específico)
 
   const dadosMercadoRaw = getScanntechMercadoTotal(selectedCategoria, selectedPeriodo);
   

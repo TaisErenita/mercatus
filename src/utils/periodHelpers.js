@@ -1,6 +1,7 @@
 // Helpers para períodos e legendas dinâmicas
 
 export const meses = [
+  { id: 0, nome: 'Todos os Meses', abrev: 'Todos' },
   { id: 1, nome: 'Janeiro', abrev: 'Jan' },
   { id: 2, nome: 'Fevereiro', abrev: 'Fev' },
   { id: 3, nome: 'Março', abrev: 'Mar' },

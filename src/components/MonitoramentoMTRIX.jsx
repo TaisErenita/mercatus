@@ -9,10 +9,10 @@ import { filterNullish } from '../utils/safeString';
 export default function MonitoramentoMTRIX({ onVoltar }) {
   const [selectedCategoria, setSelectedCategoria] = useState('total');
   const [selectedPeriodo, setSelectedPeriodo] = useState('mes');
-  const [selectedMes, setSelectedMes] = useState('agosto');
+  const [selectedMes, setSelectedMes] = useState(0); // 0 = Todos os Meses
   const [selectedUF, setSelectedUF] = useState('todas');
 
-  const dadosMTRIX = getMtrixSummary();
+  const dadosMTRIX = getMtrixSummary(selectedCategoria, selectedPeriodo, selectedMes, selectedUF);
 
   const ufs = [
     'Todas', 'SP', 'RJ', 'MG', 'ES', 'PR', 'SC', 'RS', 'BA', 'CE', 'PE',

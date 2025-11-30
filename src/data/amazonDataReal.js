@@ -158,7 +158,7 @@ export const getAmazonSummary = () => {
 
 // Função auxiliar para detectar categoria do produto
 function detectarCategoria(nomeProduto) {
-  const nome = nomeProduto.toLowerCase();
+  const nome = (nomeProduto || '').toLowerCase();
   if (nome.includes('proteína') || nome.includes('protein') || nome.includes('whey')) {
     return 'BP';
   } else if (nome.includes('fruta') || nome.includes('morango') || nome.includes('banana')) {

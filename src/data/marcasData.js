@@ -476,7 +476,7 @@ export const marcasData = {
 
 // Função helper para obter dados de marcas baseado em categoria e período
 export function getMarcasData(category, period) {
-  const key = category.toLowerCase();
+  const key = (category || 'total').toLowerCase();
   
   // Retorna dados da categoria específica ou TOTAL como fallback
   if (marcasData[key] && marcasData[key][period]) {

@@ -38,7 +38,7 @@ const mercadoTotalBase = {
 };
 
 export const getScanntechMercadoTotal = (categoria, periodo) => {
-  const catKey = categoria.toLowerCase();
+  const catKey = (categoria || 'total').toLowerCase();
   const base = mercadoTotalBase[catKey] || mercadoTotalBase['total'];
   
   // Dados consolidados de 14 meses (Ago/2024 - Set/2025)
@@ -232,7 +232,7 @@ const marcasPorRegiao = {
 };
 
 export const getScanntechMarcasPorRegiao = (categoria, periodo, regiao) => {
-  const catKey = categoria.toLowerCase();
+  const catKey = (categoria || 'total').toLowerCase();
   const periodoKey = periodo || 'mes_yoy';
   const regiaoKey = regiao || 'brasil';
   

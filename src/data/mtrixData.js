@@ -193,7 +193,7 @@ export const mtrixData = {
 
 // Função helper para obter dados MTRIX baseado em categoria e período
 export function getMtrixData(category, period) {
-  const key = category.toLowerCase();
+  const key = (category || 'total').toLowerCase();
   
   // Retorna dados da categoria específica ou TOTAL como fallback
   if (mtrixData[key] && mtrixData[key][period]) {

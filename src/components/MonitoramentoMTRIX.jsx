@@ -65,7 +65,7 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
             onChange={(e) => setSelectedUF(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-700"
           >
-            {ufs.map((uf) => (
+            {ufs.filter(uf => uf).map((uf) => (
               <option key={uf} value={uf.toLowerCase()}>
                 {uf}
               </option>

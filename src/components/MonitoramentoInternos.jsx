@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import FiltrosMonitoramento from './FiltrosMonitoramento';
-import { getFilteredInternaData, getEvolucaoTemporalCanal, getCurvaABCProdutos } from '../data/nutrimentalInternaData';
+import { getFilteredInternaData, getEvolucaoTemporalCanal, getCurvaABCProdutos, getRentabilidadeCanal } from '../data/nutrimentalInternaData';
 
 export default function MonitoramentoInternos({ onVoltar }) {
   const [selectedCategoria, setSelectedCategoria] = useState('total');
@@ -17,6 +17,7 @@ export default function MonitoramentoInternos({ onVoltar }) {
   const dadosInternos = getFilteredInternaData(selectedCategoria, selectedPeriodo, selectedMes, selectedCanal, selectedRegiao);
   const evolucaoTemporal = getEvolucaoTemporalCanal(selectedCategoria, 'ytd', selectedCanal, selectedRegiao);
   const curvaABC = getCurvaABCProdutos(selectedCategoria, 'ytd', selectedCanal, selectedRegiao);
+  const rentabilidade = getRentabilidadeCanal(selectedCategoria, selectedPeriodo, selectedRegiao);
 
   const canais = [
     { id: 'todos', label: 'Todos' },
@@ -300,6 +301,70 @@ export default function MonitoramentoInternos({ onVoltar }) {
                 ))}
               </tbody>
             </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Análise 3: Rentabilidade por Canal */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-purple-600" />
+              <CardTitle>Análise 3: Rentabilidade por Canal</CardTitle>
+            </div>
+            <Badge className="bg-purple-100 text-purple-800 border-purple-300">Margem & Ticket Médio</Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {/* Tabela de Rentabilidade */}
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Canal</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Receita</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Ticket Médio</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Margem</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Lucro Est.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rentabilidade.canais.map((canal, index) => (
+                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-3 px-4 text-sm font-medium text-gray-900">{canal.canal}</td>
+                    <td className="py-3 px-4 text-sm text-right text-gray-700">
+                      R$ {(canal.receita / 1000).toFixed(0)}k
+                    </td>
+                    <td className="py-3 px-4 text-sm text-right text-gray-700">
+                      R$ {canal.ticketMedio.toFixed(2)}/kg
+                    </td>
+                    <td className="py-3 px-4 text-sm text-right">
+                      <Badge className={`${
+                        canal.margem >= 30 ? 'bg-green-100 text-green-800 border-green-200' :
+                        canal.margem >= 25 ? 'bg-yellow-100 text-yellow-800 border-yellow-200' :
+                        'bg-red-100 text-red-800 border-red-200'
+                      }`}>
+                        {canal.margem.toFixed(1)}%
+                      </Badge>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-right font-semibold text-green-700">
+                      R$ {(canal.lucro / 1000).toFixed(0)}k
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Insights de Rentabilidade */}
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mt-6">
+            <h4 className="font-semibold text-purple-900 mb-2">💡 Insights</h4>
+            <ul className="space-y-1 text-sm text-purple-800">
+              <li>• Canal mais rentável: <strong>{rentabilidade.insights.canalMaisRentavel}</strong> (R$ {(rentabilidade.insights.lucroMaisRentavel / 1000).toFixed(0)}k de lucro)</li>
+              <li>• Maior ticket médio: <strong>{rentabilidade.insights.canalMaiorTicket}</strong> (R$ {rentabilidade.insights.valorMaiorTicket.toFixed(2)}/kg)</li>
+              <li>• Margem média geral: <strong>{rentabilidade.insights.margemMedia.toFixed(1)}%</strong></li>
+            </ul>
           </div>
         </CardContent>
       </Card>

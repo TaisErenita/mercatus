@@ -316,9 +316,68 @@ export function getCurvaABCProdutos(categoria = 'total', periodo = 'ytd', canal 
   };
 }
 
+// Análise 3: Rentabilidade por Canal
+export function getRentabilidadeCanal(categoria = 'total', periodo = 'ytd', regiao = 'todas') {
+  const dados = getFilteredInternaData(categoria, periodo, 'setembro', 'todos', regiao);
+  
+  // Calcular métricas de rentabilidade por canal
+  const rentabilidade = dados.receita_por_canal.canais.map(canal => {
+    const volumeCanal = dados.volume_por_canal.canais.find(v => v.nome === canal.nome);
+    const volume = volumeCanal ? volumeCanal.volume : 0;
+    
+    // Ticket médio = Receita / Volume (em kg)
+    const ticketMedio = volume > 0 ? canal.valor / volume : 0;
+    
+    // Margem estimada (simulada: 25% base + variação por canal)
+    const margemBase = 0.25;
+    const variacaoMargem = {
+      'Distribuidor': 0.05,
+      'Atacado': -0.03,
+      'AS': 0.08,
+      'Doceiro': 0.10,
+      'KA': -0.05,
+      'C&C': 0.02,
+      'HSA': 0.12
+    };
+    const margem = (margemBase + (variacaoMargem[canal.nome] || 0)) * 100;
+    
+    // Lucro estimado
+    const lucro = canal.valor * (margem / 100);
+    
+    return {
+      canal: canal.nome,
+      receita: canal.valor,
+      volume: volume,
+      ticketMedio: ticketMedio,
+      margem: margem,
+      lucro: lucro,
+      percentualReceita: canal.percentual
+    };
+  });
+  
+  // Ordenar por lucro (maior para menor)
+  rentabilidade.sort((a, b) => b.lucro - a.lucro);
+  
+  // Calcular insights
+  const canalMaisRentavel = rentabilidade[0];
+  const canalMaiorTicket = rentabilidade.reduce((max, c) => c.ticketMedio > max.ticketMedio ? c : max);
+  const margemMedia = rentabilidade.reduce((sum, c) => sum + c.margem, 0) / rentabilidade.length;
+  
+  return {
+    canais: rentabilidade,
+    insights: {
+      canalMaisRentavel: canalMaisRentavel.canal,
+      lucroMaisRentavel: canalMaisRentavel.lucro,
+      canalMaiorTicket: canalMaiorTicket.canal,
+      valorMaiorTicket: canalMaiorTicket.ticketMedio,
+      margemMedia: margemMedia
+    }
+  };
+}
+
 // Função legada para compatibilidade (retorna dados YTD total)
 export function getNutrimentalInternaData() {
   return getFilteredInternaData('total', 'ytd', 'setembro', 'todos', 'todas');
 }
 
-export default { getFilteredInternaData, getEvolucaoTemporalCanal, getCurvaABCProdutos, getNutrimentalInternaData };
+export default { getFilteredInternaData, getEvolucaoTemporalCanal, getCurvaABCProdutos, getRentabilidadeCanal, getNutrimentalInternaData };

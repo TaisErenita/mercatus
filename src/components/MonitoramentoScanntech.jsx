@@ -245,7 +245,13 @@ export default function MonitoramentoScanntech({ onVoltar }) {
                 <div key={index} className={`p-4 rounded-lg border-2 ${cat.cor}`}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-3xl">{cat.icon}</span>
-                    <Badge className="bg-white/80">
+                    <Badge className={`${
+                      cat.trend.startsWith('+') 
+                        ? 'bg-green-500 text-white' 
+                        : cat.trend.startsWith('-')
+                        ? 'bg-red-500 text-white'
+                        : 'bg-gray-500 text-white'
+                    } font-semibold`}>
                       {cat.trend}
                     </Badge>
                   </div>

@@ -530,6 +530,96 @@ export default function MonitoramentoScanntech({ onVoltar }) {
         </CardContent>
       </Card>
 
+      {/* ========================================= */}
+      {/* BLOCO 7: ANÁLISE COMPETITIVA DETALHADA   */}
+      {/* ========================================= */}
+      <Card className="border-t-4 border-t-yellow-500">
+        <CardHeader className="bg-gradient-to-r from-yellow-50 to-amber-50">
+          <CardTitle className="flex items-center gap-2 text-yellow-900">
+            <Award className="w-6 h-6" />
+            Análise Competitiva Detalhada
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">Posicionamento vs principais concorrentes e oportunidades</p>
+        </CardHeader>
+        <CardContent className="pt-6">
+          {/* Gap vs Principal Concorrente */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            {[
+              { marca: 'NUTRY (Nós)', share: getMarcaShare(dadosBrasil, 'NUTRY'), cor: 'bg-purple-500', tipo: 'nossa' },
+              { marca: 'NUTRATA', share: getMarcaShare(dadosBrasil, 'NUTRATA'), cor: 'bg-red-500', tipo: 'concorrente' },
+              { marca: 'BOLD', share: getMarcaShare(dadosBrasil, 'BOLD'), cor: 'bg-amber-500', tipo: 'concorrente' }
+            ].map((item, index) => (
+              <div key={index} className={`p-4 rounded-lg border-2 ${
+                item.tipo === 'nossa' ? 'bg-purple-50 border-purple-300' : 'bg-gray-50 border-gray-300'
+              }`}>
+                <p className="text-sm text-gray-600 mb-2">{item.marca}</p>
+                <p className="text-3xl font-bold mb-2" style={{ color: item.cor.replace('bg-', '#').replace('-500', '') }}>
+                  {item.share.toFixed(1)}%
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className={`${item.cor} h-3 rounded-full`}
+                    style={{ width: `${Math.min(item.share * 2, 100)}%` }}
+                  />
+                </div>
+                {item.tipo === 'nossa' && (
+                  <Badge className="mt-2 bg-purple-100 text-purple-800 border-purple-200">
+                    Líder
+                  </Badge>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Matriz de Posicionamento */}
+          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg p-4 border border-yellow-200 mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Matriz de Posicionamento</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">🟢 Vantagens Competitivas</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• <strong>Share:</strong> Líder com {getMarcaShare(dadosBrasil, 'NUTRY').toFixed(1)}% (gap de +{(getMarcaShare(dadosBrasil, 'NUTRY') - getMarcaShare(dadosBrasil, 'NUTRATA')).toFixed(1)}pp vs #2)</li>
+                  <li>• <strong>Preço:</strong> Premium justificado por qualidade</li>
+                  <li>• <strong>Distribuição:</strong> Presença nacional consolidada</li>
+                  <li>• <strong>Marca:</strong> Forte reconhecimento e lealdade</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">🔴 Ameaças Competitivas</p>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• <strong>NUTRATA:</strong> Crescendo em share, pressão de preço</li>
+                  <li>• <strong>BOLD:</strong> Expansão agressiva em regiões específicas</li>
+                  <li>• <strong>Marcas regionais:</strong> Forte presença local</li>
+                  <li>• <strong>Novos entrantes:</strong> Inovação e nichos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Recomendações Estratégicas */}
+          <div className="p-4 bg-white rounded-lg border-2 border-yellow-300">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <Target className="w-5 h-5 text-yellow-600" />
+              Recomendações Estratégicas
+            </h3>
+            <div className="space-y-2">
+              <div className="flex items-start gap-2">
+                <Badge className="bg-green-100 text-green-800 border-green-200 mt-1">Defender</Badge>
+                <p className="text-sm text-gray-700">Manter liderança em SP/RJ/MG/ES com ações de visibilidade e promoções estratégicas</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge className="bg-blue-100 text-blue-800 border-blue-200 mt-1">Atacar</Badge>
+                <p className="text-sm text-gray-700">Expandir agressivamente em NE/NO/CO onde concorrentes são mais fracos</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge className="bg-purple-100 text-purple-800 border-purple-200 mt-1">Inovar</Badge>
+                <p className="text-sm text-gray-700">Lançar novos sabores e formatos para manter diferenciação</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Insights */}
       <Card className="bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200">
         <CardHeader>

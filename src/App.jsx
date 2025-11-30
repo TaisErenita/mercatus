@@ -31,6 +31,7 @@ import { getMtrixData } from './data/mtrixData'
 import { getPerformanceInternaData } from './data/performanceInternaData'
 import { getNutrimentalScanntechData, getNutrimentalCategorias } from './data/nutrimentalScanntechData'
 import { getNutrimentalInternaData } from './data/nutrimentalInternaData'
+import { getPeriodoLegenda, meses } from './utils/periodHelpers'
 
 function App() {
   const [showLanding, setShowLanding] = useState(true)
@@ -38,6 +39,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('monitoramento')
   const [selectedPeriod, setSelectedPeriod] = useState('mes_yoy')
   const [selectedCategory, setSelectedCategory] = useState('total')
+  const [selectedMes, setSelectedMes] = useState(8) // Agosto = 8
   const [selectedMtrixRegion, setSelectedMtrixRegion] = useState('brasil')
   const [chatOpen, setChatOpen] = useState(false)
   const [chatMessages, setChatMessages] = useState([
@@ -64,6 +66,8 @@ function App() {
   };
 
   // Dados filtrados dinamicamente
+  // Legenda dinu00e2mica baseada no peru00edodo e mu00eas selecionados
+  const periodoLegenda = getPeriodoLegenda(selectedPeriod, selectedMes, 2025)
   const currentData = getFilteredData(selectedCategory, selectedPeriod)
   const kpiData = {
     marketShare: currentData.marketShare,
@@ -399,7 +403,7 @@ function App() {
                     </svg>
                     <span>Filtros</span>
                   </CardTitle>
-                  <CardDescription>Selecione categoria e período para análise (Atualização: Agosto 2025)</CardDescription>
+                  <CardDescription>Selecione categoria, período e mês para análise (Dados: {periodoLegenda.longo})</CardDescription>
                 </div>
                 <Badge className="bg-green-100 text-green-800 border-green-200">
                   Dados Atualizados
@@ -467,6 +471,42 @@ function App() {
                   </Button>
                 ))}
                 </div>
+              {/* Seletor de Mês */}
+              <div className="mt-6 pt-6 border-t border-slate-200">
+                <h4 className="text-sm font-semibold text-slate-700 mb-3">Mês de Referência</h4>
+                <select
+                  value={selectedMes}
+                  onChange={(e) => setSelectedMes(parseInt(e.target.value))}
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-white text-slate-700"
+                >
+                  {meses.map((mes) => (
+                    <option key={mes.id} value={mes.id}>
+                      {mes.nome} 2025
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-slate-500 mt-2">
+                  Período atual: <span className="font-semibold text-cyan-600">{periodoLegenda.curto}</span>
+                </p>
+              </div>
+              {/* Seletor de Mês */}
+              <div className="mt-6 pt-6 border-t border-slate-200">
+                <h4 className="text-sm font-semibold text-slate-700 mb-3">Mês de Referência</h4>
+                <select
+                  value={selectedMes}
+                  onChange={(e) => setSelectedMes(parseInt(e.target.value))}
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-white text-slate-700"
+                >
+                  {meses.map((mes) => (
+                    <option key={mes.id} value={mes.id}>
+                      {mes.nome} 2025
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-slate-500 mt-2">
+                  Período atual: <span className="font-semibold text-cyan-600">{periodoLegenda.curto}</span>
+                </p>
+              </div>
               </div>
             </CardContent>
           </Card>
@@ -495,7 +535,7 @@ function App() {
                     </CardTitle>
                     <Badge className="bg-cyan-50 text-cyan-700 border-cyan-200 text-xs">Scanntech</Badge>
                   </div>
-                  <CardDescription>Visão consolidada do mercado - {kpiData.periodo}</CardDescription>
+                  <CardDescription>Visão consolidada do mercado - {periodoLegenda.curto}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

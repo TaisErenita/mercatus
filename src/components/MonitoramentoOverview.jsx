@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import { BarChart3, Building2, Globe2, ShoppingCart, ArrowRight, TrendingUp } from 'lucide-react';
+import { BarChart3, Building2, Globe2, ShoppingCart, ArrowRight } from 'lucide-react';
 
 const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
   const submodulos = [
@@ -13,11 +13,6 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
       descricao: 'Análise completa do mercado de barras com dados Scanntech, share de mercado, análise competitiva e tendências por região.',
       badge: 'Mercado',
       badgeColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
-      metricas: [
-        { label: 'Mercado Total', valor: 'R$ 159.2M', variacao: '+7.2%', positivo: true },
-        { label: 'Volume', valor: '2.67M kg', variacao: '+7.2%', positivo: true },
-        { label: 'Share Nutrimental', valor: '89.5%', variacao: '+2.3pp', positivo: true }
-      ],
       gradient: 'from-cyan-500 to-blue-600',
       bgGradient: 'from-cyan-50 via-blue-50 to-indigo-50',
       borderColor: 'border-cyan-400'
@@ -30,11 +25,6 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
       descricao: 'Visão detalhada das vendas internas por canal, região, produtos e clientes com análise de performance YTD completa.',
       badge: 'Interno',
       badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
-      metricas: [
-        { label: 'Receita Total', valor: 'R$ 142.5M', variacao: '+18.9%', positivo: true },
-        { label: 'Volume', valor: '2.92M kg', variacao: '+15.2%', positivo: true },
-        { label: 'Top Canal', valor: 'C&C 37.9%', variacao: 'Líder', positivo: true }
-      ],
       gradient: 'from-purple-500 to-pink-600',
       bgGradient: 'from-purple-50 via-pink-50 to-rose-50',
       borderColor: 'border-purple-400'
@@ -47,11 +37,6 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
       descricao: 'Mapeamento completo da rede de distribuição nacional, cobertura geográfica e performance por distribuidor.',
       badge: 'Distribuição',
       badgeColor: 'bg-green-100 text-green-800 border-green-300',
-      metricas: [
-        { label: 'Receita', valor: 'R$ 14.0M', variacao: '35 Distrib.', positivo: true },
-        { label: 'Cobertura', valor: '25 UFs', variacao: '92.6%', positivo: true },
-        { label: 'Categorias', valor: '7 linhas', variacao: 'Ativo', positivo: true }
-      ],
       gradient: 'from-green-500 to-emerald-600',
       bgGradient: 'from-green-50 via-emerald-50 to-teal-50',
       borderColor: 'border-green-400'
@@ -64,11 +49,6 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
       descricao: 'Análise de vendas no marketplace Amazon, performance de produtos, avaliações e oportunidades no canal digital.',
       badge: 'Digital',
       badgeColor: 'bg-orange-100 text-orange-800 border-orange-300',
-      metricas: [
-        { label: 'Receita', valor: 'R$ 3.67M', variacao: '351.8k un', positivo: true },
-        { label: 'Produtos', valor: '88 SKUs', variacao: 'Ativos', positivo: true },
-        { label: 'Canal', valor: 'Digital', variacao: '100%', positivo: true }
-      ],
       gradient: 'from-orange-500 to-amber-600',
       bgGradient: 'from-orange-50 via-amber-50 to-yellow-50',
       borderColor: 'border-orange-400'
@@ -90,14 +70,16 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
                 Selecione uma fonte de dados para análises detalhadas e insights estratégicos
               </p>
             </div>
-            <Badge className="bg-blue-500 text-white border-blue-400 text-sm px-4 py-2">
-              {periodoLegenda.curto}
-            </Badge>
+            {periodoLegenda && (
+              <Badge className="bg-blue-500 text-white border-blue-400 text-sm px-4 py-2">
+                {periodoLegenda.curto}
+              </Badge>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Grid de Cards Premium */}
+      {/* Grid de Cards Simplificados */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {submodulos.map((submod) => {
           const Icon = submod.icon;
@@ -126,7 +108,7 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
                 </div>
               </div>
 
-              {/* Conteúdo */}
+              {/* Conteúdo Simplificado */}
               <CardContent className="p-6 space-y-5">
                 {/* Descrição */}
                 <p className="text-sm text-gray-700 leading-relaxed">
@@ -138,26 +120,6 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
                   <Badge className={`${submod.badgeColor} text-xs font-semibold px-3 py-1`}>
                     {submod.badge}
                   </Badge>
-                </div>
-
-                {/* Métricas */}
-                <div className="space-y-3">
-                  {submod.metricas.map((metrica, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
-                      <span className="text-sm font-medium text-gray-700">{metrica.label}</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-base font-bold text-gray-900">{metrica.valor}</span>
-                        {metrica.variacao && (
-                          <div className="flex items-center space-x-1">
-                            {metrica.positivo && <TrendingUp className="w-3 h-3 text-green-600" />}
-                            <span className={`text-xs font-semibold ${metrica.positivo ? 'text-green-600' : 'text-gray-600'}`}>
-                              {metrica.variacao}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
                 </div>
 
                 {/* Botão de Ação */}

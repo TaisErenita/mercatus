@@ -78,9 +78,11 @@ const FiltrosMonitoramento = ({
               </CardTitle>
               <CardDescription className="mt-1">{subtitulo}</CardDescription>
             </div>
-            <Badge className="bg-blue-100 text-blue-800 border-blue-300">
-              {periodoLegenda.curto}
-            </Badge>
+            {periodoLegenda && (
+              <Badge className="bg-blue-100 text-blue-800 border-blue-300">
+                {periodoLegenda.curto}
+              </Badge>
+            )}
           </div>
         </CardHeader>
         <CardContent className="space-y-6">

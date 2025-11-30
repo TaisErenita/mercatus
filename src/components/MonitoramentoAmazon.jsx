@@ -34,10 +34,15 @@ export default function MonitoramentoAmazon({ onVoltar }) {
 
       {/* Filtros */}
       <FiltrosMonitoramento
-        selectedCategoria={selectedCategoria}
-        setSelectedCategoria={setSelectedCategoria}
-        selectedPeriodo={selectedPeriodo}
-        setSelectedPeriodo={setSelectedPeriodo}
+        titulo="Amazon - E-commerce & Digital"
+        subtitulo="Análise de vendas no marketplace Amazon"
+        badgeTexto="Amazon"
+        badgeColor="bg-orange-100 text-orange-800 border-orange-300"
+        onVoltar={onVoltar}
+        selectedCategory={selectedCategoria}
+        setSelectedCategory={setSelectedCategoria}
+        selectedPeriod={selectedPeriodo}
+        setSelectedPeriod={setSelectedPeriodo}
         selectedMes={selectedMes}
         setSelectedMes={setSelectedMes}
       />

@@ -54,10 +54,15 @@ export default function MonitoramentoInternos({ onVoltar }) {
 
       {/* Filtros */}
       <FiltrosMonitoramento
-        selectedCategoria={selectedCategoria}
-        setSelectedCategoria={setSelectedCategoria}
-        selectedPeriodo={selectedPeriodo}
-        setSelectedPeriodo={setSelectedPeriodo}
+        titulo="Dados Internos - Performance Nutrimental"
+        subtitulo="Análise de vendas internas por canal, região e produtos"
+        badgeTexto="Interno"
+        badgeColor="bg-purple-100 text-purple-800 border-purple-300"
+        onVoltar={onVoltar}
+        selectedCategory={selectedCategoria}
+        setSelectedCategory={setSelectedCategoria}
+        selectedPeriod={selectedPeriodo}
+        setSelectedPeriod={setSelectedPeriodo}
         selectedMes={selectedMes}
         setSelectedMes={setSelectedMes}
       />

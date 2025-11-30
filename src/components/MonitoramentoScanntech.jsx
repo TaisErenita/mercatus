@@ -54,10 +54,15 @@ export default function MonitoramentoScanntech({ onVoltar }) {
 
       {/* Filtros */}
       <FiltrosMonitoramento
-        selectedCategoria={selectedCategoria}
-        setSelectedCategoria={setSelectedCategoria}
-        selectedPeriodo={selectedPeriodo}
-        setSelectedPeriodo={setSelectedPeriodo}
+        titulo="Scanntech - Mercado Total & Concorrência"
+        subtitulo="Análise do mercado de barras e share de mercado"
+        badgeTexto="Scanntech"
+        badgeColor="bg-cyan-100 text-cyan-800 border-cyan-300"
+        onVoltar={onVoltar}
+        selectedCategory={selectedCategoria}
+        setSelectedCategory={setSelectedCategoria}
+        selectedPeriod={selectedPeriodo}
+        setSelectedPeriod={setSelectedPeriodo}
         selectedMes={selectedMes}
         setSelectedMes={setSelectedMes}
       />

@@ -41,10 +41,15 @@ export default function MonitoramentoMTRIX({ onVoltar }) {
 
       {/* Filtros */}
       <FiltrosMonitoramento
-        selectedCategoria={selectedCategoria}
-        setSelectedCategoria={setSelectedCategoria}
-        selectedPeriodo={selectedPeriodo}
-        setSelectedPeriodo={setSelectedPeriodo}
+        titulo="MTRIX - Distribuição & Cobertura"
+        subtitulo="Análise de distribuidores e cobertura geográfica"
+        badgeTexto="MTRIX"
+        badgeColor="bg-green-100 text-green-800 border-green-300"
+        onVoltar={onVoltar}
+        selectedCategory={selectedCategoria}
+        setSelectedCategory={setSelectedCategoria}
+        selectedPeriod={selectedPeriodo}
+        setSelectedPeriod={setSelectedPeriodo}
         selectedMes={selectedMes}
         setSelectedMes={setSelectedMes}
       />

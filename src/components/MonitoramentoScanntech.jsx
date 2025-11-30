@@ -272,10 +272,18 @@ export default function MonitoramentoScanntech({ onVoltar }) {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="cereais" name="Cereais" stroke="#f59e0b" strokeWidth={2} />
-                <Line type="monotone" dataKey="frutas" name="Frutas" stroke="#ef4444" strokeWidth={2} />
-                <Line type="monotone" dataKey="nuts" name="Nuts" stroke="#f97316" strokeWidth={2} />
-                <Line type="monotone" dataKey="proteina" name="Proteína" stroke="#8b5cf6" strokeWidth={2} />
+                {(selectedCategoria === 'total' || selectedCategoria === 'cereais') && (
+                  <Line type="monotone" dataKey="cereais" name="Cereais" stroke="#f59e0b" strokeWidth={2} />
+                )}
+                {(selectedCategoria === 'total' || selectedCategoria === 'frutas') && (
+                  <Line type="monotone" dataKey="frutas" name="Frutas" stroke="#ef4444" strokeWidth={2} />
+                )}
+                {(selectedCategoria === 'total' || selectedCategoria === 'nuts') && (
+                  <Line type="monotone" dataKey="nuts" name="Nuts" stroke="#f97316" strokeWidth={2} />
+                )}
+                {(selectedCategoria === 'total' || selectedCategoria === 'proteina') && (
+                  <Line type="monotone" dataKey="proteina" name="Proteína" stroke="#8b5cf6" strokeWidth={2} />
+                )}
               </LineChart>
             </ResponsiveContainer>
           </div>

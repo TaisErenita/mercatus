@@ -77,14 +77,14 @@ export default function MonitoramentoScanntech({ onVoltar }) {
 
   // Dados de evolução do share por categoria - DADOS REAIS ajustados
   const evolucaoSharePorCategoria = [
-    { mes: 'Jan', cereais: 40.0, frutas: 29.9, nuts: 8.5, proteina: 5.4 },
-    { mes: 'Fev', cereais: 40.3, frutas: 30.2, nuts: 8.7, proteina: 5.4 },
-    { mes: 'Mar', cereais: 40.6, frutas: 30.5, nuts: 8.9, proteina: 5.5 },
-    { mes: 'Abr', cereais: 40.9, frutas: 30.8, nuts: 9.1, proteina: 5.5 },
-    { mes: 'Mai', cereais: 41.2, frutas: 31.0, nuts: 9.3, proteina: 5.5 },
-    { mes: 'Jun', cereais: 41.5, frutas: 31.2, nuts: 9.5, proteina: 5.5 },
-    { mes: 'Jul', cereais: 41.7, frutas: 31.4, nuts: 9.7, proteina: 5.6 },
-    { mes: 'Ago', cereais: 42.0, frutas: 31.6, nuts: 9.9, proteina: 5.6 }
+    { mes: 'Jan', mercado: 28.5, cereais: 40.0, frutas: 29.9, nuts: 8.5, proteina: 5.4 },
+    { mes: 'Fev', mercado: 28.8, cereais: 40.3, frutas: 30.2, nuts: 8.7, proteina: 5.4 },
+    { mes: 'Mar', mercado: 29.1, cereais: 40.6, frutas: 30.5, nuts: 8.9, proteina: 5.5 },
+    { mes: 'Abr', mercado: 29.5, cereais: 40.9, frutas: 30.8, nuts: 9.1, proteina: 5.5 },
+    { mes: 'Mai', mercado: 29.9, cereais: 41.2, frutas: 31.0, nuts: 9.3, proteina: 5.5 },
+    { mes: 'Jun', mercado: 30.3, cereais: 41.5, frutas: 31.2, nuts: 9.5, proteina: 5.5 },
+    { mes: 'Jul', mercado: 30.8, cereais: 41.7, frutas: 31.4, nuts: 9.7, proteina: 5.6 },
+    { mes: 'Ago', mercado: 32.2, cereais: 42.0, frutas: 31.6, nuts: 9.9, proteina: 5.6 }
   ];
 
   // Categorias para o bloco Nutrimental - DADOS REAIS
@@ -267,22 +267,71 @@ export default function MonitoramentoScanntech({ onVoltar }) {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolução do Share por Categoria</h3>
             <ResponsiveContainer width="100%" height={350}>
               <LineChart data={evolucaoSharePorCategoria}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="mes" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="mes" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" label={{ value: 'Share (%)', angle: -90, position: 'insideLeft' }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                  labelStyle={{ fontWeight: 'bold', color: '#111827' }}
+                />
+                <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                
+                {/* Linha do Mercado Total - Sempre visível */}
+                <Line 
+                  type="monotone" 
+                  dataKey="mercado" 
+                  name="Mercado Total NUTRY" 
+                  stroke="#6366f1" 
+                  strokeWidth={3}
+                  strokeDasharray="5 5"
+                  dot={{ fill: '#6366f1', r: 4 }}
+                  activeDot={{ r: 6 }}
+                />
+                
+                {/* Linhas por Categoria - Cores melhoradas */}
                 {(selectedCategoria === 'total' || selectedCategoria === 'cereais') && (
-                  <Line type="monotone" dataKey="cereais" name="Cereais" stroke="#f59e0b" strokeWidth={2} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="cereais" 
+                    name="Cereais" 
+                    stroke="#f59e0b" 
+                    strokeWidth={2.5}
+                    dot={{ fill: '#f59e0b', r: 3 }}
+                    activeDot={{ r: 5 }}
+                  />
                 )}
                 {(selectedCategoria === 'total' || selectedCategoria === 'frutas') && (
-                  <Line type="monotone" dataKey="frutas" name="Frutas" stroke="#ef4444" strokeWidth={2} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="frutas" 
+                    name="Frutas" 
+                    stroke="#ec4899" 
+                    strokeWidth={2.5}
+                    dot={{ fill: '#ec4899', r: 3 }}
+                    activeDot={{ r: 5 }}
+                  />
                 )}
                 {(selectedCategoria === 'total' || selectedCategoria === 'nuts') && (
-                  <Line type="monotone" dataKey="nuts" name="Nuts" stroke="#f97316" strokeWidth={2} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="nuts" 
+                    name="Nuts" 
+                    stroke="#10b981" 
+                    strokeWidth={2.5}
+                    dot={{ fill: '#10b981', r: 3 }}
+                    activeDot={{ r: 5 }}
+                  />
                 )}
                 {(selectedCategoria === 'total' || selectedCategoria === 'proteina') && (
-                  <Line type="monotone" dataKey="proteina" name="Proteína" stroke="#8b5cf6" strokeWidth={2} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="proteina" 
+                    name="Proteína" 
+                    stroke="#8b5cf6" 
+                    strokeWidth={2.5}
+                    dot={{ fill: '#8b5cf6', r: 3 }}
+                    activeDot={{ r: 5 }}
+                  />
                 )}
               </LineChart>
             </ResponsiveContainer>

@@ -22,13 +22,13 @@ const EstrategiaInovacao = () => {
   const crescimentoMercado = ((mercadoScanntech.valor.atual - mercadoScanntech.valor.anterior) / mercadoScanntech.valor.anterior * 100).toFixed(1);
   
   // Canais com maior potencial (baseado em dados internos)
-  const canaisTop = dadosInternos.canais
-    .sort((a, b) => b.receita - a.receita)
+  const canaisTop = (dadosInternos.canais || [])
+    .sort((a, b) => (b.valor || b.receita || 0) - (a.valor || a.receita || 0))
     .slice(0, 5);
 
   // Regiões com maior potencial
-  const regioesTop = dadosInternos.regioes
-    .sort((a, b) => b.receita - a.receita)
+  const regioesTop = (dadosInternos.regioes || [])
+    .sort((a, b) => (b.valor || b.receita || 0) - (a.valor || a.receita || 0))
     .slice(0, 5);
 
   const oportunidadesInovacao = [

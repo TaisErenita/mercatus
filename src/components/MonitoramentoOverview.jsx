@@ -70,11 +70,7 @@ const MonitoramentoOverview = ({ onSelectSubmodulo, periodoLegenda }) => {
                 Selecione uma fonte de dados para análises detalhadas e insights estratégicos
               </p>
             </div>
-            {periodoLegenda && (
-              <Badge className="bg-blue-500 text-white border-blue-400 text-sm px-4 py-2">
-                {periodoLegenda.curto}
-              </Badge>
-            )}
+
           </div>
         </div>
       </div>

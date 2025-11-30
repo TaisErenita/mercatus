@@ -326,3 +326,89 @@ export const getMtrixEvolucaoTemporal = (categoria = 'total') => {
   
   return evolucao;
 };
+
+// Função para obter Curva ABC de Distribuidores
+export const getMtrixCurvaABC = (categoria = 'total', periodo = 'mes', mesInicial = 1, mesFinal = 27, uf = 'todas') => {
+  // Filtrar dados
+  let dadosFiltrados = dadosMTRIX.filter(item => {
+    const matchCategoria = categoria === 'total' || item.Categoria.toLowerCase().includes(categoria.toLowerCase());
+    const matchUF = uf === 'todas' || item.UF === uf.toUpperCase();
+    return matchCategoria && matchUF;
+  });
+  
+  // Agrupar por distribuidor e somar vendas
+  const distribuidoresMap = {};
+  dadosFiltrados.forEach(item => {
+    const dist = item.Distribuidor;
+    if (!distribuidoresMap[dist]) {
+      distribuidoresMap[dist] = {
+        nome: dist,
+        receita: 0,
+        uf: item.UF
+      };
+    }
+    distribuidoresMap[dist].receita += item.Vendas;
+  });
+  
+  // Converter para array e ordenar por receita (decrescente)
+  const distribuidores = Object.values(distribuidoresMap)
+    .sort((a, b) => b.receita - a.receita);
+  
+  // Calcular total
+  const totalVendas = distribuidores.reduce((sum, d) => sum + d.receita, 0);
+  
+  // Calcular percentual individual e acumulado
+  let acumulado = 0;
+  const curvaABC = distribuidores.map((dist, index) => {
+    const percentual = (dist.receita / totalVendas * 100);
+    acumulado += percentual;
+    
+    // Classificar em A, B ou C
+    let classe = 'C';
+    if (acumulado <= 80) {
+      classe = 'A';
+    } else if (acumulado <= 95) {
+      classe = 'B';
+    }
+    
+    return {
+      posicao: index + 1,
+      nome: dist.nome,
+      uf: dist.uf,
+      receita: dist.receita,
+      percentual: percentual,
+      acumulado: acumulado,
+      classe: classe
+    };
+  });
+  
+  // Estatísticas da curva ABC
+  const classeA = curvaABC.filter(d => d.classe === 'A');
+  const classeB = curvaABC.filter(d => d.classe === 'B');
+  const classeC = curvaABC.filter(d => d.classe === 'C');
+  
+  return {
+    distribuidores: curvaABC,
+    estatisticas: {
+      totalDistribuidores: curvaABC.length,
+      classeA: {
+        quantidade: classeA.length,
+        percentual: (classeA.length / curvaABC.length * 100).toFixed(1),
+        receita: classeA.reduce((sum, d) => sum + d.receita, 0),
+        percentualReceita: 80
+      },
+      classeB: {
+        quantidade: classeB.length,
+        percentual: (classeB.length / curvaABC.length * 100).toFixed(1),
+        receita: classeB.reduce((sum, d) => sum + d.receita, 0),
+        percentualReceita: 15
+      },
+      classeC: {
+        quantidade: classeC.length,
+        percentual: (classeC.length / curvaABC.length * 100).toFixed(1),
+        receita: classeC.reduce((sum, d) => sum + d.receita, 0),
+        percentualReceita: 5
+      }
+    }
+  };
+};

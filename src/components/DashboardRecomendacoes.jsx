@@ -14,7 +14,7 @@ const DashboardRecomendacoes = () => {
     setAlertas(alerts);
   }, [engine]);
 
-  const categorias = ['todas', 'Expansão Geográfica', 'Consolidação', 'Digital', 'Posicionamento', 'Pricing', 'Marketing', 'Inteligência Competitiva', 'Sazonalidade'];
+  const categorias = ['todas', 'Expansão Geográfica', 'Consolidação', 'Digital', 'Distribuição', 'Posicionamento', 'Pricing', 'Marketing', 'Inteligência Competitiva', 'Sazonalidade'];
 
   const recomendacoesFiltradas = filtroCategoria === 'todas' 
     ? recomendacoes 

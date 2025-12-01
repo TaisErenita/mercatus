@@ -3,6 +3,12 @@ import React, { useState } from 'react';
 const EstrategiaInovacao = () => {
   const [selectedCategory, setSelectedCategory] = useState('inovacao');
 
+  // Dados reais do último ano móvel
+  const receitaAtual = 173.0; // R$ 173.0M (Ano Móvel - BARRAS)
+  const shareAtual = 32.2; // 32.2% (Scanntech YTD Brasil)
+  const mercadoTotal = 314.1; // R$ 314.1M (Ano Móvel Out/24-Set/25 Scanntech)
+  const crescimentoMercado = 5.3; // 5.3% (Ago/25 vs Ago/24)
+
   const oportunidadesInovacao = [
     {
       categoria: 'Novos Produtos',
@@ -125,8 +131,32 @@ const EstrategiaInovacao = () => {
             </span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Oportunidades de inovação, cenários futuros e movimentos estratégicos
+            Oportunidades baseadas em dados reais do último ano móvel, Scanntech, MTRIX e Amazon
           </p>
+        </div>
+        <div className="p-6 pt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-blue-50 rounded-lg p-4">
+              <p className="text-xs text-gray-600 mb-1">Receita Atual (Último Ano Móvel)</p>
+              <p className="text-2xl font-bold text-blue-600">R$ {receitaAtual.toFixed(1)}M</p>
+              <p className="text-xs text-gray-500">Apenas BARRAS 🍫 📊</p>
+            </div>
+            <div className="bg-green-50 rounded-lg p-4">
+              <p className="text-xs text-gray-600 mb-1">Market Share</p>
+              <p className="text-2xl font-bold text-green-600">{shareAtual.toFixed(1)}%</p>
+              <p className="text-xs text-gray-500">vs Mercado Total</p>
+            </div>
+            <div className="bg-purple-50 rounded-lg p-4">
+              <p className="text-xs text-gray-600 mb-1">Mercado Total</p>
+              <p className="text-2xl font-bold text-purple-600">R$ {mercadoTotal.toFixed(1)}M</p>
+              <p className="text-xs text-gray-500">Scanntech Ago/25</p>
+            </div>
+            <div className="bg-orange-50 rounded-lg p-4">
+              <p className="text-xs text-gray-600 mb-1">Crescimento Mercado</p>
+              <p className="text-2xl font-bold text-orange-600">{crescimentoMercado.toFixed(1)}%</p>
+              <p className="text-xs text-gray-500">Ago/25 vs Ago/24</p>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -191,10 +191,27 @@ export function getCurvaABCProdutos() {
 
 export function getRentabilidadeCanal() {
   const dados = getNutrimentalInternaData();
-  return dados.top_canais.map(c => ({
+  const canais = dados.top_canais.map(c => ({
     canal: c.nome,
     receita: c.receita,
     margem: 15 + Math.random() * 10, // Margem simulada
-    lucro: c.receita * (0.15 + Math.random() * 0.10)
+    lucro: c.receita * (0.15 + Math.random() * 0.10),
+    ticket_medio: (c.receita / dados.totais.volume) * 1000 // R$/kg
   }));
+  
+  // Encontrar canal mais rentável
+  const canalMaisRentavel = canais.reduce((max, c) => c.lucro > max.lucro ? c : max, canais[0]);
+  const canalMaiorTicket = canais.reduce((max, c) => c.ticket_medio > max.ticket_medio ? c : max, canais[0]);
+  const margemMedia = canais.reduce((sum, c) => sum + c.margem, 0) / canais.length;
+  
+  return {
+    canais,
+    insights: {
+      canalMaisRentavel: canalMaisRentavel.canal,
+      lucroMaisRentavel: canalMaisRentavel.lucro,
+      canalMaiorTicket: canalMaiorTicket.canal,
+      valorMaiorTicket: canalMaiorTicket.ticket_medio,
+      margemMedia
+    }
+  };
 }

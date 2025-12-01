@@ -77,9 +77,23 @@ export function getNutrimentalInternaData() {
 export function getFilteredInternaData(categoria = 'TODAS', periodo = 'YTD', mes = null) {
   const dados = getNutrimentalInternaData();
   
-  if (categoria !== 'TODAS') {
-    const cat = dados.categorias.find(c => c.sigla === categoria);
+  // Mapear nomes amigáveis para códigos
+  const mapaCategorias = {
+    'total': 'TODAS',
+    'cereais': 'BC',
+    'proteina': 'BP',
+    'nuts': 'BN',
+    'frutas': 'BF'
+  };
+  
+  const categoriaCode = mapaCategorias[categoria.toLowerCase()] || categoria.toUpperCase();
+  
+  if (categoriaCode !== 'TODAS') {
+    const cat = dados.categorias.find(c => c.sigla === categoriaCode);
     if (cat) {
+      // Ajustar canais e regiões proporcionalmente
+      const fator = cat.receita / dados.totais.receita;
+      
       return {
         totais: {
           receita: cat.receita,
@@ -87,10 +101,25 @@ export function getFilteredInternaData(categoria = 'TODAS', periodo = 'YTD', mes
           clientes: Math.round(dados.totais.clientes * (cat.percentual / 100)),
           preco_medio: cat.receita / cat.volume
         },
-        receita_por_canal: dados.receita_por_canal,
-        receita_por_regiao: dados.receita_por_regiao,
+        receita_por_canal: {
+          canais: dados.receita_por_canal.canais.map(c => ({
+            ...c,
+            valor: c.valor * fator,
+            volume: c.volume * fator
+          }))
+        },
+        receita_por_regiao: {
+          regioes: dados.receita_por_regiao.regioes.map(r => ({
+            ...r,
+            valor: r.valor * fator,
+            volume: r.volume * fator
+          }))
+        },
+        top_produtos_vendidos: dados.top_produtos_vendidos.filter(p => p.categoria === categoriaCode),
+        top_produtos_menos_vendidos: dados.top_produtos_menos_vendidos.filter(p => p.categoria === categoriaCode),
         top_canais: dados.top_canais,
-        top_regioes: dados.top_regioes
+        top_regioes: dados.top_regioes,
+        categorias: dados.categorias
       };
     }
   }

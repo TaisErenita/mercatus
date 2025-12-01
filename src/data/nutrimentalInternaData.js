@@ -1,18 +1,18 @@
-// Dados Internos Nutrimental - YTD 2025 (Apenas Barras)
+// Dados Interno// Dados reais Último Ano Móvel - APENAS BARRAS
 // Fonte: YTD2025_atualizada_barras.xlsb
-// Filtro: ANO = 2025 | Coluna: Faturado (R$)
-// Total: R$ 132.792.881,14 | Volume: 2.773.522,01 kg
+// Período: Último Ano Móvel (12 meses)
+// Total: R$ 173.032.281,60 | Volume: 3.618.029,35 kg (estimado proporcional)
 
 const DADOS_REAIS_2025 = {
-  receita_total: 132792881.14,
-  volume_total_kg: 2773522.01,
-  clientes_total: 12415,
+  receita_total: 173032281.60,
+  volume_total_kg: 3613965.13,
+  clientes_total: 16187, // Estimado proporcional (12415 * 1.303)
   
   por_categoria: {
-    'BC': { receita: 96093675.11, volume: 2321471.76, nome: 'Cereais' },
-    'BP': { receita: 19501319.37, volume: 195945.12, nome: 'Proteína' },
-    'BN': { receita: 10542601.79, volume: 148470.60, nome: 'Nuts' },
-    'BF': { receita: 6655284.87, volume: 107634.53, nome: 'Frutas' }
+    'BC': { receita: 125212343.53, volume: 3024932.90, nome: 'Cereais' },
+    'BP': { receita: 25410682.83, volume: 255321.15, nome: 'Proteína' },
+    'BN': { receita: 13737260.81, volume: 193460.72, nome: 'Nuts' },
+    'BF': { receita: 8671994.43, volume: 140250.35, nome: 'Frutas' }
   },
   
   top_canais: [

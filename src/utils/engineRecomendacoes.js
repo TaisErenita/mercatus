@@ -101,7 +101,7 @@ class EngineRecomendacoesIA {
     if (seAtc && seAtc.dn > 0.30) {
       recomendacoes.push({
         id: 'defend-southeast-leadership',
-        categoria: 'Expansão Geográfica',
+        categoria: 'Distribuição',
         titulo: 'Defender Liderança no Sudeste (Atacado)',
         descricao: `DN de ${(seAtc.dn * 100).toFixed(0)}% - maior cobertura e R$ ${(seAtc.vendas / 1000000).toFixed(1)}M em vendas`,
         impacto: 'Muito Alto',
@@ -125,7 +125,7 @@ class EngineRecomendacoesIA {
       const potencialVendas = sulAtc.vendas * 1.5; // Potencial de crescimento 50%
       recomendacoes.push({
         id: 'expand-south-distribution',
-        categoria: 'Expansão Geográfica',
+        categoria: 'Distribuição',
         titulo: 'Expandir Distribuição no Sul (Atacado)',
         descricao: `DN de apenas ${(sulAtc.dn * 100).toFixed(0)}% - grande oportunidade de expansão`,
         impacto: 'Alto',
@@ -149,7 +149,7 @@ class EngineRecomendacoesIA {
       const potencialVendas = neAtc.vendas * 1.25;
       recomendacoes.push({
         id: 'expand-northeast-coverage',
-        categoria: 'Expansão Geográfica',
+        categoria: 'Distribuição',
         titulo: 'Fortalecer Presença no Nordeste',
         descricao: `DN de ${(neAtc.dn * 100).toFixed(0)}% e R$ ${(neAtc.vendas / 1000000).toFixed(1)}M - consolidar posição`,
         impacto: 'Alto',
@@ -173,7 +173,7 @@ class EngineRecomendacoesIA {
       const potencialVendas = co10.vendas * 2.0; // Potencial de dobrar
       recomendacoes.push({
         id: 'expand-midwest-large-stores',
-        categoria: 'Expansão Geográfica',
+        categoria: 'Distribuição',
         titulo: 'Penetrar em Centro-Oeste (Lojas 10+ checkouts)',
         descricao: `DN de apenas ${(co10.dn * 100).toFixed(0)}% - oportunidade em lojas grandes`,
         impacto: 'Médio',
@@ -198,7 +198,7 @@ class EngineRecomendacoesIA {
       const potencialTotal = (sul5a9.vendas + se5a9.vendas) * 1.8;
       recomendacoes.push({
         id: 'expand-small-stores-coverage',
-        categoria: 'Expansão Geográfica',
+        categoria: 'Distribuição',
         titulo: 'Expandir em Lojas Pequenas (5-9 checkouts)',
         descricao: `DN de ${(sul5a9.dn * 100).toFixed(0)}-${(se5a9.dn * 100).toFixed(0)}% - penetrar em varejo de vizinhança`,
         impacto: 'Médio',

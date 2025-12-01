@@ -167,36 +167,36 @@ const EstrategiaInovacao = () => {
 
   const movimentosCompetitivos = [
     {
-      competidor: 'Trio',
-      movimento: 'Lançamento linha funcional',
-      impacto: 'Médio',
-      resposta: 'Acelerar inovação premium',
-      prazo: '60 dias',
-      shareAtual: '~18%'
-    },
-    {
-      competidor: 'Kobber',
+      competidor: 'NUTRATA',
       movimento: 'Expansão premium',
       impacto: 'Alto',
       resposta: 'Reforçar posicionamento e qualidade',
       prazo: '30 dias',
-      shareAtual: '~15%'
+      shareAtual: '15.3%'
     },
     {
-      competidor: 'Integral Médica',
-      movimento: 'Foco proteína whey',
-      impacto: 'Baixo',
-      resposta: 'Monitorar e diferenciar',
-      prazo: '90 dias',
-      shareAtual: '~8%'
+      competidor: 'BOLD',
+      movimento: 'Foco segmento premium alto',
+      impacto: 'Médio',
+      resposta: 'Acelerar inovação premium',
+      prazo: '60 dias',
+      shareAtual: '13.3%'
+    },
+    {
+      competidor: 'RITTER',
+      movimento: 'Expansão regional Sul',
+      impacto: 'Médio',
+      resposta: 'Fortalecer distribuição Sul',
+      prazo: '45 dias',
+      shareAtual: '12.8%'
     },
     {
       competidor: 'Outros (Fragmentado)',
       movimento: 'Entrada marcas regionais',
-      impacto: 'Médio',
-      resposta: 'Fortalecer distribuição regional',
-      prazo: '45 dias',
-      shareAtual: `~${(100 - parseFloat(shareAtual) - 18 - 15 - 8).toFixed(1)}%`
+      impacto: 'Baixo',
+      resposta: 'Monitorar e defender posição',
+      prazo: '90 dias',
+      shareAtual: `${(100 - parseFloat(shareAtual) - 15.3 - 13.3 - 12.8).toFixed(1)}%`
     }
   ];
 

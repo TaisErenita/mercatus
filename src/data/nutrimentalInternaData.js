@@ -1,8 +1,9 @@
 // Dados Internos - Performance Nutrimental
 // Apenas produtos de BARRAS (BC NUTRY, BN NUTRY, BF NUTRY, BP NUTRY)
 // Período: Jan-Set 2025 (9 meses - YTD 2025)
-// Fonte: YTD2025_atualizada_barras.xlsb - Dados reais processados (R$ 195.3M - APENAS BARRAS)
-// Atualização: 01/12/2025 - Valores reais extraídos: Receita R$ 195.279.452,55 | Volume 6.600.861,55 kg
+// Fonte: YTD2025_atualizada_barras.xlsb - Dados reais processados (APENAS BARRAS)
+// Atualização: 01/12/2025 - Coluna: Faturado (R$) | Filtro: ANO = 2025
+// Receita Faturado 2025: R$ 132.792.881,14 | Registros: 167.996 linhas
 
 const dadosBase = {
   // Vendas mensais por canal (9 meses - Jan a Set 2025) - Dados reais

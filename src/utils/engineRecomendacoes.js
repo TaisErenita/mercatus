@@ -24,6 +24,20 @@ class EngineRecomendacoesIA {
         'Rio de Janeiro': 11.25,
         'Santa Catarina': 6.57
       },
+      // Dados de Distribuição Numérica (DN) por região - Fonte: Scanntech
+      distribuicaoNumerica: {
+        'SE atc': { dn: 0.32, giro: 830.16, vendas: 28018113.87 },  // Sudeste Atacado - MAIOR RECEITA
+        'NE atc': { dn: 0.26, giro: 853.46, vendas: 13068795.34 },  // Nordeste Atacado
+        'CO atc': { dn: 0.24, giro: 1036.25, vendas: 7900463.91 },  // Centro-Oeste Atacado
+        'NO atc': { dn: 0.22, giro: 955.90, vendas: 2737450.74 },   // Norte Atacado
+        'SUL atc': { dn: 0.19, giro: 729.50, vendas: 7508538.81 },  // Sul Atacado - BAIXA DN!
+        'SUL 10+': { dn: 0.20, giro: 417.16, vendas: 9020237.48 },
+        'SE 10+': { dn: 0.19, giro: 304.99, vendas: 18865184.41 },
+        'CO 10+': { dn: 0.12, giro: 294.77, vendas: 1609672.54 },   // BAIXA DN!
+        'NE 10+': { dn: 0.15, giro: 216.14, vendas: 3090381.35 },
+        'SUL 5a9': { dn: 0.10, giro: 141.95, vendas: 2493634.28 },  // BAIXA DN!
+        'SE 5a9': { dn: 0.13, giro: 160.98, vendas: 8099512.17 }
+      },
       crescimentoAmazon: 11.8,
       sazonalidadeAmazon: {
         'abril': 1.35,
@@ -78,48 +92,125 @@ class EngineRecomendacoesIA {
 
   analisarMarketShare() {
     const recomendacoes = [];
-    const dados = this.dadosEstruturados.marketShare;
+    const dadosMarketShare = this.dadosEstruturados.marketShare;
+    const dadosDN = this.dadosEstruturados.distribuicaoNumerica;
 
-    // Oportunidade em estados com baixo market share
-    const estadosBaixoShare = Object.entries(dados)
-      .filter(([estado, share]) => share < 5)
-      .map(([estado]) => estado);
-
-    if (estadosBaixoShare.length > 0) {
+    // === ESTRATÉGIA 1: DEFESA - Proteger Liderança no Sudeste ===
+    // SE atc: DN 32%, R$ 28M - MAIOR RECEITA E MELHOR DISTRIBUIÇÃO
+    const seAtc = dadosDN['SE atc'];
+    if (seAtc && seAtc.dn > 0.30) {
       recomendacoes.push({
-        id: 'expand-low-share-states',
+        id: 'defend-southeast-leadership',
         categoria: 'Expansão Geográfica',
-        titulo: 'Expandir em Estados de Baixo Market Share',
-        descricao: `Oportunidade de crescimento em ${estadosBaixoShare.length} estados com share < 5%`,
-        impacto: 'Alto',
-        esforco: 'Médio',
-        prazo: '3-6 meses',
-        kpis: ['Market Share', 'Volume de Vendas', 'Penetração'],
-        score: 85,
+        titulo: 'Defender Liderança no Sudeste (Atacado)',
+        descricao: `DN de ${(seAtc.dn * 100).toFixed(0)}% - maior cobertura e R$ ${(seAtc.vendas / 1000000).toFixed(1)}M em vendas`,
+        impacto: 'Muito Alto',
+        esforco: 'Baixo',
+        prazo: '1-3 meses',
+        kpis: ['DN Sudeste', 'Market Share', 'Faturamento'],
+        score: 94,
         acoes: [
-          'Intensificar distribuição nos estados identificados',
-          'Campanhas de marketing regionalizadas',
-          'Parcerias com distribuidores locais'
+          `Manter DN acima de 30% (atual: ${(seAtc.dn * 100).toFixed(0)}%)`,
+          'Monitorar concorrentes ativamente (Banana Brasil, Ritter)',
+          'Expandir em canais premium (+50 PDVs)',
+          `Proteger R$ ${(seAtc.vendas / 1000000).toFixed(1)}M em receita`
         ]
       });
     }
 
-    // Fortalecer liderança em SP
-    if (dados['São Paulo'] > 20) {
+    // === ESTRATÉGIA 2: EXPANSÃO - Aumentar DN no Sul (Atacado) ===
+    // SUL atc: DN apenas 19% - GRANDE OPORTUNIDADE!
+    const sulAtc = dadosDN['SUL atc'];
+    if (sulAtc && sulAtc.dn < 0.25) {
+      const potencialVendas = sulAtc.vendas * 1.5; // Potencial de crescimento 50%
       recomendacoes.push({
-        id: 'strengthen-sp-leadership',
-        categoria: 'Consolidação',
-        titulo: 'Fortalecer Liderança em São Paulo',
-        descricao: 'SP representa 24.52% do market share - oportunidade de consolidação',
-        impacto: 'Muito Alto',
-        esforco: 'Baixo',
-        prazo: '1-3 meses',
-        kpis: ['Market Share SP', 'Volume SP', 'Faturamento SP'],
-        score: 92,
+        id: 'expand-south-distribution',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Expandir Distribuição no Sul (Atacado)',
+        descricao: `DN de apenas ${(sulAtc.dn * 100).toFixed(0)}% - grande oportunidade de expansão`,
+        impacto: 'Alto',
+        esforco: 'Médio',
+        prazo: '3-5 meses',
+        kpis: ['DN Sul', 'Cobertura PDVs', 'Volume'],
+        score: 91,
         acoes: [
-          'Aumentar investimento em marketing em SP',
-          'Expandir pontos de venda premium',
-          'Lançar produtos exclusivos para SP'
+          `Aumentar DN de ${(sulAtc.dn * 100).toFixed(0)}% para 28% (+9 p.p.)`,
+          'Expandir cobertura em PR, SC e RS (+120 PDVs)',
+          'Parcerias com redes regionais (Angeloni, Giassi)',
+          `Potencial: R$ ${(potencialVendas / 1000000).toFixed(1)}M (+50%)`
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 3: EXPANSÃO - Fortalecer Nordeste ===
+    // NE atc: DN 26%, R$ 13.1M - BOA DN, mas pode crescer
+    const neAtc = dadosDN['NE atc'];
+    if (neAtc && neAtc.dn > 0.20) {
+      const potencialVendas = neAtc.vendas * 1.25;
+      recomendacoes.push({
+        id: 'expand-northeast-coverage',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Fortalecer Presença no Nordeste',
+        descricao: `DN de ${(neAtc.dn * 100).toFixed(0)}% e R$ ${(neAtc.vendas / 1000000).toFixed(1)}M - consolidar posição`,
+        impacto: 'Alto',
+        esforco: 'Médio',
+        prazo: '3-6 meses',
+        kpis: ['DN Nordeste', 'Market Share', 'Volume'],
+        score: 88,
+        acoes: [
+          `Aumentar DN de ${(neAtc.dn * 100).toFixed(0)}% para 32% (+6 p.p.)`,
+          'Expandir em BA, PE, CE (+80 PDVs)',
+          'Campanhas regionalizadas para público nordestino',
+          `Potencial: R$ ${(potencialVendas / 1000000).toFixed(1)}M (+25%)`
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 4: EXPANSÃO - Penetrar em Centro-Oeste (Lojas 10+) ===
+    // CO 10+: DN apenas 12% - BAIXA COBERTURA!
+    const co10 = dadosDN['CO 10+'];
+    if (co10 && co10.dn < 0.15) {
+      const potencialVendas = co10.vendas * 2.0; // Potencial de dobrar
+      recomendacoes.push({
+        id: 'expand-midwest-large-stores',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Penetrar em Centro-Oeste (Lojas 10+ checkouts)',
+        descricao: `DN de apenas ${(co10.dn * 100).toFixed(0)}% - oportunidade em lojas grandes`,
+        impacto: 'Médio',
+        esforco: 'Médio',
+        prazo: '4-6 meses',
+        kpis: ['DN Centro-Oeste', 'Cobertura Lojas 10+', 'Volume'],
+        score: 85,
+        acoes: [
+          `Aumentar DN de ${(co10.dn * 100).toFixed(0)}% para 25% (+13 p.p.)`,
+          'Foco em GO, DF, MT (+40 lojas grandes)',
+          'Parcerias com redes como Extra, Carrefour',
+          `Potencial: R$ ${(potencialVendas / 1000000).toFixed(1)}M (+100%)`
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 5: EXPANSÃO - Aumentar DN em Lojas Pequenas (5-9 checkouts) ===
+    // SUL 5a9, SE 5a9: DN 10-13% - BAIXA COBERTURA EM LOJAS PEQUENAS!
+    const sul5a9 = dadosDN['SUL 5a9'];
+    const se5a9 = dadosDN['SE 5a9'];
+    if (sul5a9 && se5a9 && (sul5a9.dn < 0.15 || se5a9.dn < 0.15)) {
+      const potencialTotal = (sul5a9.vendas + se5a9.vendas) * 1.8;
+      recomendacoes.push({
+        id: 'expand-small-stores-coverage',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Expandir em Lojas Pequenas (5-9 checkouts)',
+        descricao: `DN de ${(sul5a9.dn * 100).toFixed(0)}-${(se5a9.dn * 100).toFixed(0)}% - penetrar em varejo de vizinhança`,
+        impacto: 'Médio',
+        esforco: 'Alto',
+        prazo: '6-9 meses',
+        kpis: ['DN Lojas 5-9', 'Cobertura Nacional', 'Volume'],
+        score: 82,
+        acoes: [
+          'Aumentar DN em lojas pequenas para 22% (+10 p.p.)',
+          'Programa de incentivo para distribuidores regionais',
+          'Foco em bairros residenciais (+200 PDVs)',
+          `Potencial: R$ ${(potencialTotal / 1000000).toFixed(1)}M (+80%)`
         ]
       });
     }

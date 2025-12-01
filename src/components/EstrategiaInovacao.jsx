@@ -14,7 +14,7 @@ const EstrategiaInovacao = () => {
   const dadosAmazon = getAmazonSummary();
 
   // Calcular métricas reais
-  const receitaAtual = dadosInternos.totais.receita; // R$ 142.5M (YTD 2025 BARRAS)
+  const receitaAtual = dadosInternos.totais.receita; // R$ 142.5M (Último Ano Móvel - BARRAS)
   const mercadoTotal = mercadoScanntech.valor.atual; // Mercado total Scanntech
   const shareAtual = ((receitaAtual / mercadoTotal) * 100).toFixed(1);
 
@@ -241,7 +241,7 @@ const EstrategiaInovacao = () => {
             </span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Oportunidades baseadas em dados reais YTD 2025, Scanntech, MTRIX e Amazon
+            Oportunidades baseadas em dados reais do último ano móvel, Scanntech, MTRIX e Amazon
           </p>
         </div>
 
@@ -249,7 +249,7 @@ const EstrategiaInovacao = () => {
         <div className="border-t p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-blue-50 rounded-lg p-4">
-              <p className="text-xs text-gray-600 mb-1">Receita Atual (YTD 2025)</p>
+              <p className="text-xs text-gray-600 mb-1">Receita Atual (Último Ano Móvel)</p>
               <p className="text-xl font-bold text-blue-600">R$ {receitaBase.toFixed(1)}M</p>
               <p className="text-xs text-gray-500">Apenas BARRAS</p>
             </div>

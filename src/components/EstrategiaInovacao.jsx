@@ -67,28 +67,16 @@ const EstrategiaInovacao = () => {
       fundamentacao: `Canal Digital atual: R$ 1.9M - potencial 4x`
     },
     {
-      categoria: 'Expansão Regional',
-      titulo: `Intensificar presença em ${regioesTop[0]?.nome || regioesTop[0]?.regiao || 'Região Principal'}`,
-      descricao: 'Região líder com maior participação no faturamento',
-      potencial: `+R$ ${((regioesTop[0]?.valor || regioesTop[0]?.receita || 0) * 0.15 / 1000000).toFixed(1)}M (crescimento 15%)`,
-      investimento: 'R$ 600k',
-      prazo: '4 meses',
-      mercado: `Região representa ${regioesTop[0]?.percentual || regioesTop[0]?.percentualReceita || 0}% da receita total`,
-      status: 'Planejamento',
-      prioridade: 'Alta',
-      fundamentacao: `${regioesTop[0]?.nome || regioesTop[0]?.regiao || 'Região'}: R$ ${((regioesTop[0]?.valor || regioesTop[0]?.receita || 0) / 1000000).toFixed(1)}M atual`
-    },
-    {
-      categoria: 'Canais',
-      titulo: `Fortalecer canal ${canaisTop[0]?.nome || canaisTop[0]?.canal || 'Principal'}`,
-      descricao: 'Canal principal com maior volume e receita',
-      potencial: `+R$ ${((canaisTop[0]?.valor || canaisTop[0]?.receita || 0) * 0.10 / 1000000).toFixed(1)}M (crescimento 10%)`,
-      investimento: 'R$ 400k',
-      prazo: '3 meses',
-      mercado: `Canal representa ${canaisTop[0]?.percentual || canaisTop[0]?.percentualReceita || 0}% da receita`,
-      status: 'Execução',
-      prioridade: 'Alta',
-      fundamentacao: `${canaisTop[0]?.nome || canaisTop[0]?.canal || 'Canal'}: R$ ${((canaisTop[0]?.valor || canaisTop[0]?.receita || 0) / 1000000).toFixed(1)}M atual`
+      categoria: 'Novos Produtos',
+      titulo: 'Barras Funcionais (Energia, Foco, Sleep)',
+      descricao: 'Linha de barras com ingredientes funcionais específicos',
+      potencial: `R$ ${(receitaAtual * 0.08).toFixed(1)}M receita anual`,
+      investimento: 'R$ 1.8M',
+      prazo: '10 meses',
+      mercado: 'Segmento funcional crescendo 25% a.a.',
+      status: 'Conceito',
+      prioridade: 'Média',
+      fundamentacao: 'Tendência wellness e performance mental/física'
     },
     {
       categoria: 'E-commerce',
@@ -103,16 +91,28 @@ const EstrategiaInovacao = () => {
       fundamentacao: `Amazon atual: R$ ${(dadosAmazon.receitaTotal / 1000000).toFixed(1)}M, ${dadosAmazon.unidadesTotal.toLocaleString('pt-BR')} unidades`
     },
     {
-      categoria: 'Distribuição',
-      titulo: 'Expansão MTRIX (Atacado/Distribuição)',
-      descricao: 'Ampliar presença em distribuidores regionais',
-      potencial: `R$ ${(dadosMTRIX.totalVendas * 0.25 / 1000000).toFixed(1)}M (crescimento 25%)`,
-      investimento: 'R$ 500k',
-      prazo: '5 meses',
-      mercado: `${dadosMTRIX.totalDistribuidores} distribuidores em ${dadosMTRIX.totalUFs} UFs`,
+      categoria: 'Novos Produtos',
+      titulo: 'Snacks Salgados Saudáveis',
+      descricao: 'Expansão para categoria de snacks salgados proteicos',
+      potencial: `R$ ${(receitaAtual * 0.10).toFixed(1)}M receita anual`,
+      investimento: 'R$ 2.2M',
+      prazo: '12 meses',
+      mercado: 'Mercado de snacks saudáveis R$ 2.5B',
       status: 'Conceito',
       prioridade: 'Média',
-      fundamentacao: `MTRIX atual: R$ ${(dadosMTRIX.totalVendas / 1000000).toFixed(1)}M, ${dadosMTRIX.totalDistribuidores} distribuidores`
+      fundamentacao: 'Diversificação de portfólio além de barras doces'
+    },
+    {
+      categoria: 'Canais',
+      titulo: 'Clube de Benefícios e Assinatura',
+      descricao: 'Programa de fidelidade com assinatura e benefícios exclusivos',
+      potencial: 'R$ 5M receita recorrente anual',
+      investimento: 'R$ 600k',
+      prazo: '4 meses',
+      mercado: 'Modelo de assinatura com LTV 3x maior',
+      status: 'Planejamento',
+      prioridade: 'Alta',
+      fundamentacao: 'Receita recorrente + aumento de retenção'
     }
   ];
 

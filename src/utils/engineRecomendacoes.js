@@ -215,6 +215,130 @@ class EngineRecomendacoesIA {
       });
     }
 
+    // ========================================
+    // RECOMENDAÇÕES DE EXPANSÃO GEOGRÁFICA (POR ESTADO)
+    // ========================================
+
+    // === ESTRATÉGIA 1: DEFENDER - São Paulo (Líder) ===
+    // SP: 24.52% market share - ESTADO LÍDER
+    if (dadosMarketShare['São Paulo'] > 20) {
+      recomendacoes.push({
+        id: 'defend-sao-paulo-state',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Defender Liderança em São Paulo',
+        descricao: `SP representa ${dadosMarketShare['São Paulo'].toFixed(1)}% do market share - proteger posição dominante`,
+        impacto: 'Muito Alto',
+        esforco: 'Baixo',
+        prazo: '1-3 meses',
+        kpis: ['Market Share SP', 'Volume SP', 'Faturamento SP'],
+        score: 93,
+        acoes: [
+          `Manter liderança de ${dadosMarketShare['São Paulo'].toFixed(1)}% em SP`,
+          'Investir em marketing regional (+20% budget SP)',
+          'Expandir em canais premium (Zona Sul, Jardins)',
+          'Monitorar concorrentes: Banana Brasil, Ritter, Quaker'
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 2: ATACAR - Paraná (2º maior) ===
+    // PR: 15.35% market share - OPORTUNIDADE DE CRESCIMENTO
+    if (dadosMarketShare['Paraná'] > 10) {
+      const potencialShare = dadosMarketShare['Paraná'] * 1.2; // Crescer 20%
+      recomendacoes.push({
+        id: 'attack-parana-state',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Acelerar Crescimento no Paraná',
+        descricao: `PR é o 2º maior mercado (${dadosMarketShare['Paraná'].toFixed(1)}%) - expandir agressivamente`,
+        impacto: 'Alto',
+        esforco: 'Médio',
+        prazo: '2-4 meses',
+        kpis: ['Market Share PR', 'Volume PR', 'Penetração PR'],
+        score: 90,
+        acoes: [
+          `Crescer de ${dadosMarketShare['Paraná'].toFixed(1)}% para ${potencialShare.toFixed(1)}% (+20%)`,
+          'Foco em Curitiba, Londrina, Maringá',
+          'Parcerias com redes regionais (Condor, Festval)',
+          'Campanhas para público fitness e saudável'
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 3: ATACAR - Cluster MG + RJ ===
+    // MG (11.52%) + RJ (11.25%) = 22.77% - CLUSTER ESTRATÉGICO
+    const mgShare = dadosMarketShare['Minas Gerais'] || 0;
+    const rjShare = dadosMarketShare['Rio de Janeiro'] || 0;
+    if (mgShare > 10 || rjShare > 10) {
+      const totalShare = mgShare + rjShare;
+      const potencialTotal = totalShare * 1.15; // Crescer 15%
+      recomendacoes.push({
+        id: 'attack-mg-rj-cluster',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Expandir em Minas Gerais e Rio de Janeiro',
+        descricao: `MG (${mgShare.toFixed(1)}%) + RJ (${rjShare.toFixed(1)}%) = ${totalShare.toFixed(1)}% - cluster Sudeste`,
+        impacto: 'Alto',
+        esforco: 'Médio',
+        prazo: '3-5 meses',
+        kpis: ['Market Share MG+RJ', 'Volume', 'Cobertura'],
+        score: 87,
+        acoes: [
+          `Crescer de ${totalShare.toFixed(1)}% para ${potencialTotal.toFixed(1)}% (+15%)`,
+          'MG: Foco em BH, Uberlândia, Juiz de Fora',
+          'RJ: Foco em Rio Capital, Niterói, região dos Lagos',
+          'Aproveitar logística compartilhada SP-MG-RJ'
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 4: ATACAR - Santa Catarina ===
+    // SC: 6.57% market share - OPORTUNIDADE NO SUL
+    if (dadosMarketShare['Santa Catarina'] > 5) {
+      const potencialShare = dadosMarketShare['Santa Catarina'] * 1.3; // Crescer 30%
+      recomendacoes.push({
+        id: 'attack-santa-catarina-state',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Intensificar Presença em Santa Catarina',
+        descricao: `SC representa ${dadosMarketShare['Santa Catarina'].toFixed(1)}% - crescimento no Sul`,
+        impacto: 'Médio',
+        esforco: 'Médio',
+        prazo: '4-6 meses',
+        kpis: ['Market Share SC', 'Volume SC', 'Penetração SC'],
+        score: 84,
+        acoes: [
+          `Crescer de ${dadosMarketShare['Santa Catarina'].toFixed(1)}% para ${potencialShare.toFixed(1)}% (+30%)`,
+          'Foco em Florianópolis, Joinville, Blumenau',
+          'Parcerias com Angeloni, Giassi, Bistek',
+          'Aproveitar perfil saudável do público catarinense'
+        ]
+      });
+    }
+
+    // === ESTRATÉGIA 5: PENETRAR - Estados com baixo share ===
+    // Estados < 5% - NORDESTE, CENTRO-OESTE, NORTE
+    const estadosBaixoShare = Object.entries(dadosMarketShare)
+      .filter(([estado, share]) => share < 5)
+      .map(([estado]) => estado);
+
+    if (estadosBaixoShare.length > 0) {
+      recomendacoes.push({
+        id: 'penetrate-low-share-states',
+        categoria: 'Expansão Geográfica',
+        titulo: 'Penetrar em Estados de Baixo Market Share',
+        descricao: `${estadosBaixoShare.length} estados com share < 5% - oportunidade de penetração`,
+        impacto: 'Médio',
+        esforco: 'Alto',
+        prazo: '6-12 meses',
+        kpis: ['Market Share', 'Volume', 'Penetração'],
+        score: 79,
+        acoes: [
+          'Nordeste: Foco em BA, PE, CE (mercados grandes)',
+          'Centro-Oeste: Foco em GO, DF (crescimento econômico)',
+          'Norte: Foco em AM, PA (capitais)',
+          'Estratégia: Distribuidores locais + marketing digital'
+        ]
+      });
+    }
+
     return recomendacoes;
   }
 

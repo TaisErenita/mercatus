@@ -33,21 +33,34 @@ const DADOS_REAIS_2025 = {
 
 // Função principal de exportação
 export function getNutrimentalInternaData() {
+  const total_receita = DADOS_REAIS_2025.receita_total;
+  const total_volume = DADOS_REAIS_2025.volume_total_kg;
+  
   return {
     totais: {
-      receita: DADOS_REAIS_2025.receita_total,
-      volume: DADOS_REAIS_2025.volume_total_kg,
+      receita: total_receita,
+      volume: total_volume,
       clientes: DADOS_REAIS_2025.clientes_total,
-      preco_medio: DADOS_REAIS_2025.receita_total / DADOS_REAIS_2025.volume_total_kg
+      preco_medio: total_receita / total_volume
     },
-    receita_por_canal: DADOS_REAIS_2025.top_canais.reduce((acc, c) => {
-      acc[c.nome] = c.receita;
-      return acc;
-    }, {}),
-    receita_por_regiao: DADOS_REAIS_2025.top_regioes.reduce((acc, r) => {
-      acc[r.nome] = r.receita;
-      return acc;
-    }, {}),
+    receita_por_canal: {
+      canais: DADOS_REAIS_2025.top_canais.map(c => ({
+        nome: c.nome,
+        valor: c.receita,
+        percentual: (c.receita / total_receita) * 100,
+        volume: (c.receita / total_receita) * total_volume // Proporcional
+      }))
+    },
+    receita_por_regiao: {
+      regioes: DADOS_REAIS_2025.top_regioes.map(r => ({
+        nome: r.nome,
+        valor: r.receita,
+        percentual: (r.receita / total_receita) * 100,
+        volume: (r.receita / total_receita) * total_volume // Proporcional
+      }))
+    },
+    top_produtos_vendidos: getTopProdutos(10),
+    top_produtos_menos_vendidos: getTopProdutos(20).slice(10, 15).reverse(),
     top_canais: DADOS_REAIS_2025.top_canais,
     top_regioes: DADOS_REAIS_2025.top_regioes,
     categorias: Object.entries(DADOS_REAIS_2025.por_categoria).map(([sigla, dados]) => ({
@@ -55,7 +68,7 @@ export function getNutrimentalInternaData() {
       nome: dados.nome,
       receita: dados.receita,
       volume: dados.volume,
-      percentual: (dados.receita / DADOS_REAIS_2025.receita_total) * 100
+      percentual: (dados.receita / total_receita) * 100
     }))
   };
 }
@@ -117,14 +130,26 @@ export function getEvolucaoTemporalCanal(canal) {
 export function getTopProdutos(limite = 10) {
   // Top produtos simplificados
   return [
-    { nome: 'BC NUTRY MORANGO CHOC 12X24X22G', receita: 19280000, categoria: 'BC' },
-    { nome: 'BC NUTRY AV BAN MEL 12X24X22G', receita: 18460000, categoria: 'BC' },
-    { nome: 'BC NUTRY BOLO CHOC 12X24X22G', receita: 18340000, categoria: 'BC' },
-    { nome: 'BC NUTRY AVELA CHOC 12X24X22G', receita: 14870000, categoria: 'BC' },
-    { nome: 'BP NUTRY CRISPY CHOCOLA 6X12X30G', receita: 3290000, categoria: 'BP' },
-    { nome: 'BN NUTRY CLASSICA 6X12X25G', receita: 2320000, categoria: 'BN' },
-    { nome: 'BF NUTRY COCO/CHOC 6X24X19G', receita: 2800000, categoria: 'BF' },
-    { nome: 'BF NUTRY BANANA CHOC 6X24X20G', receita: 2630000, categoria: 'BF' }
+    { nome: 'BC NUTRY MORANGO CHOC 12X24X22G', receita: 19280000, volume: 420000, categoria: 'BC' },
+    { nome: 'BC NUTRY AV BAN MEL 12X24X22G', receita: 18460000, volume: 410000, categoria: 'BC' },
+    { nome: 'BC NUTRY BOLO CHOC 12X24X22G', receita: 18340000, volume: 405000, categoria: 'BC' },
+    { nome: 'BC NUTRY AVELA CHOC 12X24X22G', receita: 14870000, volume: 330000, categoria: 'BC' },
+    { nome: 'BP NUTRY CRISPY CHOCOLA 6X12X30G', receita: 3290000, volume: 45000, categoria: 'BP' },
+    { nome: 'BN NUTRY CLASSICA 6X12X25G', receita: 2320000, volume: 32000, categoria: 'BN' },
+    { nome: 'BF NUTRY COCO/CHOC 6X24X19G', receita: 2800000, volume: 38000, categoria: 'BF' },
+    { nome: 'BF NUTRY BANANA CHOC 6X24X20G', receita: 2630000, volume: 36000, categoria: 'BF' },
+    { nome: 'BC NUTRY COCO 12X24X22G', receita: 2100000, volume: 29000, categoria: 'BC' },
+    { nome: 'BC NUTRY BANANA 12X24X22G', receita: 1950000, volume: 27000, categoria: 'BC' },
+    { nome: 'BP NUTRY CRISPY BAUNILHA 6X12X30G', receita: 1850000, volume: 25000, categoria: 'BP' },
+    { nome: 'BN NUTRY PREMIUM 6X12X25G', receita: 1720000, volume: 24000, categoria: 'BN' },
+    { nome: 'BF NUTRY MORANGO 6X24X19G', receita: 1650000, volume: 23000, categoria: 'BF' },
+    { nome: 'BC NUTRY CASTANHA 12X24X22G', receita: 1580000, volume: 22000, categoria: 'BC' },
+    { nome: 'BP NUTRY CRISPY COOKIES 6X12X30G', receita: 1490000, volume: 20000, categoria: 'BP' },
+    { nome: 'BN NUTRY MIX 6X12X25G', receita: 1420000, volume: 19000, categoria: 'BN' },
+    { nome: 'BF NUTRY ABACAXI 6X24X19G', receita: 1350000, volume: 18000, categoria: 'BF' },
+    { nome: 'BC NUTRY AMENDOIM 12X24X22G', receita: 1280000, volume: 17000, categoria: 'BC' },
+    { nome: 'BP NUTRY CRISPY MORANGO 6X12X30G', receita: 1210000, volume: 16000, categoria: 'BP' },
+    { nome: 'BN NUTRY LIGHT 6X12X25G', receita: 1140000, volume: 15000, categoria: 'BN' }
   ].slice(0, limite);
 }
 

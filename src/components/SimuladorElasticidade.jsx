@@ -12,14 +12,14 @@ const SimuladorElasticidade = () => {
 
   const [results, setResults] = useState(null);
 
-  // Dados por categoria (YTD 2025 BARRAS)
+  // Dados por categoria (Último Ano Móvel - BARRAS)
   const categoryData = {
     'TODAS': {
       name: 'Todas as Categorias',
       revenue: 142509966,    // R$ 142.5M
       volume: 2921408,       // kg vendidos
       avgPrice: 48.79,       // R$ 48.79/kg
-      marketShare: 89.5,     // 89.5% share estimado
+      marketShare: 32.2,     // 32.2% share REAL Scanntech (YTD Brasil)
       elasticityCoeff: -1.2
     },
     'BC': {
@@ -27,7 +27,7 @@ const SimuladorElasticidade = () => {
       revenue: 90900000,     // R$ 90.9M (63.8%)
       volume: 2160000,       // kg estimado
       avgPrice: 42.08,       // R$ 42.08/kg
-      marketShare: 57.2,     // proporcional
+      marketShare: 42.0,     // 42.0% share REAL Scanntech (Cereais)
       elasticityCoeff: -1.0  // menos elástica (produto mais básico)
     },
     'BP': {
@@ -35,7 +35,7 @@ const SimuladorElasticidade = () => {
       revenue: 19000000,     // R$ 19.0M (13.3%)
       volume: 184600,        // kg estimado
       avgPrice: 102.91,      // R$ 102.91/kg
-      marketShare: 11.9,     // proporcional
+      marketShare: 5.6,      // 5.6% share REAL Scanntech (Proteína)
       elasticityCoeff: -1.5  // mais elástica (produto premium)
     },
 
@@ -44,7 +44,7 @@ const SimuladorElasticidade = () => {
       revenue: 9600000,      // R$ 9.6M (6.7%)
       volume: 134200,        // kg estimado
       avgPrice: 71.51,       // R$ 71.51/kg
-      marketShare: 6.0,      // proporcional
+      marketShare: 9.9,      // 9.9% share REAL Scanntech (Nuts)
       elasticityCoeff: -1.4  // elástica (produto premium)
     },
     'BF': {
@@ -52,7 +52,7 @@ const SimuladorElasticidade = () => {
       revenue: 6900000,      // R$ 6.9M (4.9%)
       volume: 107300,        // kg estimado
       avgPrice: 64.32,       // R$ 64.32/kg
-      marketShare: 4.3,      // proporcional
+      marketShare: 31.6,     // 31.6% share REAL Scanntech (Frutas)
       elasticityCoeff: -1.3
     }
   };

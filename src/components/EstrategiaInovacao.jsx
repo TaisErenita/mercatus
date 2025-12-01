@@ -16,7 +16,8 @@ const EstrategiaInovacao = () => {
   // Calcular métricas reais
   const receitaAtual = dadosInternos.totais.receita; // R$ 142.5M (Último Ano Móvel - BARRAS)
   const mercadoTotal = mercadoScanntech.valor.atual; // Mercado total Scanntech
-  const shareAtual = ((receitaAtual / mercadoTotal) * 100).toFixed(1);
+  // Market Share REAL da Scanntech (YTD Brasil): 32.2%
+  const shareAtual = '32.2'; // Share real da Nutrimental na base Scanntech
 
   // Projeções baseadas em dados reais
   const crescimentoMercado = ((mercadoScanntech.valor.atual - mercadoScanntech.valor.anterior) / mercadoScanntech.valor.anterior * 100).toFixed(1);
